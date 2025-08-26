@@ -1,3 +1,4 @@
+console.log("✅ Script loaded correctly!");
 document.addEventListener("DOMContentLoaded", () => {
   const screens = document.querySelectorAll('.screen');
   let tripType = '';
