@@ -8,13 +8,12 @@
 </head>
 <body>
 
-  <!-- Static Flight image -->
   <img src="https://upload.wikimedia.org/wikipedia/commons/8/8b/Airplane_silhouette.svg" 
        class="plane" alt="plane">
 
   <div class="container">
 
-    <!-- Step 1: Travel Type -->
+    <!-- Step 1 -->
     <div id="step1" class="step active">
       <h1>VoyageX</h1>
       <p>Turn miles into smiles!</p>
@@ -25,7 +24,7 @@
       </div>
     </div>
 
-    <!-- Step 2: Booking Form -->
+    <!-- Step 2 -->
     <div id="step2" class="step">
       <h1 id="formTitle">Booking Form</h1>
       <form>
@@ -61,6 +60,17 @@
 
   </div>
 
+  <!-- script must be at the bottom -->
   <script src="script.js"></script>
 </body>
 </html>
+function chooseType(type) {
+  // Hide all steps
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+
+  // Show booking form
+  document.getElementById('step2').classList.add('active');
+
+  // Change title according to choice
+  document.getElementById("formTitle").innerText = type + " Booking Form";
+}
