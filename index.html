@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VoyageX</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <!-- Clouds -->
@@ -12,14 +12,14 @@
   <div class="cloud cloud2"></div>
   <div class="cloud cloud3"></div>
 
-  <!-- Screen 1 -->
+  <!-- Screen 1: Home -->
   <div id="home" class="screen active">
     <h1>Choose your dream destination!</h1>
     <button id="btnInternational">International</button>
     <button id="btnDomestic">Domestic</button>
   </div>
 
-  <!-- Screen 2 (Booking Form) -->
+  <!-- Screen 2: Booking -->
   <div id="booking" class="screen">
     <h1>VoyageX Booking</h1>
     <p id="tripType"></p>
@@ -64,18 +64,21 @@
     </form>
   </div>
 
-  <!-- Screen 3 (Confirmation) -->
+  <!-- Screen 3: Confirmation -->
   <div id="confirmation" class="screen">
     <h1 id="confirmationCaption"></h1>
     <div id="confirmationDetails"></div>
     <button id="btnConfirm">Confirm</button>
   </div>
 
-  <!-- Screen 4 (Success / Boarding Pass) -->
+  <!-- Screen 4: Success -->
   <div id="success" class="screen">
     <h1>🎉 Congratulations!</h1>
     <p>Your booking is confirmed.</p>
-    <div class="boarding-pass" id="boardingPass"></div>
+    <div id="boardingPass">
+      <h2>Boarding Pass</h2>
+      <canvas id="qrcode"></canvas>
+    </div>
   </div>
 
   <script src="script.js"></script>
