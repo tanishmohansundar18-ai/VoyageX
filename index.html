@@ -6,119 +6,106 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="clouds">
-    <div class="cloud"></div>
-    <div class="cloud"></div>
-    <div class="cloud"></div>
-    <div class="cloud"></div>
-    <div class="cloud"></div>
-  </div>
+  <!-- Clouds -->
+  <div class="cloud cloud1"></div>
+  <div class="cloud cloud2"></div>
+  <div class="cloud cloud3"></div>
+  <div class="cloud cloud4"></div>
+  <div class="cloud cloud5"></div>
 
-  <!-- Step 1 -->
-  <div id="step1" class="step active">
-    <h1 class="title">VoyageX</h1>
-    <p class="tagline">Turn miles into smiles!</p>
-    <button onclick="chooseType('international')">International</button>
-    <button onclick="chooseType('domestic')">Domestic</button>
-  </div>
-
-  <!-- Step 2 -->
-  <div id="step2" class="step">
-    <h1>VoyageX</h1>
-    <h2 id="formTitle"></h2>
-    <form id="bookingForm">
-      <label>Destination:</label>
-      <select id="destinationSelect"></select>
-
-      <label>Name:</label>
-      <input type="text" id="name" required>
-
-      <label>Age:</label>
-      <input type="number" id="age" required>
-
-      <label>Passengers:</label>
-      <input type="number" id="passengers" required>
-
-      <label>Contact Number:</label>
-      <input type="tel" id="contact" required>
-
-      <label>Email:</label>
-      <input type="email" id="email" required>
-
-      <label>Flight:</label>
-      <select id="airline">
-        <option>Emirates</option>
-        <option>Singapore Airlines</option>
-        <option>Qatar Airways</option>
-        <option>Air India</option>
-        <option>Lufthansa</option>
-      </select>
-
-      <label>Duration (days):</label>
-      <input type="number" id="days" required>
-
-      <label>Date of Departure:</label>
-      <input type="date" id="departure" required>
-
-      <label>Date of Arrival:</label>
-      <input type="date" id="arrival" required>
-
-      <label>Price (per person/day):</label>
-      <input type="text" id="priceField" readonly>
-
-      <label>Discount:</label>
-      <input type="text" id="discountField" readonly>
-
-      <button type="submit">Book Now</button>
-    </form>
-  </div>
-
-  <!-- Step 3: Confirmation before final ticket -->
-  <div id="step3" class="step">
-    <h1>Confirm Your Booking</h1>
-    <div class="ticket">
-      <div class="row"><strong>Name:</strong> <span id="confName"></span></div>
-      <div class="row"><strong>Age:</strong> <span id="confAge"></span></div>
-      <div class="row"><strong>Passengers:</strong> <span id="confPassengers"></span></div>
-      <div class="row"><strong>Contact:</strong> <span id="confContact"></span></div>
-      <div class="row"><strong>Email:</strong> <span id="confEmail"></span></div>
-      <div class="row"><strong>Destination:</strong> <span id="confDestination"></span></div>
-      <div class="row"><strong>Airline:</strong> <span id="confAirline"></span></div>
-      <div class="row"><strong>Duration:</strong> <span id="confDays"></span></div>
-      <div class="row"><strong>Departure:</strong> <span id="confDeparture"></span></div>
-      <div class="row"><strong>Return:</strong> <span id="confArrival"></span></div>
-      <div class="row"><strong>Total Price:</strong> <span id="confPrice"></span></div>
-      <div class="row"><strong>Discounted:</strong> <span id="confDiscount"></span></div>
+  <div class="container">
+    <!-- STEP 1 -->
+    <div id="step1" class="step active">
+      <h1 class="title">VoyageX</h1>
+      <p class="caption">Turn miles into smiles!</p>
+      <button onclick="chooseType('international')">International</button>
+      <button onclick="chooseType('domestic')">Domestic</button>
     </div>
-    <button onclick="finalizeBooking()">Confirm Booking</button>
-  </div>
 
-  <!-- Step 4: Final Ticket -->
-  <div id="step4" class="step">
-    <h1>🎉 Booking Confirmed!</h1>
-    <h2 id="caption"></h2>
-    <div class="ticket">
-      <h2>VoyageX Boarding Pass</h2>
-      <div class="row"><strong>Name:</strong> <span id="sumName"></span></div>
-      <div class="row"><strong>Age:</strong> <span id="sumAge"></span></div>
-      <div class="row"><strong>Passengers:</strong> <span id="sumPassengers"></span></div>
-      <div class="row"><strong>Contact:</strong> <span id="sumContact"></span></div>
-      <div class="row"><strong>Email:</strong> <span id="sumEmail"></span></div>
-      <div class="row"><strong>Destination:</strong> <span id="sumDestination"></span></div>
-      <div class="row"><strong>Airline:</strong> <span id="sumAirline"></span></div>
-      <div class="row"><strong>Duration:</strong> <span id="sumDays"></span></div>
-      <div class="row"><strong>Departure:</strong> <span id="sumDeparture"></span></div>
-      <div class="row"><strong>Return:</strong> <span id="sumArrival"></span></div>
-      <div class="row"><strong>Total Price:</strong> <span id="sumPrice"></span></div>
-      <div class="row"><strong>Discounted:</strong> <span id="sumDiscount"></span></div>
+    <!-- STEP 2 (Form) -->
+    <div id="step2" class="step">
+      <h1>VoyageX</h1>
+      <h2 id="formTitle"></h2>
+      <form id="bookingForm">
+        <label>Name:</label>
+        <input type="text" id="name" required>
 
-      <div style="text-align:center; margin-top:15px;">
-        <img id="qrCode" alt="Booking QR Code" style="width:120px; height:120px;">
+        <label>Age:</label>
+        <input type="number" id="age" required>
+
+        <label>Number of Passengers:</label>
+        <input type="number" id="passengers" required>
+
+        <label>Contact Number:</label>
+        <input type="text" id="contact" required>
+
+        <label>Email:</label>
+        <input type="email" id="email" required>
+
+        <label>Destination:</label>
+        <select id="destinationSelect" required></select>
+
+        <label>Airline:</label>
+        <select id="airline" required>
+          <option>Emirates</option>
+          <option>Singapore Airlines</option>
+          <option>Qatar Airways</option>
+          <option>Air India</option>
+          <option>Lufthansa</option>
+        </select>
+
+        <label>Package Duration (days):</label>
+        <input type="number" id="days" required>
+
+        <label>Date of Departure:</label>
+        <input type="date" id="departure" required>
+
+        <label>Date of Arrival:</label>
+        <input type="date" id="arrival" required>
+
+        <label>Price per Day (auto):</label>
+        <input type="text" id="priceField" readonly>
+
+        <label>Discount (auto):</label>
+        <input type="text" id="discountField" readonly>
+
+        <button type="submit">Proceed</button>
+      </form>
+    </div>
+
+    <!-- STEP 3 (Confirmation Screen) -->
+    <div id="step3" class="step">
+      <h1>Confirm Your Booking</h1>
+      <div id="confirmationDetails"></div>
+      <button onclick="finalizeBooking()">Confirm Booking</button>
+    </div>
+
+    <!-- STEP 4 (Final Ticket) -->
+    <div id="step4" class="step">
+      <h1>🎉 Booking Confirmed!</h1>
+      <h2 id="caption"></h2>
+      <div class="ticket">
+        <h2>VoyageX Boarding Pass</h2>
+        <div class="row"><span>Name:</span> <span id="outName"></span></div>
+        <div class="row"><span>Age:</span> <span id="outAge"></span></div>
+        <div class="row"><span>Passengers:</span> <span id="outPassengers"></span></div>
+        <div class="row"><span>Contact:</span> <span id="outContact"></span></div>
+        <div class="row"><span>Email:</span> <span id="outEmail"></span></div>
+        <div class="row"><span>Destination:</span> <span id="outDestination"></span></div>
+        <div class="row"><span>Airline:</span> <span id="outAirline"></span></div>
+        <div class="row"><span>Package Days:</span> <span id="outDays"></span></div>
+        <div class="row"><span>Departure:</span> <span id="outDeparture"></span></div>
+        <div class="row"><span>Arrival:</span> <span id="outArrival"></span></div>
+        <div class="row"><span>Total Price:</span> <span id="outPrice"></span></div>
+        <div class="row"><span>Discount Applied:</span> <span id="outDiscount"></span></div>
+        <div class="row"><span>Final Amount:</span> <span id="outFinal"></span></div>
+        <div style="text-align:center; margin-top:15px;">
+          <img id="qrCode" alt="Booking QR Code" style="width:120px; height:120px;">
+        </div>
+        <div class="ticket-footer">Have a wonderful journey with VoyageX ✈️</div>
       </div>
-
-      <div class="ticket-footer">Have a wonderful journey with VoyageX ✈️</div>
+      <button onclick="location.reload()">Back to Home</button>
     </div>
-    <button onclick="location.reload()">Back to Home</button>
   </div>
 
   <script src="script.js"></script>
