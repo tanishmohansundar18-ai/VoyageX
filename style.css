@@ -5,28 +5,34 @@ body, html {
   font-family: Arial, sans-serif;
   overflow: hidden;
   background: linear-gradient(to top, #87cefa, #e0f7ff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
 /* Screens */
 .screen {
   position: absolute;
   top: 0;
-  left: 100%;
+  left: 0;
   width: 100%;
   height: 100%;
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  transition: left 0.8s ease-in-out;
   background: linear-gradient(to top, #87cefa, #e0f7ff);
+  animation: fadeIn 0.8s ease-in-out;
 }
 .screen.active {
-  left: 0;
+  display: flex;
 }
-.screen.exit-left {
-  left: -100%;
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
 }
 
 /* Typography */
@@ -80,17 +86,11 @@ input, select {
   border: 1px solid #ccc;
 }
 
-/* Flight animation */
+/* Static Flight image */
 .plane {
   position: absolute;
-  top: 20%;
-  left: -150px;
-  width: 120px;
-  z-index: 10;
-  animation: fly 12s linear infinite;
-}
-@keyframes fly {
-  0% { left: -150px; top: 20%; }
-  50% { left: 50%; top: 10%; }
-  100% { left: 110%; top: 25%; }
+  top: 10%;
+  right: 10%;
+  width: 150px;
+  z-index: 5;
 }
