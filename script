@@ -1,89 +1,114 @@
-/* General layout */
-body, html {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  height: 100%;
-  width: 100%;
-  background: #87ceeb; /* light blue sky */
-  overflow-y: auto;
-  overflow-x: hidden;
-  position: relative;
-  text-align: center;
-}
+document.addEventListener("DOMContentLoaded", () => {
+  const screens = document.querySelectorAll('.screen');
+  let tripType = '';
+  let pricePerDay = 0;
+  let discount = 0;
 
-/* Screens */
-.screen {
-  display: none;
-  padding: 20px;
-  min-height: 100vh;
-  box-sizing: border-box;
-}
+  const destinations = {
+    international: [
+      'New York','Sydney','Paris','London',
+      'Tokyo','Kyoto','Beijing','Shanghai',
+      'Switzerland','Dubai','Maldives','Bali'
+    ],
+    domestic: [
+      'Bengaluru','Chennai','Mumbai','Hyderabad',
+      'Thiruvananthapuram','Kolkata','Jaipur','Srinagar'
+    ]
+  };
 
-.screen.active {
-  display: block;
-}
+  const flights = {
+    international: ['Emirates','Singapore Airlines','Vistara'],
+    domestic: ['IndiGo','Air India','Akasa Air']
+  };
 
-/* Clouds Background */
-.clouds::before,
-.clouds::after {
-  content: "";
-  position: absolute;
-  top: 50px;
-  width: 200px;
-  height: 100px;
-  background: white;
-  border-radius: 50%;
-  opacity: 0.8;
-  animation: moveClouds 60s linear infinite;
-}
+  function showScreen(id) {
+    screens.forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
 
-.clouds::after {
-  top: 150px;
-  left: 50%;
-  width: 300px;
-  height: 150px;
-  animation-duration: 90s;
-}
+  function setupBooking(type) {
+    tripType = type;
+    const destSelect = document.getElementById('destination');
+    const flightSelect = document.getElementById('flight');
+    destSelect.innerHTML = '';
+    flightSelect.innerHTML = '';
 
-@keyframes moveClouds {
-  from { left: -400px; }
-  to { left: 120%; }
-}
+    destinations[type].forEach(d => {
+      const opt = document.createElement('option');
+      opt.value = d;
+      opt.textContent = d;
+      destSelect.appendChild(opt);
+    });
 
-/* Form Styles */
-.form-container {
-  background: #002244; /* dark blue form background */
-  color: white;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 500px;
-  margin: auto;
-  text-align: left;
-}
+    flights[type].forEach(f => {
+      const opt = document.createElement('option');
+      opt.value = f;
+      opt.textContent = f;
+      flightSelect.appendChild(opt);
+    });
 
-label {
-  display: block;
-  margin-top: 10px;
-}
+    document.getElementById('tripType').textContent =
+      `Trip Type: ${type.charAt(0).toUpperCase() + type.slice(1)}`;
 
-input, select {
-  width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-}
+    if (type === 'international') {
+      pricePerDay = 60000;
+      discount = 0.35;
+    } else {
+      pricePerDay = 30000;
+      discount = 0.25;
+    }
 
-button {
-  margin-top: 15px;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  background: #ff9800;
-  color: white;
-  cursor: pointer;
-}
+    showScreen('booking');
+  }
 
-button:hover {
-  background: #e68900;
-}
+  // Attach button listeners
+  document.getElementById('btnInternational')
+    .addEventListener('click', () => setupBooking('international'));
+  document.getElementById('btnDomestic')
+    .addEventListener('click', () => setupBooking('domestic'));
+
+  // Booking form submission
+  document.getElementById('bookingForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const destination = document.getElementById('destination').value;
+    const customers = parseInt(document.getElementById('customers').value);
+    const age = document.getElementById('age').value;
+    const phone = document.getElementById('phone').value;
+    const email = document.getElementById('email').value;
+    const flight = document.getElementById('flight').value;
+    const departure = new Date(document.getElementById('departure').value);
+    const ret = new Date(document.getElementById('return').value);
+
+    const days = Math.max(1, (ret - departure) / (1000 * 60 * 60 * 24));
+    const gross = customers * pricePerDay * days;
+    const total = gross - gross * discount;
+
+    const caption = tripType === 'international'
+      ? 'Beyond borders, beyond ordinary'
+      : 'Where every journey becomes a story';
+
+    document.getElementById('confirmationCaption').textContent = caption;
+
+    document.getElementById('confirmationDetails').innerHTML = `
+      <p><strong>Name:</strong> ${name}</p>
+      <p><strong>Destination:</strong> ${destination}</p>
+      <p><strong>Customers:</strong> ${customers}</p>
+      <p><strong>Age:</strong> ${age}</p>
+      <p><strong>Phone:</strong> ${phone}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Flight:</strong> ${flight}</p>
+      <p><strong>Departure:</strong> ${departure.toDateString()}</p>
+      <p><strong>Return:</strong> ${ret.toDateString()}</p>
+      <p><strong>Total Price:</strong> ₹${total.toLocaleString()}</p>
+    `;
+
+    showScreen('confirmation');
+  });
+
+  // Confirmation button → final screen
+  document.getElementById('btnCongrats').addEventListener('click', () => {
+    showScreen('final');
+  });
+});
