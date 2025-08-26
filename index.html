@@ -3,75 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VoyageX</title>
+  <title>TripNest</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Moving Clouds Background -->
-  <div class="clouds"></div>
-
-  <!-- Screen 1: Home -->
-  <div id="home" class="screen active">
-    <h1>VoyageX</h1>
+  <section id="step1" class="step active">
+    <h1>TripNest</h1>
     <p>Turn miles into smiles!</p>
-    <div class="options">
-      <button id="btnInternational">International</button>
-      <button id="btnDomestic">Domestic</button>
-    </div>
-  </div>
+    <button id="btnInternational">International</button>
+    <button id="btnDomestic">Domestic</button>
+  </section>
 
-  <!-- Screen 2: Booking Form -->
-  <div id="booking" class="screen">
-    <h1>VoyageX</h1>
-    <div class="form-container">
-      <form id="bookingForm">
-        <p id="tripType"></p>
-        <label>Name:</label>
-        <input type="text" id="name" required>
+  <section id="step2" class="step">
+    <h2 id="formTitle">Form will show here</h2>
+  </section>
 
-        <label>Destination:</label>
-        <select id="destination" required></select>
-
-        <label>Number of Customers:</label>
-        <input type="number" id="customers" min="1" required>
-
-        <label>Age:</label>
-        <input type="number" id="age" required>
-
-        <label>Phone Number:</label>
-        <input type="tel" id="phone" required>
-
-        <label>Email:</label>
-        <input type="email" id="email" required>
-
-        <label>Flight Options:</label>
-        <select id="flight" required></select>
-
-        <label>Date of Departure:</label>
-        <input type="date" id="departure" required>
-
-        <label>Date of Return:</label>
-        <input type="date" id="return" required>
-
-        <p id="price"></p>
-        <button type="submit">Book Now!</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Screen 3: Confirmation -->
-  <div id="confirmation" class="screen">
-    <h1 id="confirmationCaption"></h1>
-    <div id="confirmationDetails"></div>
-    <button id="btnCongrats">Confirm</button>
-  </div>
-
-  <!-- Screen 4: Final Congrats -->
-  <div id="final" class="screen">
-    <h1>🎉 Congratulations!</h1>
-    <p>Your booking is confirmed 🎟️✈️</p>
-  </div>
-
+  <!-- 👇 script MUST be before closing body -->
   <script src="script.js"></script>
 </body>
 </html>
