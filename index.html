@@ -1,65 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Travel Packages</title>
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-        background: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
-        background-size: cover;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        color: white;
-        text-align: center;
-    }
-
-    h1 {
-        margin-bottom: 40px;
-        font-size: 2.5rem;
-        text-shadow: 2px 2px 4px #000;
-    }
-
-    .cube-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-        gap: 20px;
-        width: 80%;
-        max-width: 800px;
-    }
-
-    .cube {
-        background: rgba(255, 255, 255, 0.2);
-        border: 2px solid white;
-        border-radius: 15px;
-        padding: 30px;
-        font-size: 1.2rem;
-        cursor: pointer;
-        transition: transform 0.3s, background 0.3s;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    }
-
-    .cube:hover {
-        transform: translateY(-10px);
-        background: rgba(255, 255, 255, 0.4);
-    }
-</style>
+  <meta charset="UTF-8">
+  <title>VoyageX - Flight Booking</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Turn Miles Into Smiles!</h1>
-<div class="cube-container">
-    <div class="cube" onclick="alert('UK selected')">UK</div>
-    <div class="cube" onclick="alert('USA selected')">USA</div>
-    <div class="cube" onclick="alert('India selected')">India</div>
-    <div class="cube" onclick="alert('Australia selected')">Australia</div>
-    <div class="cube" onclick="alert('Japan selected')">Japan</div>
-    <div class="cube" onclick="alert('Africa selected')">Africa</div>
-</div>
+
+  <!-- Flying Plane -->
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Airplane_silhouette.svg/512px-Airplane_silhouette.svg.png" 
+       class="plane" alt="plane">
+
+  <!-- Screen 1: Welcome -->
+  <div class="screen active" id="screen1">
+    <h1>VoyageX</h1>
+    <p>Turn miles into smiles!</p>
+    <button onclick="goToScreen(2)">Start Booking</button>
+  </div>
+
+  <!-- Screen 2: Destination -->
+  <div class="screen" id="screen2">
+    <h1>Destination</h1>
+    <div class="options">
+      <button onclick="selectCountry('India')">India</button>
+      <button onclick="selectCountry('USA')">USA</button>
+      <button onclick="selectCountry('UK')">UK</button>
+      <button onclick="selectCountry('Japan')">Japan</button>
+      <button onclick="selectCountry('China')">China</button>
+      <button onclick="selectCountry('Africa')">Africa</button>
+    </div>
+  </div>
+
+  <!-- Screen 3: City Selection -->
+  <div class="screen" id="screen3">
+    <h1 id="cityTitle">Select City</h1>
+    <div class="options" id="cityOptions"></div>
+  </div>
+
+  <!-- Screen 4: Booking Form -->
+  <div class="screen" id="screen4">
+    <h1>Enter Your Details</h1>
+    <form>
+      <input type="text" placeholder="Full Name" required>
+      <input type="tel" placeholder="Mobile Number" required>
+      <input type="email" placeholder="Email ID" required>
+      <input type="number" placeholder="Number of Customers" required>
+      <input type="number" placeholder="Age" required>
+      <select>
+        <option>Economy</option>
+        <option>Business</option>
+        <option>First Class</option>
+      </select>
+      <input type="text" placeholder="Preferred Flight" required>
+      <label>Departure Date</label>
+      <input type="date" required>
+      <label>Return Date</label>
+      <input type="date" required>
+      <button type="submit">Book Now</button>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
