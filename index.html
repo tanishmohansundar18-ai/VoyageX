@@ -73,8 +73,28 @@
     </form>
   </div>
 
-  <!-- Step 3 -->
+  <!-- Step 3: Confirmation before final ticket -->
   <div id="step3" class="step">
+    <h1>Confirm Your Booking</h1>
+    <div class="ticket">
+      <div class="row"><strong>Name:</strong> <span id="confName"></span></div>
+      <div class="row"><strong>Age:</strong> <span id="confAge"></span></div>
+      <div class="row"><strong>Passengers:</strong> <span id="confPassengers"></span></div>
+      <div class="row"><strong>Contact:</strong> <span id="confContact"></span></div>
+      <div class="row"><strong>Email:</strong> <span id="confEmail"></span></div>
+      <div class="row"><strong>Destination:</strong> <span id="confDestination"></span></div>
+      <div class="row"><strong>Airline:</strong> <span id="confAirline"></span></div>
+      <div class="row"><strong>Duration:</strong> <span id="confDays"></span></div>
+      <div class="row"><strong>Departure:</strong> <span id="confDeparture"></span></div>
+      <div class="row"><strong>Return:</strong> <span id="confArrival"></span></div>
+      <div class="row"><strong>Total Price:</strong> <span id="confPrice"></span></div>
+      <div class="row"><strong>Discounted:</strong> <span id="confDiscount"></span></div>
+    </div>
+    <button onclick="finalizeBooking()">Confirm Booking</button>
+  </div>
+
+  <!-- Step 4: Final Ticket -->
+  <div id="step4" class="step">
     <h1>🎉 Booking Confirmed!</h1>
     <h2 id="caption"></h2>
     <div class="ticket">
