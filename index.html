@@ -22,7 +22,7 @@
       <button onclick="chooseType('domestic')">Domestic</button>
     </div>
 
-    <!-- STEP 2 (Form) -->
+    <!-- STEP 2 -->
     <div id="step2" class="step">
       <h1>VoyageX</h1>
       <h2 id="formTitle"></h2>
@@ -63,24 +63,24 @@
         <label>Date of Arrival:</label>
         <input type="date" id="arrival" required>
 
-        <label>Price per Day (auto):</label>
+        <label>Price per Day:</label>
         <input type="text" id="priceField" readonly>
 
-        <label>Discount (auto):</label>
+        <label>Discount:</label>
         <input type="text" id="discountField" readonly>
 
         <button type="submit">Proceed</button>
       </form>
     </div>
 
-    <!-- STEP 3 (Confirmation Screen) -->
+    <!-- STEP 3 -->
     <div id="step3" class="step">
       <h1>Confirm Your Booking</h1>
       <div id="confirmationDetails"></div>
       <button onclick="finalizeBooking()">Confirm Booking</button>
     </div>
 
-    <!-- STEP 4 (Final Ticket) -->
+    <!-- STEP 4 -->
     <div id="step4" class="step">
       <h1>🎉 Booking Confirmed!</h1>
       <h2 id="caption"></h2>
@@ -97,7 +97,7 @@
         <div class="row"><span>Departure:</span> <span id="outDeparture"></span></div>
         <div class="row"><span>Arrival:</span> <span id="outArrival"></span></div>
         <div class="row"><span>Total Price:</span> <span id="outPrice"></span></div>
-        <div class="row"><span>Discount Applied:</span> <span id="outDiscount"></span></div>
+        <div class="row"><span>Discount:</span> <span id="outDiscount"></span></div>
         <div class="row"><span>Final Amount:</span> <span id="outFinal"></span></div>
         <div style="text-align:center; margin-top:15px;">
           <img id="qrCode" alt="Booking QR Code" style="width:120px; height:120px;">
