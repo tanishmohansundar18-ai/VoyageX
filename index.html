@@ -1,81 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>VoyageX - Interactive Travel</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser/dist/email.min.js"></script>
-  <script>
-    emailjs.init("KmPZnkRBE9Hqvjfev"); // Your public key
-  </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travel Packages</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+        background-size: cover;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        color: white;
+        text-align: center;
+    }
+
+    h1 {
+        margin-bottom: 40px;
+        font-size: 2.5rem;
+        text-shadow: 2px 2px 4px #000;
+    }
+
+    .cube-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 20px;
+        width: 80%;
+        max-width: 800px;
+    }
+
+    .cube {
+        background: rgba(255, 255, 255, 0.2);
+        border: 2px solid white;
+        border-radius: 15px;
+        padding: 30px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: transform 0.3s, background 0.3s;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .cube:hover {
+        transform: translateY(-10px);
+        background: rgba(255, 255, 255, 0.4);
+    }
+</style>
 </head>
 <body>
-
-  <!-- Landing Page -->
-  <div id="landingPage" class="screen">
-    <h1>Turn Miles Into Smiles!</h1>
-    <div class="cube-container">
-      <div class="country-cube" data-country="UK">UK</div>
-      <div class="country-cube" data-country="USA">USA</div>
-      <div class="country-cube" data-country="India">India</div>
-      <div class="country-cube" data-country="Australia">Australia</div>
-      <div class="country-cube" data-country="Japan">Japan</div>
-      <div class="country-cube" data-country="Africa">Africa</div>
-    </div>
-  </div>
-
-  <!-- Packages Page -->
-  <div id="packagesPage" class="screen" style="display:none;">
-    <button onclick="goBack()">← Back</button>
-    <h2 id="countryTitle"></h2>
-    <div id="packagesContainer" class="package-container"></div>
-  </div>
-
-  <!-- Booking Form Page -->
-  <div id="bookingPage" class="screen" style="display:none;">
-    <button onclick="goBackToPackages()">← Back</button>
-    <h2>Complete Your Booking</h2>
-    <form id="bookingForm" onsubmit="event.preventDefault(); bookTicket();">
-
-      <label>Main Booker</label>
-      <input type="text" id="mainName" placeholder="Your Name" required>
-
-      <label>Address</label>
-      <input type="text" id="address" placeholder="Your Address" required>
-
-      <label>Number of Customers</label>
-      <input type="number" id="numCustomers" placeholder="Number of Customers" min="1" onchange="generateCustomerFields()" required>
-      <div id="customers"></div>
-
-      <label>Package</label>
-      <input type="text" id="package" readonly>
-
-      <label>Flight Option</label>
-      <select id="flight" required>
-        <option value="" disabled selected>-- Select Airline --</option>
-        <option value="Emirates">Emirates</option>
-        <option value="Singapore Airlines">Singapore Airlines</option>
-        <option value="Qatar Airways">Qatar Airways</option>
-        <option value="Air India">Air India</option>
-      </select>
-
-      <label>City of Departure</label>
-      <input type="text" id="departureCity" placeholder="City of Departure" required>
-
-      <label>Departure Date</label>
-      <input type="date" id="departureDate" required>
-
-      <label>Arrival Date</label>
-      <input type="date" id="arrivalDate" required>
-
-      <label>Number of Tickets</label>
-      <input type="number" id="tickets" placeholder="Tickets" required>
-
-      <button type="submit">✅ Book Now</button>
-    </form>
-    <div id="output"></div>
-  </div>
-
-  <script src="script.js"></script>
+<h1>Turn Miles Into Smiles!</h1>
+<div class="cube-container">
+    <div class="cube" onclick="alert('UK selected')">UK</div>
+    <div class="cube" onclick="alert('USA selected')">USA</div>
+    <div class="cube" onclick="alert('India selected')">India</div>
+    <div class="cube" onclick="alert('Australia selected')">Australia</div>
+    <div class="cube" onclick="alert('Japan selected')">Japan</div>
+    <div class="cube" onclick="alert('Africa selected')">Africa</div>
+</div>
 </body>
 </html>
