@@ -8,57 +8,57 @@
 </head>
 <body>
 
-  <!-- Flight (static image) -->
+  <!-- Static Flight image -->
   <img src="https://upload.wikimedia.org/wikipedia/commons/8/8b/Airplane_silhouette.svg" 
        class="plane" alt="plane">
 
-  <!-- Screen 1: Welcome -->
-  <div class="screen active" id="screen1">
-    <h1>VoyageX</h1>
-    <p>Turn miles into smiles!</p>
-    <button onclick="goToScreen(2)">Start Booking</button>
-  </div>
+  <div class="container">
 
-  <!-- Screen 2: Destination -->
-  <div class="screen" id="screen2">
-    <h1>Destination</h1>
-    <div class="options">
-      <button onclick="selectCountry('India')">India</button>
-      <button onclick="selectCountry('USA')">USA</button>
-      <button onclick="selectCountry('UK')">UK</button>
-      <button onclick="selectCountry('Japan')">Japan</button>
-      <button onclick="selectCountry('China')">China</button>
-      <button onclick="selectCountry('Africa')">Africa</button>
+    <!-- Step 1: Travel Type -->
+    <div id="step1" class="step active">
+      <h1>VoyageX</h1>
+      <p>Turn miles into smiles!</p>
+      <h2>Choose Travel Type</h2>
+      <div class="options">
+        <button onclick="chooseType('International')">International</button>
+        <button onclick="chooseType('Domestic')">Domestic</button>
+      </div>
     </div>
-  </div>
 
-  <!-- Screen 3: City Selection -->
-  <div class="screen" id="screen3">
-    <h1 id="cityTitle">Select City</h1>
-    <div class="options" id="cityOptions"></div>
-  </div>
+    <!-- Step 2: Booking Form -->
+    <div id="step2" class="step">
+      <h1 id="formTitle">Booking Form</h1>
+      <form>
+        <input type="text" placeholder="Full Name" required>
+        <input type="number" placeholder="Age" required>
+        <input type="number" placeholder="Number of Passengers" required>
+        <input type="tel" placeholder="Contact Number" required>
+        <input type="email" placeholder="Email ID" required>
 
-  <!-- Screen 4: Booking Form -->
-  <div class="screen" id="screen4">
-    <h1>Enter Your Details</h1>
-    <form>
-      <input type="text" placeholder="Full Name" required>
-      <input type="tel" placeholder="Mobile Number" required>
-      <input type="email" placeholder="Email ID" required>
-      <input type="number" placeholder="Number of Customers" required>
-      <input type="number" placeholder="Age" required>
-      <select>
-        <option>Economy</option>
-        <option>Business</option>
-        <option>First Class</option>
-      </select>
-      <input type="text" placeholder="Preferred Flight" required>
-      <label>Departure Date</label>
-      <input type="date" required>
-      <label>Return Date</label>
-      <input type="date" required>
-      <button type="submit">Book Now</button>
-    </form>
+        <select required>
+          <option value="">Select Airline</option>
+          <option>Emirates</option>
+          <option>Singapore Airlines</option>
+          <option>Qatar Airways</option>
+          <option>British Airways</option>
+          <option>Air India</option>
+          <option>Etihad</option>
+          <option>Thai Airways</option>
+        </select>
+
+        <input type="text" placeholder="Price" required>
+        <input type="text" placeholder="Discount (if any)">
+        <input type="number" placeholder="Package Duration (Days)" required>
+
+        <label>Departure Date</label>
+        <input type="date" required>
+        <label>Return Date</label>
+        <input type="date" required>
+
+        <button type="submit">Book Now</button>
+      </form>
+    </div>
+
   </div>
 
   <script src="script.js"></script>
