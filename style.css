@@ -1,123 +1,92 @@
-body {
+/* General layout */
+body, html {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom, #87ceeb, #e0f7ff);
-  overflow: hidden;
-  height: 100vh;
+  height: 100%;
+  width: 100%;
+  background: #87ceeb; /* light blue sky */
+  overflow-y: auto; /* allow scrolling */
+  overflow-x: hidden;
+  position: relative;
 }
 
-.container {
-  position: relative;
-  z-index: 2;
+/* Screens */
+.screen {
+  display: none;
+  min-height: 100vh;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   text-align: center;
   padding: 20px;
 }
+.active { display: flex; }
 
-.step {
-  display: none;
-}
-.step.active {
-  display: block;
-  animation: fadeIn 0.8s;
-}
-
-h1.title {
-  font-size: 50px;
-  color: #004080;
-}
-p.caption {
-  font-size: 20px;
-  margin-bottom: 20px;
-}
-
-button {
-  padding: 10px 20px;
-  margin: 10px;
-  border: none;
-  background: #004080;
-  color: white;
-  font-size: 16px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-button:hover {
-  background: #0066cc;
-}
-
-input, select {
-  display: block;
-  margin: 10px auto;
-  padding: 8px;
-  width: 80%;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.ticket {
-  background: #fff;
-  border-radius: 10px;
-  padding: 20px;
-  margin: 20px auto;
-  width: 80%;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-.ticket h2 {
-  margin-top: 0;
-}
-.row {
-  display: flex;
-  justify-content: space-between;
-  margin: 5px 0;
-}
-.ticket-footer {
-  margin-top: 15px;
-  font-size: 14px;
-  color: #555;
-}
-
-/* Clouds */
-.cloud {
+/* Moving Clouds */
+.clouds::before,
+.clouds::after {
+  content: "";
   position: absolute;
+  top: 50px;
+  width: 200px;
+  height: 100px;
   background: white;
   border-radius: 50%;
   opacity: 0.8;
-  z-index: 1;
+  animation: moveClouds 60s linear infinite;
 }
-.cloud1 { width: 120px; height: 70px; top: 50px; left: 10%; }
-.cloud2 { width: 150px; height: 90px; top: 150px; left: 70%; }
-.cloud3 { width: 100px; height: 60px; top: 300px; left: 40%; }
-.cloud4 { width: 180px; height: 100px; top: 200px; left: 20%; }
-.cloud5 { width: 130px; height: 80px; top: 400px; left: 60%; }
+.clouds::after {
+  top: 150px;
+  left: 50%;
+  width: 300px;
+  height: 150px;
+  animation-duration: 90s;
+}
 
-/* Scrollable screens */
-#step2, #step3, #step4 {
-  max-height: 90vh;
+@keyframes moveClouds {
+  from { left: -400px; }
+  to { left: 120%; }
+}
+
+/* Typography */
+h1 { font-size: 3rem; margin-bottom: 10px; }
+p { font-size: 1.2rem; }
+
+/* Buttons */
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #003366; /* dark blue */
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* Booking Form */
+.form-container {
+  background: #003366;
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 100%;
   overflow-y: auto;
-  padding-right: 10px;
 }
 
-/* Custom scrollbar */
-#step2::-webkit-scrollbar,
-#step3::-webkit-scrollbar,
-#step4::-webkit-scrollbar {
-  width: 10px;
-}
-#step2::-webkit-scrollbar-track,
-#step3::-webkit-scrollbar-track,
-#step4::-webkit-scrollbar-track {
-  background: #cce6ff;
-  border-radius: 10px;
-}
-#step2::-webkit-scrollbar-thumb,
-#step3::-webkit-scrollbar-thumb,
-#step4::-webkit-scrollbar-thumb {
-  background: #004080;
-  border-radius: 10px;
+label {
+  display: block;
+  margin-top: 10px;
+  text-align: left;
 }
 
-/* Fade animation */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+input, select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 6px;
+  border: none;
 }
