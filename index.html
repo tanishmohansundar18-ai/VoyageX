@@ -16,6 +16,7 @@
       justify-content: center;
       align-items: center;
       position: relative;
+      overflow: hidden;
     }
 
     .container {
@@ -25,14 +26,16 @@
       border-radius: 15px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       width: 90%;
-      max-width: 400px;
+      max-width: 420px;
+      position: relative;
+      z-index: 2;
     }
 
     .step { display: none; }
     .step.active { display: block; }
 
     h1 { font-size: 2.3em; color: #003366; }
-    h2 { font-size: 1.5em; color: #004080; }
+    h2 { font-size: 1.5em; color: #004080; margin-top: 10px; }
     p  { font-size: 1.2em; color: #004080; }
 
     button {
@@ -56,19 +59,41 @@
       margin: 6px 0;
     }
 
-    .plane {
+    /* Clouds */
+    .cloud {
       position: absolute;
-      top: 5%;
-      right: 10%;
-      width: 150px;
-      z-index: 5;
+      background: white;
+      border-radius: 50%;
+      box-shadow:
+        30px 15px 0 10px white,
+        60px 15px 0 5px white;
+      width: 80px;
+      height: 50px;
+      opacity: 0.8;
+      z-index: 1;
+    }
+
+    .cloud1 { top: 10%; left: 10%; animation: drift1 60s linear infinite; }
+    .cloud2 { top: 20%; right: 15%; animation: drift2 75s linear infinite; }
+
+    /* Animations */
+    @keyframes drift1 {
+      0%   { transform: translateX(0); }
+      50%  { transform: translateX(100px); }
+      100% { transform: translateX(0); }
+    }
+    @keyframes drift2 {
+      0%   { transform: translateX(0); }
+      50%  { transform: translateX(-120px); }
+      100% { transform: translateX(0); }
     }
   </style>
 </head>
 <body>
 
-  <img src="https://upload.wikimedia.org/wikipedia/commons/8/8b/Airplane_silhouette.svg" 
-       class="plane" alt="plane">
+  <!-- Clouds -->
+  <div class="cloud cloud1"></div>
+  <div class="cloud cloud2"></div>
 
   <div class="container">
 
@@ -84,10 +109,11 @@
     <!-- STEP 2 -->
     <div id="step2" class="step">
       <h1 id="formTitle">Booking Form</h1>
-      <form>
+      <p id="formCaption"></p>
+      <form id="bookingForm">
         <input type="text" placeholder="Full Name" required>
         <input type="number" placeholder="Age" required>
-        <input type="number" placeholder="Number of Passengers" required>
+        <input type="number" id="passengers" placeholder="Number of Passengers" required>
         <input type="tel" placeholder="Contact Number" required>
         <input type="email" placeholder="Email ID" required>
 
@@ -105,48 +131,75 @@
           <option>Etihad</option>
         </select>
 
-        <input type="text" placeholder="Price" required>
-        <input type="text" placeholder="Discount (if any)">
-        <input type="number" placeholder="Package Duration (Days)" required>
+        <input type="number" id="days" placeholder="Package Duration (Days)" required>
         <label>Departure Date</label>
         <input type="date" required>
         <label>Return Date</label>
         <input type="date" required>
 
+        <!-- Price + Discount shown as readonly -->
+        <input type="text" id="priceField" placeholder="Price" readonly>
+        <input type="text" id="discountField" placeholder="Discount" readonly>
+
         <button type="submit">Book Now</button>
       </form>
+    </div>
+
+    <!-- STEP 3 -->
+    <div id="step3" class="step">
+      <h1>Booking Confirmed 🎉</h1>
+      <p>Your booking has been successfully submitted!</p>
+      <a href="confirmation.html">Go to Confirmation Order</a>
     </div>
 
   </div>
 
   <script>
+    let bookingType = "";
+
     function chooseType(type) {
-      // hide step 1, show step 2
+      bookingType = type;
       document.getElementById("step1").classList.remove("active");
       document.getElementById("step2").classList.add("active");
 
-      // update title
       document.getElementById("formTitle").innerText = type + " Booking Form";
+      document.getElementById("formCaption").innerText =
+        type === "International"
+          ? "Beyond Borders, Beyond Ordinaries"
+          : "Your next adventure starts here";
 
-      // update destinations
       const destinationSelect = document.getElementById("destinationSelect");
       destinationSelect.innerHTML = "<option value=''>Select Destination</option>";
-
-      let destinations = [];
-      if (type === "International") {
-        destinations = ["London","Paris","Switzerland","New York","Sydney","Egypt","Kenya","Singapore","Dubai","Maldives","Japan"];
-      } else {
-        destinations = ["Bangalore","Mumbai","Delhi","Chennai","Hyderabad","Thiruvananthapuram","Kolkata","Srinagar"];
-      }
-
+      let destinations = type === "International"
+        ? ["London","Paris","Switzerland","New York","Sydney","Egypt","Kenya","Singapore","Dubai","Maldives","Japan"]
+        : ["Bangalore","Mumbai","Delhi","Chennai","Hyderabad","Thiruvananthapuram","Kolkata","Srinagar"];
       destinations.forEach(d => {
-        const option = document.createElement("option");
-        option.value = d;
-        option.textContent = d;
-        destinationSelect.appendChild(option);
+        const opt = document.createElement("option");
+        opt.value = d;
+        opt.textContent = d;
+        destinationSelect.appendChild(opt);
       });
     }
-  </script>
 
+    document.getElementById("bookingForm").addEventListener("input", () => {
+      const passengers = parseInt(document.getElementById("passengers").value) || 0;
+      const days = parseInt(document.getElementById("days").value) || 0;
+
+      let rate = bookingType === "International" ? 60000 : 30000;
+      let discount = bookingType === "International" ? 30 : 25;
+
+      let total = passengers * days * rate;
+      let discounted = total - (total * discount / 100);
+
+      document.getElementById("priceField").value = "₹ " + total.toLocaleString();
+      document.getElementById("discountField").value = discount + "% → ₹ " + discounted.toLocaleString();
+    });
+
+    document.getElementById("bookingForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      document.getElementById("step2").classList.remove("active");
+      document.getElementById("step3").classList.add("active");
+    });
+  </script>
 </body>
 </html>
