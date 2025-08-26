@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ticket Booking App</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("YOUR_PUBLIC_KEY"); // replace with your EmailJS Public Key
+    })();
+  </script>
+</head>
+<body>
+  <h1>🌍 International Ticket Booking</h1>
+  <div class="card">
+    <form id="bookingForm" onsubmit="event.preventDefault(); bookTicket();">
+      <input type="text" id="mainName" placeholder="Booking Person's Name" required><br>
+
+      <input type="number" id="numCustomers" placeholder="Number of Customers" min="1" onchange="generateCustomerFields()" required><br>
+
+      <div id="customers"></div>
+
+      <select id="country" onchange="loadCities()" required>
+        <option value="">-- Select Country --</option>
+        <option value="India">India</option>
+        <option value="USA">USA</option>
+        <option value="UK">UK</option>
+        <option value="Japan">Japan</option>
+        <option value="Australia">Australia</option>
+      </select><br>
+
+      <select id="city" required>
+        <option value="">-- Select City --</option>
+      </select><br>
+
+      <input type="number" id="tickets" placeholder="Number of Tickets" required><br>
+      
+      <button type="submit">Book Now</button>
+    </form>
+    
+    <div id="output"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
