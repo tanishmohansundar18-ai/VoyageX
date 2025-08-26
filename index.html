@@ -7,11 +7,8 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Clouds Background -->
-  <div class="cloud cloud1"></div>
-  <div class="cloud cloud2"></div>
-  <div class="cloud cloud3"></div>
-  <div class="cloud cloud4"></div>
+  <!-- Moving Clouds Background -->
+  <div class="clouds"></div>
 
   <!-- Screen 1: Home -->
   <div id="home" class="screen active">
@@ -29,7 +26,6 @@
     <div class="form-container">
       <form id="bookingForm">
         <p id="tripType"></p>
-
         <label>Name:</label>
         <input type="text" id="name" required>
 
@@ -65,15 +61,15 @@
 
   <!-- Screen 3: Confirmation -->
   <div id="confirmation" class="screen">
-    <h2 id="confirmationCaption"></h2>
+    <h1 id="confirmationCaption"></h1>
     <div id="confirmationDetails"></div>
-    <button onclick="showScreen('congrats')">Next</button>
+    <button id="btnCongrats">Confirm</button>
   </div>
 
-  <!-- Screen 4: Congratulations -->
-  <div id="congrats" class="screen">
-    <h1>🎉 Congratulations 🎉</h1>
-    <p>Your booking is confirmed!</p>
+  <!-- Screen 4: Final Congrats -->
+  <div id="final" class="screen">
+    <h1>🎉 Congratulations!</h1>
+    <p>Your booking is confirmed 🎟️✈️</p>
   </div>
 
   <script src="script.js"></script>
