@@ -17,11 +17,11 @@
   <section id="step1" class="step active">
     <h1>VoyageX</h1>
     <p>Turn miles into smiles!</p>
-    <button onclick="chooseType('international')">International</button>
-    <button onclick="chooseType('domestic')">Domestic</button>
+    <button id="btnInternational">International</button>
+    <button id="btnDomestic">Domestic</button>
   </section>
 
-  <!-- Step 2 (Form) -->
+  <!-- Step 2 -->
   <section id="step2" class="step">
     <h2 id="formTitle"></h2>
     <form id="bookingForm">
@@ -47,14 +47,14 @@
     </form>
   </section>
 
-  <!-- Step 3 (Confirmation) -->
+  <!-- Step 3 -->
   <section id="step3" class="step">
     <h2>Confirm Your Booking</h2>
     <div id="confirmationDetails"></div>
-    <button onclick="finalizeBooking()">Confirm Booking</button>
+    <button id="btnConfirm">Confirm Booking</button>
   </section>
 
-  <!-- Step 4 (Ticket) -->
+  <!-- Step 4 -->
   <section id="step4" class="step">
     <h2 id="caption"></h2>
     <div class="ticket">
