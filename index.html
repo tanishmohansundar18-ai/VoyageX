@@ -130,6 +130,11 @@
         <input type="tel" placeholder="Contact Number" required>
         <input type="email" placeholder="Email ID" required>
 
+        <!-- Destination dropdown -->
+        <select id="destinationSelect" required>
+          <option value="">Select Destination</option>
+        </select>
+
         <select required>
           <option value="">Select Airline</option>
           <option>Emirates</option>
@@ -158,9 +163,28 @@
 
   <script>
     function chooseType(type) {
+      // Hide first screen, show form
       document.getElementById('step1').classList.remove('active');
       document.getElementById('step2').classList.add('active');
       document.getElementById("formTitle").innerText = type + " Booking Form";
+
+      // Fill destinations based on choice
+      const destinationSelect = document.getElementById("destinationSelect");
+      destinationSelect.innerHTML = "<option value=''>Select Destination</option>"; // reset first
+
+      let destinations = [];
+      if (type === "International") {
+        destinations = ["London", "Paris", "Switzerland", "New York", "Sydney", "Egypt", "Kenya", "Singapore", "Dubai", "Maldives", "Japan"];
+      } else {
+        destinations = ["Bangalore", "Mumbai", "Delhi", "Chennai", "Hyderabad", "Thiruvananthapuram", "Kolkata", "Srinagar"];
+      }
+
+      destinations.forEach(d => {
+        const option = document.createElement("option");
+        option.value = d;
+        option.textContent = d;
+        destinationSelect.appendChild(option);
+      });
     }
   </script>
 
