@@ -22,16 +22,64 @@
       <label>Main Booker</label>
       <input type="text" id="mainName" placeholder="Your Name" required>
 
+      <label>Address</label>
+      <input type="text" id="address" placeholder="Your Address" required>
+
       <label>Number of Customers</label>
       <input type="number" id="numCustomers" placeholder="Number of Customers" min="1" onchange="generateCustomerFields()" required>
 
       <div id="customers"></div>
 
-      <!-- Single Destination Dropdown -->
       <label>Choose Destination</label>
       <select id="destination" required>
         <option value="" disabled selected style="color:black;">-- Select Destination --</option>
         <option value="Australia">Australia</option>
         <option value="Paris">Paris, France</option>
         <option value="London">London, UK</option>
-        <option
+        <option value="India">India</option>
+        <option value="New York">New York, USA</option>
+        <option value="Tokyo">Tokyo, Japan</option>
+        <option value="Shanghai">Shanghai, China</option>
+        <option value="Egypt">Egypt</option>
+      </select>
+
+      <label>Package</label>
+      <select id="package" required>
+        <option value="Economy">Economy - ₹1000 / ticket</option>
+        <option value="Premium">Premium - ₹2000 / ticket</option>
+        <option value="Luxury">Luxury - ₹5000 / ticket</option>
+      </select>
+
+      <label>Flight Option</label>
+      <select id="flight" required>
+        <option value="" disabled selected style="color:black;">-- Select Airline --</option>
+        <option value="Emirates">Emirates</option>
+        <option value="Singapore Airlines">Singapore Airlines</option>
+        <option value="Qatar Airways">Qatar Airways</option>
+        <option value="Air India">Air India</option>
+      </select>
+
+      <label>City of Departure</label>
+      <input type="text" id="departureCity" placeholder="City of Departure" required>
+
+      <label>City of Arrival</label>
+      <input type="text" id="arrivalCity" placeholder="City of Arrival" required>
+
+      <label>Date of Departure</label>
+      <input type="date" id="departureDate" required>
+
+      <label>Date of Arrival</label>
+      <input type="date" id="arrivalDate" required>
+
+      <label>Number of Tickets</label>
+      <input type="number" id="tickets" placeholder="Tickets" required>
+      
+      <button type="submit">✅ Book Now</button>
+    </form>
+    
+    <div id="output"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
