@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>VoyageX - Flight Booking</title>
+  <title>VoyageX Booking</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <style>
     body, html {
       margin: 0;
@@ -12,161 +11,187 @@
       height: 100%;
       font-family: Arial, sans-serif;
       background: linear-gradient(to top, #87cefa, #e0f7ff);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
       overflow: hidden;
     }
 
-    .container {
-      text-align: center;
-      background: rgba(255, 255, 255, 0.9);
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      width: 90%;
-      max-width: 500px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .step { display: none; }
-    .step.active { display: block; }
-
-    h1 { font-size: 2em; color: #003366; }
-    h2 { font-size: 1.5em; color: #004080; margin-top: 10px; }
-    p  { font-size: 1.1em; color: #004080; }
-
-    button {
-      padding: 12px 24px;
-      margin: 10px;
-      font-size: 1em;
-      border: none;
-      border-radius: 25px;
-      background-color: #004080;
-      color: white;
-      cursor: pointer;
-    }
-    button:hover { background-color: #0066cc; }
-
-    input, select {
-      padding: 10px;
-      width: 100%;
-      max-width: 300px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      margin: 6px 0;
-    }
-
-    /* Clouds */
     .cloud {
       position: absolute;
       background: white;
       border-radius: 50%;
-      box-shadow:
-        30px 15px 0 10px white,
-        60px 15px 0 5px white;
-      width: 80px;
-      height: 50px;
-      opacity: 0.8;
-      z-index: 1;
+      opacity: 0.9;
+      animation: float 60s linear infinite;
     }
-    .cloud1 { top: 10%; left: 10%; animation: drift1 60s linear infinite; }
-    .cloud2 { top: 20%; right: 15%; animation: drift2 75s linear infinite; }
-    .cloud3 { top: 40%; left: 25%; animation: drift1 70s linear infinite; }
-    .cloud4 { top: 60%; right: 20%; animation: drift2 80s linear infinite; }
-    .cloud5 { top: 75%; left: 5%; animation: drift1 90s linear infinite; }
+    .cloud1 { width: 150px; height: 80px; top: 10%; left: -200px; animation-delay: 0s; }
+    .cloud2 { width: 200px; height: 100px; top: 30%; left: -250px; animation-delay: 15s; }
+    .cloud3 { width: 120px; height: 70px; top: 60%; left: -180px; animation-delay: 30s; }
+    .cloud4 { width: 170px; height: 90px; top: 50%; left: -220px; animation-delay: 45s; }
+    .cloud5 { width: 140px; height: 75px; top: 75%; left: -210px; animation-delay: 60s; }
+    .cloud6 { width: 190px; height: 95px; top: 20%; left: -240px; animation-delay: 75s; }
 
-    @keyframes drift1 {
-      0%   { transform: translateX(0); }
-      50%  { transform: translateX(100px); }
-      100% { transform: translateX(0); }
-    }
-    @keyframes drift2 {
-      0%   { transform: translateX(0); }
-      50%  { transform: translateX(-120px); }
-      100% { transform: translateX(0); }
+    @keyframes float {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(120vw); }
     }
 
-    .details {
+    .container {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .step { display: none; width: 90%; max-width: 500px; text-align: center; }
+    .active { display: block; animation: fadeIn 0.6s; }
+
+    @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+
+    h1 { font-size: 2.5em; color: #004080; margin-bottom: 10px; }
+    h2.caption { font-size: 1.2em; margin-bottom: 20px; color: #333; }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 25px;
+      font-size: 1em;
+      border: none;
+      border-radius: 25px;
+      background: #004080;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover { background: #0066cc; }
+
+    .form-group { margin: 10px 0; text-align: left; }
+    label { display: block; margin-bottom: 5px; font-weight: bold; }
+    input, select {
+      width: 100%; padding: 10px;
+      border-radius: 8px; border: 1px solid #ccc;
+    }
+
+    .ticket {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
       text-align: left;
-      margin: 15px auto;
-      font-size: 1.05em;
-      line-height: 1.5;
-      color: #222;
     }
+    .ticket h2 { text-align: center; margin-bottom: 15px; }
+    .ticket .row { margin: 8px 0; }
+    .ticket-footer { margin-top: 15px; text-align: center; font-style: italic; }
   </style>
 </head>
 <body>
-
   <!-- Clouds -->
   <div class="cloud cloud1"></div>
   <div class="cloud cloud2"></div>
   <div class="cloud cloud3"></div>
   <div class="cloud cloud4"></div>
   <div class="cloud cloud5"></div>
+  <div class="cloud cloud6"></div>
 
   <div class="container">
-
     <!-- STEP 1 -->
     <div id="step1" class="step active">
       <h1>VoyageX</h1>
-      <p>Turn miles into smiles!</p>
-      <h2>Choose Travel Type</h2>
-      <button onclick="chooseType('International')">International</button>
-      <button onclick="chooseType('Domestic')">Domestic</button>
+      <p>"Turn miles into smiles!"</p>
+      <button onclick="chooseType('international')">International</button>
+      <button onclick="chooseType('domestic')">Domestic</button>
     </div>
 
     <!-- STEP 2 -->
     <div id="step2" class="step">
-      <h1 id="formTitle">Booking Form</h1>
-      <p id="formCaption"></p>
+      <h2 id="caption" class="caption"></h2>
+      <h1 id="formTitle"></h1>
       <form id="bookingForm">
-        <input type="text" id="name" placeholder="Full Name" required>
-        <input type="number" id="age" placeholder="Age" required>
-        <input type="number" id="passengers" placeholder="Number of Passengers" required>
-        <input type="tel" id="contact" placeholder="Contact Number" required>
-        <input type="email" id="email" placeholder="Email ID" required>
-
-        <select id="destinationSelect" required>
-          <option value="">Select Destination</option>
-        </select>
-
-        <select id="airline" required>
-          <option value="">Select Airline</option>
-          <option>Emirates</option>
-          <option>Singapore Airlines</option>
-          <option>Qatar Airways</option>
-          <option>British Airways</option>
-          <option>Air India</option>
-          <option>Etihad</option>
-        </select>
-
-        <input type="number" id="days" placeholder="Package Duration (Days)" required>
-        <label>Departure Date</label>
-        <input type="date" id="departure" required>
-        <label>Return Date</label>
-        <input type="date" id="arrival" required>
-
-        <input type="text" id="priceField" placeholder="Price" readonly>
-        <input type="text" id="discountField" placeholder="Discount" readonly>
-
-        <!-- Book Now at end -->
-        <div style="margin-top:20px;">
-          <button type="submit">Book Now</button>
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" id="name" required>
         </div>
+        <div class="form-group">
+          <label>Age</label>
+          <input type="number" id="age" required>
+        </div>
+        <div class="form-group">
+          <label>Number of Passengers</label>
+          <input type="number" id="passengers" required>
+        </div>
+        <div class="form-group">
+          <label>Contact Number</label>
+          <input type="tel" id="contact" required>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="email" required>
+        </div>
+        <div class="form-group">
+          <label>Destination</label>
+          <select id="destinationSelect" required></select>
+        </div>
+        <div class="form-group">
+          <label>Flight</label>
+          <select id="airline" required>
+            <option>Emirates</option>
+            <option>Singapore Airlines</option>
+            <option>Qatar Airways</option>
+            <option>Lufthansa</option>
+            <option>IndiGo</option>
+            <option>Air India</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Package (Days)</label>
+          <input type="number" id="days" required>
+        </div>
+        <div class="form-group">
+          <label>Date of Departure</label>
+          <input type="date" id="departure" required>
+        </div>
+        <div class="form-group">
+          <label>Date of Arrival</label>
+          <input type="date" id="arrival" required>
+        </div>
+        <div class="form-group">
+          <label>Price (auto)</label>
+          <input type="text" id="priceField" readonly>
+        </div>
+        <div class="form-group">
+          <label>Discounted Price</label>
+          <input type="text" id="discountField" readonly>
+        </div>
+        <button type="submit">Book Now</button>
       </form>
     </div>
 
     <!-- STEP 3 -->
     <div id="step3" class="step">
       <h1>🎉 Booking Confirmed!</h1>
-      <p class="success">Your VoyageX journey is ready to take off.</p>
-      <div class="details" id="bookingSummary"></div>
+      <div class="ticket">
+        <h2>VoyageX Boarding Pass</h2>
+        <div class="row"><strong>Name:</strong> <span id="sumName"></span></div>
+        <div class="row"><strong>Age:</strong> <span id="sumAge"></span></div>
+        <div class="row"><strong>Passengers:</strong> <span id="sumPassengers"></span></div>
+        <div class="row"><strong>Contact:</strong> <span id="sumContact"></span></div>
+        <div class="row"><strong>Email:</strong> <span id="sumEmail"></span></div>
+        <div class="row"><strong>Destination:</strong> <span id="sumDestination"></span></div>
+        <div class="row"><strong>Airline:</strong> <span id="sumAirline"></span></div>
+        <div class="row"><strong>Duration:</strong> <span id="sumDays"></span></div>
+        <div class="row"><strong>Departure:</strong> <span id="sumDeparture"></span></div>
+        <div class="row"><strong>Return:</strong> <span id="sumArrival"></span></div>
+        <div class="row"><strong>Total Price:</strong> <span id="sumPrice"></span></div>
+        <div class="row"><strong>Discounted:</strong> <span id="sumDiscount"></span></div>
+
+        <!-- QR Code -->
+        <div style="text-align:center; margin-top:15px;">
+          <img id="qrCode" alt="Booking QR Code" style="width:120px; height:120px;">
+          <br>
+          <a id="downloadQR" href="#" download="voyagex_qrcode.png">Download QR Code</a>
+        </div>
+
+        <div class="ticket-footer">Have a wonderful journey with VoyageX ✈️</div>
+      </div>
       <button onclick="location.reload()">Back to Home</button>
     </div>
-
   </div>
 
   <script>
@@ -177,73 +202,71 @@
       document.getElementById("step1").classList.remove("active");
       document.getElementById("step2").classList.add("active");
 
-      document.getElementById("formTitle").innerText = type + " Booking Form";
-      document.getElementById("formCaption").innerText =
-        type === "International"
-          ? "Beyond Borders, Beyond Ordinaries"
-          : "Your next adventure starts here";
-
-      const destinationSelect = document.getElementById("destinationSelect");
-      destinationSelect.innerHTML = "<option value=''>Select Destination</option>";
-      let destinations = type === "International"
-        ? ["London","Paris","Switzerland","New York","Sydney","Egypt","Kenya","Singapore","Dubai","Maldives","Japan"]
-        : ["Bangalore","Mumbai","Delhi","Chennai","Hyderabad","Thiruvananthapuram","Kolkata","Srinagar"];
-      destinations.forEach(d => {
-        const opt = document.createElement("option");
-        opt.value = d;
-        opt.textContent = d;
-        destinationSelect.appendChild(opt);
-      });
+      if (type === "international") {
+        document.getElementById("formTitle").textContent = "International Booking Form";
+        document.getElementById("caption").textContent = "Beyond Borders, Beyond Ordinaries";
+        document.getElementById("destinationSelect").innerHTML = `
+          <option>London</option><option>Paris</option><option>Switzerland</option>
+          <option>New York</option><option>Sydney</option><option>Egypt</option>
+          <option>Kenya</option><option>Singapore</option><option>Dubai</option>
+          <option>Maldives</option><option>Japan</option>`;
+      } else {
+        document.getElementById("formTitle").textContent = "Domestic Booking Form";
+        document.getElementById("caption").textContent = "Your next adventure starts here";
+        document.getElementById("destinationSelect").innerHTML = `
+          <option>Bangalore</option><option>Mumbai</option><option>Delhi</option>
+          <option>Chennai</option><option>Hyderabad</option><option>Thiruvananthapuram</option>
+          <option>Kolkata</option><option>Srinagar</option>`;
+      }
     }
 
-    document.getElementById("bookingForm").addEventListener("input", () => {
-      const passengers = parseInt(document.getElementById("passengers").value) || 0;
-      const days = parseInt(document.getElementById("days").value) || 0;
+    document.getElementById("days").addEventListener("input", calculatePrice);
+    document.getElementById("passengers").addEventListener("input", calculatePrice);
 
-      let rate = bookingType === "International" ? 60000 : 30000;
-      let discount = bookingType === "International" ? 30 : 25;
+    function calculatePrice() {
+      let days = +document.getElementById("days").value || 0;
+      let passengers = +document.getElementById("passengers").value || 0;
+      let base = bookingType === "international" ? 60000 : 30000;
+      let discount = bookingType === "international" ? 0.3 : 0.25;
+      let total = base * passengers * days;
+      let discounted = total - total * discount;
+      document.getElementById("priceField").value = total + " INR";
+      document.getElementById("discountField").value = discounted + " INR";
+    }
 
-      let total = passengers * days * rate;
-      let discounted = total - (total * discount / 100);
-
-      document.getElementById("priceField").value = "₹ " + total.toLocaleString();
-      document.getElementById("discountField").value = discount + "% → ₹ " + discounted.toLocaleString();
-    });
-
-    document.getElementById("bookingForm").addEventListener("submit", (e) => {
+    document.getElementById("bookingForm").addEventListener("submit", function(e) {
       e.preventDefault();
-
-      const name = document.getElementById("name").value;
-      const age = document.getElementById("age").value;
-      const passengers = document.getElementById("passengers").value;
-      const contact = document.getElementById("contact").value;
-      const email = document.getElementById("email").value;
-      const destination = document.getElementById("destinationSelect").value;
-      const airline = document.getElementById("airline").value;
-      const days = document.getElementById("days").value;
-      const departure = document.getElementById("departure").value;
-      const arrival = document.getElementById("arrival").value;
-      const price = document.getElementById("priceField").value;
-      const discount = document.getElementById("discountField").value;
-
-      const summary = `
-        <strong>Name:</strong> ${name}<br>
-        <strong>Age:</strong> ${age}<br>
-        <strong>Passengers:</strong> ${passengers}<br>
-        <strong>Contact:</strong> ${contact}<br>
-        <strong>Email:</strong> ${email}<br>
-        <strong>Destination:</strong> ${destination}<br>
-        <strong>Airline:</strong> ${airline}<br>
-        <strong>Duration:</strong> ${days} days<br>
-        <strong>Departure:</strong> ${departure}<br>
-        <strong>Return:</strong> ${arrival}<br>
-        <strong>Total Price:</strong> ${price}<br>
-        <strong>Discounted Price:</strong> ${discount}
-      `;
-      document.getElementById("bookingSummary").innerHTML = summary;
-
       document.getElementById("step2").classList.remove("active");
       document.getElementById("step3").classList.add("active");
+
+      // Fill summary
+      document.getElementById("sumName").textContent = document.getElementById("name").value;
+      document.getElementById("sumAge").textContent = document.getElementById("age").value;
+      document.getElementById("sumPassengers").textContent = document.getElementById("passengers").value;
+      document.getElementById("sumContact").textContent = document.getElementById("contact").value;
+      document.getElementById("sumEmail").textContent = document.getElementById("email").value;
+      document.getElementById("sumDestination").textContent = document.getElementById("destinationSelect").value;
+      document.getElementById("sumAirline").textContent = document.getElementById("airline").value;
+      document.getElementById("sumDays").textContent = document.getElementById("days").value + " days";
+      document.getElementById("sumDeparture").textContent = document.getElementById("departure").value;
+      document.getElementById("sumArrival").textContent = document.getElementById("arrival").value;
+      document.getElementById("sumPrice").textContent = document.getElementById("priceField").value;
+      document.getElementById("sumDiscount").textContent = document.getElementById("discountField").value;
+
+      // QR Code
+      let qrData = `
+Name: ${document.getElementById("name").value}
+Destination: ${document.getElementById("destinationSelect").value}
+Departure: ${document.getElementById("departure").value}
+Return: ${document.getElementById("arrival").value}
+Airline: ${document.getElementById("airline").value}
+Passengers: ${document.getElementById("passengers").value}
+Total: ${document.getElementById("priceField").value}
+Discounted: ${document.getElementById("discountField").value}
+      `;
+      let qrURL = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + encodeURIComponent(qrData);
+      document.getElementById("qrCode").src = qrURL;
+      document.getElementById("downloadQR").href = qrURL;
     });
   </script>
 </body>
