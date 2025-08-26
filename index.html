@@ -1,43 +1,22 @@
-const cityData = {
-  "India": ["Delhi", "Mumbai", "Bangalore", "Chennai"],
-  "USA": ["New York", "Los Angeles", "Chicago", "Miami"],
-  "UK": ["London", "Manchester", "Liverpool", "Bristol"],
-  "Japan": ["Tokyo", "Osaka", "Kyoto", "Hiroshima"],
-  "Australia": ["Sydney", "Melbourne", "Brisbane", "Perth"]
-};
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>VoyageX - Ticket Booking</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("YOUR_PUBLIC_KEY"); // replace with EmailJS public key
+    })();
+  </script>
+</head>
+<body>
+  <div class="logo">🌎 VoyageX</div>
 
-function loadCities() {
-  const country = document.getElementById("country").value;
-  const citySelect = document.getElementById("city");
+  <h1>Book Your Dream Trip ✈️</h1>
 
-  // Clear previous options
-  citySelect.innerHTML = '<option value="">-- Select City --</option>';
-
-  if (country && cityData[country]) {
-    cityData[country].forEach(city => {
-      const option = document.createElement("option");
-      option.value = city;
-      option.textContent = city;
-      citySelect.appendChild(option);
-    });
-  }
-}
-
-// Optional: Dynamically generate customer fields
-function generateCustomerFields() {
-  const num = document.getElementById("numCustomers").value;
-  const container = document.getElementById("customers");
-  container.innerHTML = ""; // Clear previous fields
-
-  for (let i = 1; i <= num; i++) {
-    container.innerHTML += `
-      <label>Customer ${i} Name:</label>
-      <input type="text" name="customer${i}" placeholder="Customer ${i} Name" required>
+  <div class="card">
+    <form id="bookingForm" onsubmit="event.preventDefault(); bookTicket();">
       
-      <label>Customer ${i} Phone:</label>
-      <input type="tel" name="phone${i}" placeholder="Phone Number" required>
-    `;
-  }
-}
-
-
+      <label>Main Booker</label>
