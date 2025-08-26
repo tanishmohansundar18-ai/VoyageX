@@ -2,23 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>VoyageX - Ticket Booking</title>
+  <title>VoyageX - Interactive Travel</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser/dist/email.min.js"></script>
   <script>
-    (function(){
-      emailjs.init("YOUR_PUBLIC_KEY"); // replace with EmailJS public key
-    })();
+    emailjs.init("KmPZnkRBE9Hqvjfev"); // Your public key
   </script>
 </head>
 <body>
-  <div class="logo">🌎 VoyageX</div>
 
-  <h1>Turn miles into smiles! ✈️</h1>
+  <!-- Landing Page -->
+  <div id="landingPage" class="screen">
+    <h1>Turn Miles Into Smiles!</h1>
+    <div class="cube-container">
+      <div class="country-cube" data-country="UK">UK</div>
+      <div class="country-cube" data-country="USA">USA</div>
+      <div class="country-cube" data-country="India">India</div>
+      <div class="country-cube" data-country="Australia">Australia</div>
+      <div class="country-cube" data-country="Japan">Japan</div>
+      <div class="country-cube" data-country="Africa">Africa</div>
+    </div>
+  </div>
 
-  <div class="card">
+  <!-- Packages Page -->
+  <div id="packagesPage" class="screen" style="display:none;">
+    <button onclick="goBack()">← Back</button>
+    <h2 id="countryTitle"></h2>
+    <div id="packagesContainer" class="package-container"></div>
+  </div>
+
+  <!-- Booking Form Page -->
+  <div id="bookingPage" class="screen" style="display:none;">
+    <button onclick="goBackToPackages()">← Back</button>
+    <h2>Complete Your Booking</h2>
     <form id="bookingForm" onsubmit="event.preventDefault(); bookTicket();">
-      
+
       <label>Main Booker</label>
       <input type="text" id="mainName" placeholder="Your Name" required>
 
@@ -27,32 +45,14 @@
 
       <label>Number of Customers</label>
       <input type="number" id="numCustomers" placeholder="Number of Customers" min="1" onchange="generateCustomerFields()" required>
-
       <div id="customers"></div>
 
-      <label>Choose Destination</label>
-      <select id="destination" required>
-        <option value="" disabled selected style="color:black;">-- Select Destination --</option>
-        <option value="Australia">Australia</option>
-        <option value="Paris">Paris, France</option>
-        <option value="London">London, UK</option>
-        <option value="India">India</option>
-        <option value="New York">New York, USA</option>
-        <option value="Tokyo">Tokyo, Japan</option>
-        <option value="Shanghai">Shanghai, China</option>
-        <option value="Egypt">Egypt</option>
-      </select>
-
       <label>Package</label>
-      <select id="package" required>
-        <option value="Economy">Economy - ₹1000 / ticket</option>
-        <option value="Premium">Premium - ₹2000 / ticket</option>
-        <option value="Luxury">Luxury - ₹5000 / ticket</option>
-      </select>
+      <input type="text" id="package" readonly>
 
       <label>Flight Option</label>
       <select id="flight" required>
-        <option value="" disabled selected style="color:black;">-- Select Airline --</option>
+        <option value="" disabled selected>-- Select Airline --</option>
         <option value="Emirates">Emirates</option>
         <option value="Singapore Airlines">Singapore Airlines</option>
         <option value="Qatar Airways">Qatar Airways</option>
@@ -62,21 +62,17 @@
       <label>City of Departure</label>
       <input type="text" id="departureCity" placeholder="City of Departure" required>
 
-      <label>City of Arrival</label>
-      <input type="text" id="arrivalCity" placeholder="City of Arrival" required>
-
-      <label>Date of Departure</label>
+      <label>Departure Date</label>
       <input type="date" id="departureDate" required>
 
-      <label>Date of Arrival</label>
+      <label>Arrival Date</label>
       <input type="date" id="arrivalDate" required>
 
       <label>Number of Tickets</label>
       <input type="number" id="tickets" placeholder="Tickets" required>
-      
+
       <button type="submit">✅ Book Now</button>
     </form>
-    
     <div id="output"></div>
   </div>
 
