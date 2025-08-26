@@ -7,6 +7,7 @@ function goToScreen(n) {
     current.classList.add('exit-left');
     setTimeout(() => current.classList.remove('exit-left'), 800);
   }
+
   next.classList.add('active');
 }
 
