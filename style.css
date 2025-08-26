@@ -6,7 +6,7 @@ body, html {
   background: linear-gradient(to bottom right, #e6f2ff, #ffffff);
   min-height: 100vh;
   color: #002244;
-  overflow-y: auto; /* enable scrolling */
+  overflow-y: auto;
 }
 
 /* Screen container */
@@ -17,6 +17,7 @@ body, html {
   flex-direction: column;
   min-height: 100vh;
   padding: 2rem;
+  text-align: center;
 }
 
 .active {
@@ -35,6 +36,11 @@ h2 {
   font-weight: 400;
   margin-bottom: 2rem;
   color: #004488;
+}
+
+.tagline {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
 }
 
 /* Buttons */
@@ -141,12 +147,12 @@ input, select {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #002244; /* Dark Blue */
+  background: #002244;
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #004488; /* Lighter on hover */
+  background: #004488;
 }
 
 /* Firefox support */
