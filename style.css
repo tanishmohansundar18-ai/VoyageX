@@ -14,22 +14,11 @@ body {
   padding: 20px;
 }
 
-.step {
-  display: none;
-}
-.step.active {
-  display: block;
-  animation: fadeIn 0.8s;
-}
+.step { display: none; }
+.step.active { display: block; animation: fadeIn 0.8s; }
 
-h1.title {
-  font-size: 50px;
-  color: #004080;
-}
-p.caption {
-  font-size: 20px;
-  margin-bottom: 20px;
-}
+h1.title { font-size: 50px; color: #004080; }
+p.caption { font-size: 20px; margin-bottom: 20px; }
 
 button {
   padding: 10px 20px;
@@ -41,9 +30,7 @@ button {
   border-radius: 8px;
   cursor: pointer;
 }
-button:hover {
-  background: #0066cc;
-}
+button:hover { background: #0066cc; }
 
 input, select {
   display: block;
@@ -62,9 +49,6 @@ input, select {
   width: 80%;
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
-.ticket h2 {
-  margin-top: 0;
-}
 .row {
   display: flex;
   justify-content: space-between;
@@ -76,28 +60,32 @@ input, select {
   color: #555;
 }
 
-/* Clouds */
+/* Clouds animation */
 .cloud {
   position: absolute;
   background: white;
   border-radius: 50%;
   opacity: 0.8;
   z-index: 1;
+  animation: float linear infinite;
 }
-.cloud1 { width: 120px; height: 70px; top: 50px; left: 10%; }
-.cloud2 { width: 150px; height: 90px; top: 150px; left: 70%; }
-.cloud3 { width: 100px; height: 60px; top: 300px; left: 40%; }
-.cloud4 { width: 180px; height: 100px; top: 200px; left: 20%; }
-.cloud5 { width: 130px; height: 80px; top: 400px; left: 60%; }
+.cloud1 { width: 120px; height: 70px; top: 50px; left: -200px; animation-duration: 50s; }
+.cloud2 { width: 150px; height: 90px; top: 150px; left: -250px; animation-duration: 60s; }
+.cloud3 { width: 100px; height: 60px; top: 300px; left: -150px; animation-duration: 40s; }
+.cloud4 { width: 180px; height: 100px; top: 200px; left: -280px; animation-duration: 70s; }
+.cloud5 { width: 130px; height: 80px; top: 400px; left: -200px; animation-duration: 55s; }
 
-/* Scrollable screens */
+@keyframes float {
+  from { transform: translateX(0); }
+  to { transform: translateX(120vw); }
+}
+
+/* Scrollbars for long forms/tickets */
 #step2, #step3, #step4 {
   max-height: 90vh;
   overflow-y: auto;
   padding-right: 10px;
 }
-
-/* Custom scrollbar */
 #step2::-webkit-scrollbar,
 #step3::-webkit-scrollbar,
 #step4::-webkit-scrollbar {
