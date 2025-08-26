@@ -4,7 +4,103 @@
   <meta charset="UTF-8">
   <title>VoyageX - Flight Booking</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to top, #87cefa, #e0f7ff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .step {
+      display: none;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+    .step.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    h1 {
+      font-size: 2.3em;
+      color: #003366;
+    }
+    h2 {
+      font-size: 1.5em;
+      color: #004080;
+    }
+    p {
+      font-size: 1.2em;
+      color: #004080;
+    }
+
+    button {
+      padding: 12px 24px;
+      margin: 10px;
+      font-size: 1em;
+      border: none;
+      border-radius: 25px;
+      background-color: #004080;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #0066cc;
+    }
+
+    .options {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+    .options button {
+      background: #0099ff;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+    }
+    input, select {
+      padding: 10px;
+      width: 100%;
+      max-width: 300px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .plane {
+      position: absolute;
+      top: 5%;
+      right: 10%;
+      width: 150px;
+      z-index: 5;
+    }
+  </style>
 </head>
 <body>
 
@@ -60,17 +156,13 @@
 
   </div>
 
-  <!-- script must be at the bottom -->
-  <script src="script.js"></script>
+  <script>
+    function chooseType(type) {
+      document.getElementById('step1').classList.remove('active');
+      document.getElementById('step2').classList.add('active');
+      document.getElementById("formTitle").innerText = type + " Booking Form";
+    }
+  </script>
+
 </body>
 </html>
-function chooseType(type) {
-  // Hide all steps
-  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-
-  // Show booking form
-  document.getElementById('step2').classList.add('active');
-
-  // Change title according to choice
-  document.getElementById("formTitle").innerText = type + " Booking Form";
-}
