@@ -74,6 +74,9 @@
     }
     .cloud1 { top: 10%; left: 10%; animation: drift1 60s linear infinite; }
     .cloud2 { top: 20%; right: 15%; animation: drift2 75s linear infinite; }
+    .cloud3 { top: 40%; left: 25%; animation: drift1 70s linear infinite; }
+    .cloud4 { top: 60%; right: 20%; animation: drift2 80s linear infinite; }
+    .cloud5 { top: 75%; left: 5%; animation: drift1 90s linear infinite; }
 
     @keyframes drift1 {
       0%   { transform: translateX(0); }
@@ -100,6 +103,9 @@
   <!-- Clouds -->
   <div class="cloud cloud1"></div>
   <div class="cloud cloud2"></div>
+  <div class="cloud cloud3"></div>
+  <div class="cloud cloud4"></div>
+  <div class="cloud cloud5"></div>
 
   <div class="container">
 
@@ -146,7 +152,10 @@
         <input type="text" id="priceField" placeholder="Price" readonly>
         <input type="text" id="discountField" placeholder="Discount" readonly>
 
-        <button type="submit">Book Now</button>
+        <!-- Book Now at end -->
+        <div style="margin-top:20px;">
+          <button type="submit">Book Now</button>
+        </div>
       </form>
     </div>
 
@@ -204,7 +213,6 @@
     document.getElementById("bookingForm").addEventListener("submit", (e) => {
       e.preventDefault();
 
-      // Gather all details
       const name = document.getElementById("name").value;
       const age = document.getElementById("age").value;
       const passengers = document.getElementById("passengers").value;
@@ -218,7 +226,6 @@
       const price = document.getElementById("priceField").value;
       const discount = document.getElementById("discountField").value;
 
-      // Create booking summary
       const summary = `
         <strong>Name:</strong> ${name}<br>
         <strong>Age:</strong> ${age}<br>
@@ -233,10 +240,8 @@
         <strong>Total Price:</strong> ${price}<br>
         <strong>Discounted Price:</strong> ${discount}
       `;
-
       document.getElementById("bookingSummary").innerHTML = summary;
 
-      // Switch to confirmation screen
       document.getElementById("step2").classList.remove("active");
       document.getElementById("step3").classList.add("active");
     });
