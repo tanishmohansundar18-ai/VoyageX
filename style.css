@@ -1,89 +1,117 @@
-/* General layout */
 body, html {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
   height: 100%;
   width: 100%;
-  background: #87ceeb; /* light blue sky */
-  overflow-y: auto;
+  background: #87ceeb; /* sky blue */
   overflow-x: hidden;
-  position: relative;
-  text-align: center;
+  overflow-y: auto;
 }
 
-/* Screens */
+/* Dark blue scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #cce6ff;
+}
+::-webkit-scrollbar-thumb {
+  background: darkblue;
+  border-radius: 5px;
+}
+
 .screen {
   display: none;
-  padding: 20px;
   min-height: 100vh;
-  box-sizing: border-box;
+  padding: 20px;
+  text-align: center;
+  position: relative;
 }
-
-.screen.active {
+.active {
   display: block;
 }
 
-/* Clouds Background */
-.clouds::before,
-.clouds::after {
-  content: "";
+h1 {
+  font-size: 3rem;
+  margin-top: 60px;
+  color: darkblue;
+}
+p {
+  font-size: 1.2rem;
+}
+button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  background: darkblue;
+  color: white;
+  transition: 0.3s;
+}
+button:hover {
+  background: navy;
+}
+
+.form-group {
+  margin: 10px 0;
+}
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+input, select {
+  padding: 8px;
+  width: 250px;
+}
+
+/* Clouds */
+.cloud {
   position: absolute;
-  top: 50px;
-  width: 200px;
-  height: 100px;
   background: white;
   border-radius: 50%;
   opacity: 0.8;
   animation: moveClouds 60s linear infinite;
 }
-
-.clouds::after {
-  top: 150px;
-  left: 50%;
-  width: 300px;
-  height: 150px;
-  animation-duration: 90s;
+.cloud1 {
+  width: 120px; height: 60px; top: 80px; left: -150px;
+  animation-duration: 50s;
 }
-
+.cloud2 {
+  width: 180px; height: 90px; top: 200px; left: -200px;
+  animation-duration: 70s;
+}
+.cloud3 {
+  width: 100px; height: 50px; top: 350px; left: -120px;
+  animation-duration: 60s;
+}
 @keyframes moveClouds {
-  from { left: -400px; }
-  to { left: 120%; }
+  from { transform: translateX(-200px); }
+  to { transform: translateX(120vw); }
 }
 
-/* Form Styles */
-.form-container {
-  background: #002244; /* dark blue form background */
-  color: white;
+/* Boarding Pass */
+.boarding-pass {
+  margin: 20px auto;
   padding: 20px;
-  border-radius: 10px;
-  max-width: 500px;
-  margin: auto;
+  max-width: 400px;
+  border: 2px dashed darkblue;
+  border-radius: 15px;
+  background: #fff;
   text-align: left;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
-
-label {
-  display: block;
-  margin-top: 10px;
+.boarding-pass h2 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: darkblue;
 }
-
-input, select {
-  width: 100%;
-  padding: 8px;
-  margin-top: 5px;
+.boarding-pass p {
+  margin: 6px 0;
 }
-
-button {
+.qr {
+  text-align: center;
   margin-top: 15px;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  background: #ff9800;
-  color: white;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #e68900;
 }
