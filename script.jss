@@ -29,8 +29,8 @@ function generateCustomerFields() {
 
   for (let i = 1; i <= num; i++) {
     container.innerHTML += `
-      <input type="text" id="custName${i}" placeholder="Customer ${i} Name" required><br>
-      <input type="text" id="custPhone${i}" placeholder="Customer ${i} Phone" required><br>
+      <input type="text" id="custName${i}" placeholder="Customer ${i} Name" required>
+      <input type="text" id="custPhone${i}" placeholder="Customer ${i} Phone" required>
     `;
   }
 }
@@ -41,6 +41,7 @@ function bookTicket() {
   let country = document.getElementById("country").value;
   let city = document.getElementById("city").value;
   let tickets = parseInt(document.getElementById("tickets").value);
+  let pkg = document.getElementById("package").value;
 
   if (!mainName || !numCustomers || !country || !city || tickets <= 0) {
     document.getElementById("output").innerHTML = "⚠️ Please fill all fields correctly.";
@@ -54,17 +55,20 @@ function bookTicket() {
     customerDetails += `👤 ${cname} 📞 ${cphone}<br>`;
   }
 
-  let price = 1000; // flat rate
+  let price = (pkg === "Economy") ? 1000 : (pkg === "Premium") ? 2000 : 5000;
   let total = tickets * price;
 
   let bookingDetails = `
-    ✅ Booking Confirmed!<br>
-    Booker: ${mainName}<br>
-    Country: ${country}<br>
-    City: ${city}<br>
-    Tickets: ${tickets}<br>
-    Total Price: ₹${total}<br><br>
-    <b>Customer Details:</b><br>${customerDetails}
+    <div class="ticket">
+      🎟️ <b>VoyageX Booking Confirmation</b><br><br>
+      Booker: ${mainName}<br>
+      Country: ${country}<br>
+      City: ${city}<br>
+      Package: ${pkg}<br>
+      Tickets: ${tickets}<br>
+      Total Price: ₹${total}<br><br>
+      <b>Customer Details:</b><br>${customerDetails}
+    </div>
   `;
 
   document.getElementById("output").innerHTML = bookingDetails;
@@ -75,6 +79,7 @@ function bookTicket() {
     from_name: mainName,
     country: country,
     city: city,
+    package: pkg,
     tickets: tickets,
     total: total,
     customers: customerDetails
@@ -85,3 +90,4 @@ function bookTicket() {
     alert("❌ Failed to send email: " + JSON.stringify(error));
   });
 }
+
