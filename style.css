@@ -1,117 +1,95 @@
-body, html {
+/* General styles */
+body {
   margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  height: 100%;
-  width: 100%;
-  background: #87ceeb; /* sky blue */
-  overflow-x: hidden;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(to bottom right, #003366, #4da6ff);
+  color: white;
+  text-align: center;
+  height: 100vh;
   overflow-y: auto;
-}
-
-/* Dark blue scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-}
-::-webkit-scrollbar-track {
-  background: #cce6ff;
-}
-::-webkit-scrollbar-thumb {
-  background: darkblue;
-  border-radius: 5px;
 }
 
 .screen {
   display: none;
-  min-height: 100vh;
   padding: 20px;
-  text-align: center;
-  position: relative;
 }
-.active {
+
+.screen.active {
   display: block;
 }
 
-h1 {
+.title {
   font-size: 3rem;
-  margin-top: 60px;
-  color: darkblue;
+  margin-top: 15%;
 }
-p {
+
+.subtitle {
   font-size: 1.2rem;
+  margin-bottom: 30px;
 }
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
 button {
-  margin: 10px;
-  padding: 10px 20px;
-  font-size: 1rem;
-  cursor: pointer;
-  border: none;
-  border-radius: 8px;
-  background: darkblue;
-  color: white;
-  transition: 0.3s;
-}
-button:hover {
-  background: navy;
-}
-
-.form-group {
-  margin: 10px 0;
-}
-label {
-  display: block;
-  margin-bottom: 5px;
-}
-input, select {
-  padding: 8px;
-  width: 250px;
-}
-
-/* Clouds */
-.cloud {
-  position: absolute;
   background: white;
-  border-radius: 50%;
-  opacity: 0.8;
-  animation: moveClouds 60s linear infinite;
-}
-.cloud1 {
-  width: 120px; height: 60px; top: 80px; left: -150px;
-  animation-duration: 50s;
-}
-.cloud2 {
-  width: 180px; height: 90px; top: 200px; left: -200px;
-  animation-duration: 70s;
-}
-.cloud3 {
-  width: 100px; height: 50px; top: 350px; left: -120px;
-  animation-duration: 60s;
-}
-@keyframes moveClouds {
-  from { transform: translateX(-200px); }
-  to { transform: translateX(120vw); }
+  color: #003366;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-/* Boarding Pass */
-.boarding-pass {
-  margin: 20px auto;
+button:hover {
+  background: #4da6ff;
+  color: white;
+}
+
+/* Form card */
+.form-card {
+  background: rgba(255, 255, 255, 0.15);
   padding: 20px;
+  margin: auto;
   max-width: 400px;
-  border: 2px dashed darkblue;
   border-radius: 15px;
-  background: #fff;
+  backdrop-filter: blur(10px);
   text-align: left;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
-.boarding-pass h2 {
-  text-align: center;
+
+.form-card label {
+  display: block;
   margin-bottom: 10px;
-  color: darkblue;
+  font-weight: bold;
 }
-.boarding-pass p {
-  margin: 6px 0;
+
+.form-card input, 
+.form-card select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  margin-top: 5px;
 }
-.qr {
-  text-align: center;
-  margin-top: 15px;
+
+/* Boarding pass */
+.boarding-card {
+  background: white;
+  color: #003366;
+  margin: auto;
+  max-width: 400px;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: left;
+}
+
+#qrcode {
+  margin-top: 20px;
+  width: 100px;
+  height: 100px;
 }
