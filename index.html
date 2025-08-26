@@ -2,81 +2,76 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VoyageX</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Clouds -->
-  <div class="cloud"></div>
-  <div class="cloud"></div>
-  <div class="cloud"></div>
-  <div class="cloud"></div>
-  <div class="cloud"></div>
+  <!-- Moving Clouds Background -->
+  <div class="clouds"></div>
 
-  <!-- Step 1 -->
-  <section id="step1" class="step active">
+  <!-- Screen 1: Home -->
+  <div id="home" class="screen active">
     <h1>VoyageX</h1>
     <p>Turn miles into smiles!</p>
-    <button id="btnInternational">International</button>
-    <button id="btnDomestic">Domestic</button>
-  </section>
-
-  <!-- Step 2 -->
-  <section id="step2" class="step">
-    <h2 id="formTitle"></h2>
-    <form id="bookingForm">
-      <input type="text" id="name" placeholder="Name" required>
-      <input type="number" id="age" placeholder="Age" required>
-      <input type="number" id="passengers" placeholder="Number of Passengers" required>
-      <input type="text" id="contact" placeholder="Contact Number" required>
-      <input type="email" id="email" placeholder="Email" required>
-      <select id="destinationSelect"></select>
-      <select id="airline">
-        <option>Emirates</option>
-        <option>Singapore Airlines</option>
-        <option>Qatar Airways</option>
-        <option>British Airways</option>
-        <option>Lufthansa</option>
-      </select>
-      <input type="number" id="days" placeholder="Number of Days" required>
-      <input type="date" id="departure" required>
-      <input type="date" id="arrival" required>
-      <input type="text" id="priceField" readonly>
-      <input type="text" id="discountField" readonly>
-      <button type="submit">Book Now</button>
-    </form>
-  </section>
-
-  <!-- ✅ Step 3 (Confirmation Screen) -->
-  <section id="step3" class="step">
-    <h2>Confirm Your Booking</h2>
-    <div id="confirmationDetails"></div>
-    <button id="btnConfirm">Confirm Booking</button>
-  </section>
-
-  <!-- Step 4 -->
-  <section id="step4" class="step">
-    <h2 id="caption"></h2>
-    <div class="ticket">
-      <h3>Booking Confirmation</h3>
-      <p><strong>Name:</strong> <span id="outName"></span></p>
-      <p><strong>Age:</strong> <span id="outAge"></span></p>
-      <p><strong>Passengers:</strong> <span id="outPassengers"></span></p>
-      <p><strong>Contact:</strong> <span id="outContact"></span></p>
-      <p><strong>Email:</strong> <span id="outEmail"></span></p>
-      <p><strong>Destination:</strong> <span id="outDestination"></span></p>
-      <p><strong>Airline:</strong> <span id="outAirline"></span></p>
-      <p><strong>Days:</strong> <span id="outDays"></span></p>
-      <p><strong>Departure:</strong> <span id="outDeparture"></span></p>
-      <p><strong>Arrival:</strong> <span id="outArrival"></span></p>
-      <p><strong>Total Price:</strong> <span id="outPrice"></span></p>
-      <p><strong>Discount:</strong> <span id="outDiscount"></span></p>
-      <p><strong>Final Amount:</strong> <span id="outFinal"></span></p>
-      <img id="qrCode" alt="QR Code">
-      <br>
-      <a id="confirmationLink" href="#" target="_blank">Open Booking Confirmation</a>
+    <div class="options">
+      <button onclick="showDestinations('international')">International</button>
+      <button onclick="showDestinations('domestic')">Domestic</button>
     </div>
-  </section>
+  </div>
+
+  <!-- Screen 2: Booking Form -->
+  <div id="booking" class="screen">
+    <h1>VoyageX</h1>
+    <div class="form-container">
+      <form id="bookingForm">
+        <p id="tripType"></p>
+
+        <label>Name:</label>
+        <input type="text" id="name" required>
+
+        <label>Destination:</label>
+        <select id="destination" required></select>
+
+        <label>Number of Customers:</label>
+        <input type="number" id="customers" min="1" required>
+
+        <label>Age:</label>
+        <input type="number" id="age" required>
+
+        <label>Phone Number:</label>
+        <input type="tel" id="phone" required>
+
+        <label>Email:</label>
+        <input type="email" id="email" required>
+
+        <label>Flight Options:</label>
+        <select id="flight" required></select>
+
+        <label>Date of Departure:</label>
+        <input type="date" id="departure" required>
+
+        <label>Date of Return:</label>
+        <input type="date" id="return" required>
+
+        <p id="price"></p>
+        <button type="submit">Book Now!</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Screen 3: Confirmation -->
+  <div id="confirmation" class="screen">
+    <h2 id="confirmationCaption"></h2>
+    <div id="confirmationDetails"></div>
+    <button onclick="showScreen('congrats')">Next</button>
+  </div>
+
+  <!-- Screen 4: Congratulations -->
+  <div id="congrats" class="screen">
+    <h1>🎉 Congratulations 🎉</h1>
+    <p>Your booking is confirmed!</p>
+  </div>
 
   <script src="script.js"></script>
 </body>
