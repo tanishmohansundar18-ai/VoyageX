@@ -14,9 +14,24 @@
 <body>
   <div class="logo">🌎 VoyageX</div>
 
-  <h1>Book Your Dream Trip ✈️</h1>
+  <h1>Turn miles into smiles! ✈️</h1>
 
   <div class="card">
     <form id="bookingForm" onsubmit="event.preventDefault(); bookTicket();">
       
       <label>Main Booker</label>
+      <input type="text" id="mainName" placeholder="Your Name" required>
+
+      <label>Number of Customers</label>
+      <input type="number" id="numCustomers" placeholder="Number of Customers" min="1" onchange="generateCustomerFields()" required>
+
+      <div id="customers"></div>
+
+      <!-- Single Destination Dropdown -->
+      <label>Choose Destination</label>
+      <select id="destination" required>
+        <option value="" disabled selected style="color:black;">-- Select Destination --</option>
+        <option value="Australia">Australia</option>
+        <option value="Paris">Paris, France</option>
+        <option value="London">London, UK</option>
+        <option
