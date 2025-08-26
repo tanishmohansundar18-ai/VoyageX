@@ -6,7 +6,7 @@ body, html {
   height: 100%;
   width: 100%;
   background: #87ceeb; /* light blue sky */
-  overflow-y: auto; /* allow scrolling */
+  overflow-y: auto; 
   overflow-x: hidden;
   position: relative;
 }
@@ -24,30 +24,25 @@ body, html {
 }
 .active { display: flex; }
 
-/* Moving Clouds */
-.clouds::before,
-.clouds::after {
-  content: "";
+/* Clouds */
+.cloud {
   position: absolute;
-  top: 50px;
-  width: 200px;
-  height: 100px;
   background: white;
   border-radius: 50%;
   opacity: 0.8;
-  animation: moveClouds 60s linear infinite;
 }
-.clouds::after {
-  top: 150px;
-  left: 50%;
-  width: 300px;
-  height: 150px;
-  animation-duration: 90s;
-}
+.cloud1 { width: 120px; height: 60px; top: 50px; animation: move1 60s linear infinite; }
+.cloud2 { width: 200px; height: 100px; top: 150px; animation: move2 80s linear infinite; }
+.cloud3 { width: 160px; height: 80px; top: 250px; animation: move1 100s linear infinite; }
+.cloud4 { width: 220px; height: 110px; top: 350px; animation: move2 120s linear infinite; }
 
-@keyframes moveClouds {
-  from { left: -400px; }
-  to { left: 120%; }
+@keyframes move1 {
+  from { left: -250px; }
+  to { left: 110%; }
+}
+@keyframes move2 {
+  from { right: -250px; }
+  to { right: 110%; }
 }
 
 /* Typography */
@@ -59,7 +54,7 @@ button {
   padding: 10px 20px;
   border: none;
   border-radius: 8px;
-  background: #003366; /* dark blue */
+  background: #003366;
   color: white;
   font-size: 1rem;
   cursor: pointer;
