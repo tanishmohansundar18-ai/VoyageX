@@ -1,14 +1,6 @@
 function goToScreen(n) {
-  const current = document.querySelector('.screen.active');
-  const next = document.getElementById('screen' + n);
-
-  if (current) {
-    current.classList.remove('active');
-    current.classList.add('exit-left');
-    setTimeout(() => current.classList.remove('exit-left'), 800);
-  }
-
-  next.classList.add('active');
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen' + n).classList.add('active');
 }
 
 const cities = {
