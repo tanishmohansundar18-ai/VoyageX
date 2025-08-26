@@ -2,25 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Ticket Booking App</title>
+  <title>VoyageX - Ticket Booking</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script>
     (function(){
-      emailjs.init("YOUR_PUBLIC_KEY"); // replace with your EmailJS Public Key
+      emailjs.init("YOUR_PUBLIC_KEY"); // replace with EmailJS public key
     })();
   </script>
 </head>
 <body>
-  <h1>🌍 International Ticket Booking</h1>
+  <div class="logo">🌎 VoyageX</div>
+
+  <h1>Book Your Dream Trip ✈️</h1>
+
   <div class="card">
     <form id="bookingForm" onsubmit="event.preventDefault(); bookTicket();">
-      <input type="text" id="mainName" placeholder="Booking Person's Name" required><br>
+      
+      <label>Main Booker</label>
+      <input type="text" id="mainName" placeholder="Your Name" required>
 
-      <input type="number" id="numCustomers" placeholder="Number of Customers" min="1" onchange="generateCustomerFields()" required><br>
+      <label>Number of Customers</label>
+      <input type="number" id="numCustomers" placeholder="Number of Customers" min="1" onchange="generateCustomerFields()" required>
 
       <div id="customers"></div>
 
+      <label>Choose Country</label>
       <select id="country" onchange="loadCities()" required>
         <option value="">-- Select Country --</option>
         <option value="India">India</option>
@@ -28,15 +35,24 @@
         <option value="UK">UK</option>
         <option value="Japan">Japan</option>
         <option value="Australia">Australia</option>
-      </select><br>
+      </select>
 
+      <label>Choose City</label>
       <select id="city" required>
         <option value="">-- Select City --</option>
-      </select><br>
+      </select>
 
-      <input type="number" id="tickets" placeholder="Number of Tickets" required><br>
+      <label>Travel Package</label>
+      <select id="package" required>
+        <option value="Economy">Economy - ₹1000 / ticket</option>
+        <option value="Premium">Premium - ₹2000 / ticket</option>
+        <option value="Luxury">Luxury - ₹5000 / ticket</option>
+      </select>
+
+      <label>Number of Tickets</label>
+      <input type="number" id="tickets" placeholder="Tickets" required>
       
-      <button type="submit">Book Now</button>
+      <button type="submit">✅ Book Now</button>
     </form>
     
     <div id="output"></div>
@@ -45,3 +61,4 @@
   <script src="script.js"></script>
 </body>
 </html>
+
