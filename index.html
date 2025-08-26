@@ -1,24 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TripNest</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VoyageX</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <section id="step1" class="step active">
-    <h1>TripNest</h1>
-    <p>Turn miles into smiles!</p>
+  <!-- Clouds -->
+  <div class="cloud cloud1"></div>
+  <div class="cloud cloud2"></div>
+  <div class="cloud cloud3"></div>
+
+  <!-- Screen 1 -->
+  <div id="home" class="screen active">
+    <h1>Choose your dream destination!</h1>
     <button id="btnInternational">International</button>
     <button id="btnDomestic">Domestic</button>
-  </section>
+  </div>
 
-  <section id="step2" class="step">
-    <h2 id="formTitle">Form will show here</h2>
-  </section>
+  <!-- Screen 2 (Booking Form) -->
+  <div id="booking" class="screen">
+    <h1>VoyageX Booking</h1>
+    <p id="tripType"></p>
+    <form id="bookingForm">
+      <div class="form-group">
+        <label>Name:</label>
+        <input type="text" id="name" required>
+      </div>
+      <div class="form-group">
+        <label>Destination:</label>
+        <select id="destination"></select>
+      </div>
+      <div class="form-group">
+        <label>Number of Customers:</label>
+        <input type="number" id="customers" min="1" required>
+      </div>
+      <div class="form-group">
+        <label>Age:</label>
+        <input type="number" id="age" min="1" required>
+      </div>
+      <div class="form-group">
+        <label>Phone:</label>
+        <input type="text" id="phone" required>
+      </div>
+      <div class="form-group">
+        <label>Email:</label>
+        <input type="email" id="email" required>
+      </div>
+      <div class="form-group">
+        <label>Flight:</label>
+        <select id="flight"></select>
+      </div>
+      <div class="form-group">
+        <label>Date of Departure:</label>
+        <input type="date" id="departure" required>
+      </div>
+      <div class="form-group">
+        <label>Date of Return:</label>
+        <input type="date" id="return" required>
+      </div>
+      <button type="submit">Book Now!</button>
+    </form>
+  </div>
 
-  <!-- 👇 script MUST be before closing body -->
+  <!-- Screen 3 (Confirmation) -->
+  <div id="confirmation" class="screen">
+    <h1 id="confirmationCaption"></h1>
+    <div id="confirmationDetails"></div>
+    <button id="btnConfirm">Confirm</button>
+  </div>
+
+  <!-- Screen 4 (Success / Boarding Pass) -->
+  <div id="success" class="screen">
+    <h1>🎉 Congratulations!</h1>
+    <p>Your booking is confirmed.</p>
+    <div class="boarding-pass" id="boardingPass"></div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
