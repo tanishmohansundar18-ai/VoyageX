@@ -49,7 +49,6 @@ function showDestinations(type) {
   document.getElementById('tripType').textContent =
     `Trip Type: ${type.charAt(0).toUpperCase() + type.slice(1)}`;
 
-  // pricing
   if (type === 'international') {
     pricePerDay = 60000;
     discount = 0.35;
@@ -60,6 +59,10 @@ function showDestinations(type) {
 
   showScreen('booking');
 }
+
+// Button event listeners
+document.getElementById('btnInternational').addEventListener('click', () => showDestinations('international'));
+document.getElementById('btnDomestic').addEventListener('click', () => showDestinations('domestic'));
 
 document.getElementById('bookingForm').addEventListener('submit', function(e) {
   e.preventDefault();
