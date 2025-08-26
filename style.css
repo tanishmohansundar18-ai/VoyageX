@@ -1,32 +1,46 @@
 body {
   margin: 0;
+  padding: 0;
   font-family: Arial, sans-serif;
   background: linear-gradient(to bottom, #87ceeb, #e0f7ff);
-  height: 100vh;
   overflow: hidden;
+  height: 100vh;
+}
+
+.container {
+  position: relative;
+  z-index: 2;
   text-align: center;
+  padding: 20px;
 }
 
 .step {
   display: none;
-  padding: 20px;
 }
-
 .step.active {
   display: block;
+  animation: fadeIn 0.8s;
+}
+
+h1.title {
+  font-size: 50px;
+  color: #004080;
+}
+p.caption {
+  font-size: 20px;
+  margin-bottom: 20px;
 }
 
 button {
+  padding: 10px 20px;
   margin: 10px;
-  padding: 12px 24px;
   border: none;
-  border-radius: 8px;
   background: #004080;
   color: white;
   font-size: 16px;
+  border-radius: 8px;
   cursor: pointer;
 }
-
 button:hover {
   background: #0066cc;
 }
@@ -37,69 +51,63 @@ input, select {
   padding: 8px;
   width: 80%;
   border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: 5px;
 }
 
 .ticket {
-  background: white;
-  margin: 20px auto;
-  padding: 20px;
+  background: #fff;
   border-radius: 10px;
-  max-width: 400px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  padding: 20px;
+  margin: 20px auto;
+  width: 80%;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+.ticket h2 {
+  margin-top: 0;
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+}
+.ticket-footer {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #555;
 }
 
 /* Clouds */
 .cloud {
   position: absolute;
-  top: 50px;
-  width: 150px;
-  height: 80px;
-  background: #fff;
+  background: white;
   border-radius: 50%;
   opacity: 0.8;
-  animation: moveClouds 60s linear infinite;
+  z-index: 1;
 }
-.cloud::before,
-.cloud::after {
-  content: '';
-  position: absolute;
-  background: #fff;
-  border-radius: 50%;
-}
-.cloud::before {
-  width: 100px;
-  height: 100px;
-  top: -30px;
-  left: 10px;
-}
-.cloud::after {
-  width: 120px;
-  height: 120px;
-  top: -40px;
-  right: 15px;
-}
-.cloud:nth-child(1) { top: 80px; left: -200px; animation-delay: 0s; }
-.cloud:nth-child(2) { top: 150px; left: -400px; animation-delay: 20s; }
-.cloud:nth-child(3) { top: 200px; left: -600px; animation-delay: 40s; }
-.cloud:nth-child(4) { top: 250px; left: -800px; animation-delay: 10s; }
-.cloud:nth-child(5) { top: 300px; left: -1000px; animation-delay: 30s; }
+.cloud1 { width: 120px; height: 70px; top: 50px; left: 10%; }
+.cloud2 { width: 150px; height: 90px; top: 150px; left: 70%; }
+.cloud3 { width: 100px; height: 60px; top: 300px; left: 40%; }
+.cloud4 { width: 180px; height: 100px; top: 200px; left: 20%; }
+.cloud5 { width: 130px; height: 80px; top: 400px; left: 60%; }
 
-@keyframes moveClouds {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(2000px); }
-}
-
-/* Scrollable steps */
+/* Scrollable screens */
 #step2, #step3, #step4 {
   max-height: 90vh;
   overflow-y: auto;
   padding-right: 10px;
 }
+
+/* Custom scrollbar */
 #step2::-webkit-scrollbar,
 #step3::-webkit-scrollbar,
 #step4::-webkit-scrollbar {
   width: 10px;
+}
+#step2::-webkit-scrollbar-track,
+#step3::-webkit-scrollbar-track,
+#step4::-webkit-scrollbar-track {
+  background: #cce6ff;
+  border-radius: 10px;
 }
 #step2::-webkit-scrollbar-thumb,
 #step3::-webkit-scrollbar-thumb,
@@ -107,8 +115,9 @@ input, select {
   background: #004080;
   border-radius: 10px;
 }
-#step2::-webkit-scrollbar-track,
-#step3::-webkit-scrollbar-track,
-#step4::-webkit-scrollbar-track {
-  background: #cce6ff;
+
+/* Fade animation */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
