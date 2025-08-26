@@ -1,0 +1,89 @@
+/* General layout */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  height: 100%;
+  width: 100%;
+  background: #87ceeb; /* light blue sky */
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  text-align: center;
+}
+
+/* Screens */
+.screen {
+  display: none;
+  padding: 20px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.screen.active {
+  display: block;
+}
+
+/* Clouds Background */
+.clouds::before,
+.clouds::after {
+  content: "";
+  position: absolute;
+  top: 50px;
+  width: 200px;
+  height: 100px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: moveClouds 60s linear infinite;
+}
+
+.clouds::after {
+  top: 150px;
+  left: 50%;
+  width: 300px;
+  height: 150px;
+  animation-duration: 90s;
+}
+
+@keyframes moveClouds {
+  from { left: -400px; }
+  to { left: 120%; }
+}
+
+/* Form Styles */
+.form-container {
+  background: #002244; /* dark blue form background */
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 500px;
+  margin: auto;
+  text-align: left;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+input, select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background: #ff9800;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #e68900;
+}
