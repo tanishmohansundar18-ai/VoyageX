@@ -5,9 +5,6 @@ body, html {
   font-family: Arial, sans-serif;
   overflow: hidden;
   background: linear-gradient(to top, #87cefa, #e0f7ff);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 /* Screens */
@@ -22,7 +19,8 @@ body, html {
   justify-content: center;
   align-items: center;
   text-align: center;
-  transition: all 0.8s ease-in-out;
+  transition: left 0.8s ease-in-out;
+  background: linear-gradient(to top, #87cefa, #e0f7ff);
 }
 .screen.active {
   left: 0;
@@ -88,6 +86,7 @@ input, select {
   top: 20%;
   left: -150px;
   width: 120px;
+  z-index: 10;
   animation: fly 12s linear infinite;
 }
 @keyframes fly {
