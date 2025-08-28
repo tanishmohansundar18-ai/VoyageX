@@ -1,125 +1,149 @@
-/* ===== General Styling ===== */
-body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+/* ===== Global Styles ===== */
+* {
   margin: 0;
   padding: 0;
-  background: #f5f7fa;
-  color: #333;
-  text-align: center;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: #f0f4f8; /* clean light gray-blue */
+  color: #222;
   overflow-y: scroll;
 }
 
-/* Custom Scrollbar */
+/* ===== Scrollbar ===== */
 ::-webkit-scrollbar {
   width: 10px;
 }
+
 ::-webkit-scrollbar-track {
-  background: #001f54;
+  background: #0a1f44; /* dark blue */
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #004aad;
+  background: #4a90e2; /* lighter blue */
   border-radius: 5px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #00337f;
+  background: #357ABD;
 }
 
-header {
-  background: #004aad;
-  color: white;
-  padding: 20px;
-  font-size: 20px;
+/* ===== Screens ===== */
+.screen {
+  display: none;
+  min-height: 100vh;
+  padding: 40px;
+  text-align: center;
 }
 
-section {
-  padding: 30px;
+.active {
+  display: block;
+}
+
+/* ===== Headings ===== */
+h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #0a1f44;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #4a90e2;
 }
 
 /* ===== Buttons ===== */
 button {
-  background: #004aad;
+  background: #4a90e2;
   color: white;
   border: none;
-  padding: 12px 20px;
+  padding: 12px 24px;
   margin: 10px;
+  font-size: 1rem;
   border-radius: 6px;
-  font-size: 16px;
   cursor: pointer;
   transition: 0.3s;
 }
 
 button:hover {
-  background: #00337f;
+  background: #357ABD;
 }
 
-/* ===== Inputs ===== */
-input {
-  display: block;
-  margin: 10px auto;
-  padding: 10px;
-  width: 250px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 14px;
-}
-
-/* ===== Boarding Pass Styling ===== */
-#boardingPass {
-  max-width: 650px;
-  margin: 30px auto;
+/* ===== Forms ===== */
+form {
+  max-width: 500px;
+  margin: 0 auto;
   background: white;
-  border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  overflow: hidden;
-  font-family: 'Courier New', monospace;
-  border: 2px dashed #004aad; /* perforation look */
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+}
+
+label {
+  display: block;
+  margin: 12px 0 5px;
+  font-weight: 500;
+  color: #0a1f44;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+/* ===== Confirmation Screen ===== */
+.confirm-box {
+  background: white;
+  display: inline-block;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0px 6px 18px rgba(0,0,0,0.15);
+  margin-top: 40px;
+  text-align: left;
+}
+
+.confirm-box h2 {
+  color: #0a1f44;
+  margin-bottom: 15px;
+}
+
+.confirm-box p {
+  margin: 8px 0;
+  font-size: 1rem;
+}
+
+/* ===== Boarding Pass ===== */
+.boarding-pass {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 500px;
+  margin: 40px auto;
+  box-shadow: 0px 6px 18px rgba(0,0,0,0.15);
   position: relative;
 }
 
-/* Perforation Line */
-#boardingPass::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  border-top: 2px dashed #ccc;
+.boarding-pass h2 {
+  text-align: center;
+  color: #0a1f44;
+  margin-bottom: 20px;
 }
 
-.bp-header {
-  background: #004aad;
-  color: white;
-  padding: 15px;
-  font-size: 20px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+.boarding-pass p {
+  margin: 10px 0;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
-.bp-body {
-  padding: 25px;
+.qr {
+  margin-top: 20px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center;
 }
-
-.bp-info {
-  text-align: left;
-  font-size: 16px;
-  line-height: 1.6;
-}
-
-.bp-info b {
-  color: #004aad;
-}
-
-.bp-qr {
-  text-align: center;
-}
-
-.bp-footer {
-  background: #eee;
-  padding: 12px;
-  font-size: 14px;
-  text-align: center;
-}
-
