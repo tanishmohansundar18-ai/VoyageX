@@ -4,66 +4,88 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VoyageX</title>
-
-  <!-- CSS -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <header>
-    <h1>VoyageX</h1>
-    <p>Turn miles into smiles!</p>
-  </header>
 
   <!-- Screen 1 -->
-  <section id="screen1">
+  <div class="screen active" id="screen1">
+    <h1>VoyageX</h1>
+    <p class="caption">Turn miles into smiles!</p>
     <h2>Choose your dream destination!</h2>
-    <button onclick="goToBooking('International')">International</button>
-    <button onclick="goToBooking('Domestic')">Domestic</button>
-  </section>
+    <button onclick="chooseType('international')">International</button>
+    <button onclick="chooseType('domestic')">Domestic</button>
+  </div>
 
   <!-- Screen 2 -->
-  <section id="screen2" style="display:none;">
-    <h2>VoyageX Booking</h2>
+  <div class="screen hidden" id="screen2">
+    <h2>Booking Details - VoyageX</h2>
     <form id="bookingForm">
-      <input type="text" id="name" placeholder="Your Name" required>
-      <input type="number" id="customers" placeholder="Number of Customers" required>
-      <input type="number" id="age" placeholder="Age" required>
-      <input type="tel" id="phone" placeholder="Phone Number" required>
-      <input type="email" id="email" placeholder="Email" required>
-      <input type="date" id="start" required>
-      <input type="date" id="end" required>
-      <button type="submit">Proceed to Confirmation</button>
+      <label>Name:</label>
+      <input type="text" id="name" required><br>
+
+      <label>Destination:</label>
+      <select id="destination"></select><br>
+
+      <label>Number of Customers:</label>
+      <input type="number" id="customers" min="1" value="1" required><br>
+
+      <label>Age:</label>
+      <input type="number" id="age" min="1" required><br>
+
+      <label>Phone:</label>
+      <input type="text" id="phone" required><br>
+
+      <label>Email:</label>
+      <input type="email" id="email" required><br>
+
+      <label>Flight:</label>
+      <select id="flight"></select><br>
+
+      <label>Date of Departure:</label>
+      <input type="date" id="departure" required><br>
+
+      <label>Date of Return:</label>
+      <input type="date" id="return" required><br>
+
+      <p id="price"></p>
+
+      <button type="submit">Book Now!</button>
     </form>
-  </section>
+  </div>
 
   <!-- Screen 3 -->
-  <section id="screen3" style="display:none;">
-    <h2>Confirm Your Details</h2>
-    <p><b>Type:</b> <span id="confType"></span></p>
-    <p><b>Name:</b> <span id="confName"></span></p>
-    <p><b>Customers:</b> <span id="confCustomers"></span></p>
-    <p><b>Age:</b> <span id="confAge"></span></p>
-    <p><b>Phone:</b> <span id="confPhone"></span></p>
-    <p><b>Email:</b> <span id="confEmail"></span></p>
-    <p><b>Start Date:</b> <span id="confStart"></span></p>
-    <p><b>End Date:</b> <span id="confEnd"></span></p>
-    <button onclick="generateBoardingPass()">Confirm & Generate Pass</button>
-  </section>
+  <div class="screen hidden" id="screen3">
+    <h2 id="confirmationMessage"></h2>
+    <p id="tagline"></p>
+    <button onclick="goToBoardingPass()">View Boarding Pass</button>
+  </div>
 
   <!-- Screen 4 -->
-  <section id="screen4" style="display:none;">
-    <h2>Your Boarding Pass</h2>
-    <p><b>Type:</b> <span id="bpType"></span></p>
-    <p><b>Name:</b> <span id="bpName"></span></p>
-    <p><b>Customers:</b> <span id="bpCustomers"></span></p>
-    <p><b>Start Date:</b> <span id="bpStart"></span></p>
-    <p><b>End Date:</b> <span id="bpEnd"></span></p>
-    <canvas id="qrCode"></canvas>
-  </section>
+  <div class="screen hidden" id="screen4">
+    <div id="boardingPass">
+      <h2>✈️ VoyageX Boarding Pass</h2>
+      <div class="pass-row">
+        <span class="pass-label">Type:</span>
+        <span id="bpType"></span>
+      </div>
+      <div class="pass-row">
+        <span class="pass-label">Destination:</span>
+        <span id="bpDestination"></span>
+      </div>
+      <div class="pass-row">
+        <span class="pass-label">Name:</span>
+        <span id="bpName"></span>
+      </div>
+      <div class="pass-row">
+        <span class="pass-label">Travel Dates:</span>
+        <span id="bpDates"></span>
+      </div>
+      <div id="qrcode"></div>
+    </div>
+  </div>
 
-  <!-- QRious for QR code -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
-  <!-- JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="js/script.js"></script>
 </body>
 </html>
