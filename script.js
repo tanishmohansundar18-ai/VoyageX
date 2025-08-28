@@ -1,114 +1,117 @@
-const screens = document.querySelectorAll('.screen');
-let bookingType = '';
-let destination = '';
-
-const internationalCities = ["New York", "Sydney", "Paris", "London", "Tokyo", "Kyoto", "Beijing", "Shanghai", "Switzerland", "Dubai", "Maldives", "Bali"];
-const domesticCities = ["Bengaluru", "Chennai", "Mumbai", "Hyderabad", "Thiruvananthapuram", "Kolkata", "Jaipur", "Srinagar"];
-
-const flights = {
-  international: ["Emirates", "Singapore Airlines", "Vistara"],
-  domestic: ["IndiGo", "Air India", "Akasa Air"]
-};
-
-// Show a screen
-function showScreen(id) {
-  screens.forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to bottom right, #e6f2ff, #ffffff);
+  color: #002244;
+  height: 100%;
+  overflow-y: auto;
 }
 
-// Step 1: Choose Type
-function chooseType(type) {
-  bookingType = type;
-  const cityOptions = document.getElementById('cityOptions');
-  cityOptions.innerHTML = '';
-
-  const cities = type === 'international' ? internationalCities : domesticCities;
-  cities.forEach(city => {
-    const btn = document.createElement('button');
-    btn.classList.add('option-btn');
-    btn.textContent = city;
-    btn.onclick = () => chooseCity(city);
-    cityOptions.appendChild(btn);
-  });
-
-  showScreen('screen2');
+/* Screens */
+.screen {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  text-align: center;
+}
+.active {
+  display: flex;
 }
 
-// Step 2: Choose City
-function chooseCity(city) {
-  destination = city;
-  document.getElementById('destination').value = city;
-
-  const flightSelect = document.getElementById('flight');
-  flightSelect.innerHTML = '';
-  flights[bookingType].forEach(f => {
-    const opt = document.createElement('option');
-    opt.value = f;
-    opt.textContent = f;
-    flightSelect.appendChild(opt);
-  });
-
-  calculatePrice();
-  showScreen('screen3');
+/* Typography */
+h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #004488;
+}
+.subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #333;
 }
 
-// Step 3: Calculate Price
-function calculatePrice() {
-  const customers = parseInt(document.getElementById('customers').value) || 1;
-  let basePrice = bookingType === 'international' ? 60000 : 30000;
-  let discount = bookingType === 'international' ? 0.35 : 0.25;
-  let total = customers * basePrice * (1 - discount);
-  document.getElementById('priceDisplay').textContent = `Total Price: ₹${total.toLocaleString()}`;
+/* Buttons */
+button {
+  background: #004488;
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1.6rem;
+  margin: 0.5rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+button:hover {
+  background: #0066cc;
+}
+.back-btn {
+  background: #777;
+}
+.btn-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-document.getElementById('customers').addEventListener('input', calculatePrice);
+/* Form */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 300px;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 0.9rem;
+}
+input, select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+#priceDetails {
+  font-weight: bold;
+  color: #004488;
+}
 
-// Step 4: Submit Form
-document.getElementById('bookingForm').addEventListener('submit', function(e) {
-  e.preventDefault();
+/* Boarding pass */
+.boarding-pass {
+  background: #fff;
+  padding: 1.5rem;
+  border: 2px dashed #004488;
+  border-radius: 12px;
+  display: inline-block;
+  margin-top: 1.5rem;
+}
 
-  const name = document.getElementById('name').value;
-  const phone = document.getElementById('phone').value;
-  const email = document.getElementById('email').value;
-  const age = document.getElementById('age').value;
-  const customers = document.getElementById('customers').value;
-  const flight = document.getElementById('flight').value;
-  const departure = document.getElementById('departure').value;
-  const ret = document.getElementById('return').value;
-  const price = document.getElementById('priceDisplay').textContent;
-
-  const caption = bookingType === 'international'
-    ? "🌍 Beyond borders, beyond ordinary"
-    : "🛫 Where every journey becomes a story";
-
-  document.getElementById('caption').textContent = caption;
-
-  const summary = `
-    <strong>Name:</strong> ${name}<br>
-    <strong>Destination:</strong> ${destination}<br>
-    <strong>Customers:</strong> ${customers}<br>
-    <strong>Age:</strong> ${age}<br>
-    <strong>Phone:</strong> ${phone}<br>
-    <strong>Email:</strong> ${email}<br>
-    <strong>Flight:</strong> ${flight}<br>
-    <strong>Departure:</strong> ${departure}<br>
-    <strong>Return:</strong> ${ret}<br>
-    <strong>${price}</strong>
-  `;
-  document.getElementById('summary').innerHTML = summary;
-
-  // Generate QR code
-  document.getElementById('qrcode').innerHTML = '';
-  new QRCode(document.getElementById('qrcode'), {
-    text: `${name} - ${destination} - ${departure} - ${ret}`,
-    width: 128,
-    height: 128
-  });
-
-  showScreen('screen4');
-
-  // Auto move to final screen after 4s
-  setTimeout(() => {
-    showScreen('screen5');
-  }, 4000);
-});
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #001f3f;
+}
+::-webkit-scrollbar-thumb {
+  background: #004488;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #0066cc;
+}
