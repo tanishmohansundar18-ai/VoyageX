@@ -4,88 +4,36 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VoyageX</title>
-  <link rel="stylesheet" href="css/style.css">
+  <!-- FIXED PATHS -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <!-- Screen 1 -->
   <div class="screen active" id="screen1">
     <h1>VoyageX</h1>
-    <p class="caption">Turn miles into smiles!</p>
+    <p>Turn miles into smiles!</p>
     <h2>Choose your dream destination!</h2>
-    <button onclick="chooseType('international')">International</button>
-    <button onclick="chooseType('domestic')">Domestic</button>
+    <button onclick="goToBooking('International')">International</button>
+    <button onclick="goToBooking('Domestic')">Domestic</button>
   </div>
 
-  <!-- Screen 2 -->
-  <div class="screen hidden" id="screen2">
-    <h2>Booking Details - VoyageX</h2>
-    <form id="bookingForm">
-      <label>Name:</label>
-      <input type="text" id="name" required><br>
-
-      <label>Destination:</label>
-      <select id="destination"></select><br>
-
-      <label>Number of Customers:</label>
-      <input type="number" id="customers" min="1" value="1" required><br>
-
-      <label>Age:</label>
-      <input type="number" id="age" min="1" required><br>
-
-      <label>Phone:</label>
-      <input type="text" id="phone" required><br>
-
-      <label>Email:</label>
-      <input type="email" id="email" required><br>
-
-      <label>Flight:</label>
-      <select id="flight"></select><br>
-
-      <label>Date of Departure:</label>
-      <input type="date" id="departure" required><br>
-
-      <label>Date of Return:</label>
-      <input type="date" id="return" required><br>
-
-      <p id="price"></p>
-
-      <button type="submit">Book Now!</button>
-    </form>
+  <div class="screen" id="screen2">
+    <h2>Booking Screen</h2>
+    <button onclick="goToConfirmation()">Confirm Booking</button>
   </div>
 
-  <!-- Screen 3 -->
-  <div class="screen hidden" id="screen3">
-    <h2 id="confirmationMessage"></h2>
-    <p id="tagline"></p>
+  <div class="screen" id="screen3">
+    <h2>Booking Confirmed!</h2>
     <button onclick="goToBoardingPass()">View Boarding Pass</button>
   </div>
 
-  <!-- Screen 4 -->
-  <div class="screen hidden" id="screen4">
-    <div id="boardingPass">
-      <h2>✈️ VoyageX Boarding Pass</h2>
-      <div class="pass-row">
-        <span class="pass-label">Type:</span>
-        <span id="bpType"></span>
-      </div>
-      <div class="pass-row">
-        <span class="pass-label">Destination:</span>
-        <span id="bpDestination"></span>
-      </div>
-      <div class="pass-row">
-        <span class="pass-label">Name:</span>
-        <span id="bpName"></span>
-      </div>
-      <div class="pass-row">
-        <span class="pass-label">Travel Dates:</span>
-        <span id="bpDates"></span>
-      </div>
-      <div id="qrcode"></div>
-    </div>
+  <div class="screen" id="screen4">
+    <h2>Boarding Pass</h2>
+    <p>Flight: VX123</p>
+    <p>Passenger: John Doe</p>
+    <p>Seat: 12A</p>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  <script src="js/script.js"></script>
+  <!-- FIXED PATH -->
+  <script src="script.js"></script>
 </body>
 </html>
