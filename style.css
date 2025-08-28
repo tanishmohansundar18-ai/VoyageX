@@ -1,54 +1,125 @@
+/* ===== General Styling ===== */
 body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: skyblue;
+  padding: 0;
+  background: #f5f7fa;
+  color: #333;
   text-align: center;
-  overflow-y: scroll; /* scrollbar */
+  overflow-y: scroll;
 }
 
-.screen {
-  display: none;
-  padding: 40px;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #001f54;
+}
+::-webkit-scrollbar-thumb {
+  background: #004aad;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00337f;
 }
 
-.screen.active {
-  display: block;
+header {
+  background: #004aad;
+  color: white;
+  padding: 20px;
+  font-size: 20px;
 }
 
+section {
+  padding: 30px;
+}
+
+/* ===== Buttons ===== */
 button {
-  padding: 12px 25px;
-  margin: 10px;
-  background: darkblue;
+  background: #004aad;
   color: white;
   border: none;
+  padding: 12px 20px;
+  margin: 10px;
   border-radius: 6px;
-  cursor: pointer;
   font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 button:hover {
-  background: navy;
+  background: #00337f;
 }
 
-/* Boarding Pass */
-.boarding-pass {
+/* ===== Inputs ===== */
+input {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 250px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* ===== Boarding Pass Styling ===== */
+#boardingPass {
+  max-width: 650px;
+  margin: 30px auto;
   background: white;
-  border: 2px dashed darkblue;
-  border-radius: 12px;
-  padding: 20px;
-  max-width: 400px;
-  margin: 20px auto;
-  box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
-  text-align: left;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  overflow: hidden;
+  font-family: 'Courier New', monospace;
+  border: 2px dashed #004aad; /* perforation look */
+  position: relative;
 }
 
-.boarding-pass h3 {
-  text-align: center;
-  margin-bottom: 15px;
+/* Perforation Line */
+#boardingPass::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  border-top: 2px dashed #ccc;
 }
 
-#qrcode {
-  margin-top: 20px;
+.bp-header {
+  background: #004aad;
+  color: white;
+  padding: 15px;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.bp-body {
+  padding: 25px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
 }
+
+.bp-info {
+  text-align: left;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.bp-info b {
+  color: #004aad;
+}
+
+.bp-qr {
+  text-align: center;
+}
+
+.bp-footer {
+  background: #eee;
+  padding: 12px;
+  font-size: 14px;
+  text-align: center;
+}
+
