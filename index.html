@@ -4,56 +4,65 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VoyageX</title>
+
   <!-- CSS -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- Screen 1 -->
-  <div id="screen1" class="screen active">
+  <header>
     <h1>VoyageX</h1>
     <p>Turn miles into smiles!</p>
-    <button onclick="goToScreen('international')">International</button>
-    <button onclick="goToScreen('domestic')">Domestic</button>
-  </div>
+  </header>
 
-  <!-- Screen 2 (destination selection) -->
-  <div id="screen2" class="screen">
-    <h2 id="destinationTitle">Choose your dream destination!</h2>
-    <div id="destinationOptions"></div>
-    <button onclick="goToForm()">Proceed</button>
-  </div>
+  <!-- Screen 1 -->
+  <section id="screen1">
+    <h2>Choose your dream destination!</h2>
+    <button onclick="goToBooking('International')">International</button>
+    <button onclick="goToBooking('Domestic')">Domestic</button>
+  </section>
 
-  <!-- Screen 3 (form) -->
-  <div id="screen3" class="screen">
+  <!-- Screen 2 -->
+  <section id="screen2" style="display:none;">
     <h2>VoyageX Booking</h2>
-    <form id="bookingForm" onsubmit="handleBooking(event)">
-      <input type="text" id="name" placeholder="Your Name" required><br>
-      <input type="number" id="customers" placeholder="Number of Customers" required><br>
-      <input type="number" id="age" placeholder="Age" required><br>
-      <input type="tel" id="phone" placeholder="Phone Number" required><br>
-      <input type="email" id="email" placeholder="Email" required><br>
-      <input type="date" id="departure" required><br>
-      <input type="date" id="return" required><br>
-      <button type="submit">Book Now!</button>
+    <form id="bookingForm">
+      <input type="text" id="name" placeholder="Your Name" required>
+      <input type="number" id="customers" placeholder="Number of Customers" required>
+      <input type="number" id="age" placeholder="Age" required>
+      <input type="tel" id="phone" placeholder="Phone Number" required>
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="date" id="start" required>
+      <input type="date" id="end" required>
+      <button type="submit">Proceed to Confirmation</button>
     </form>
-  </div>
+  </section>
 
-  <!-- Screen 4 (boarding pass with QR code) -->
-  <div id="screen4" class="screen">
+  <!-- Screen 3 -->
+  <section id="screen3" style="display:none;">
+    <h2>Confirm Your Details</h2>
+    <p><b>Type:</b> <span id="confType"></span></p>
+    <p><b>Name:</b> <span id="confName"></span></p>
+    <p><b>Customers:</b> <span id="confCustomers"></span></p>
+    <p><b>Age:</b> <span id="confAge"></span></p>
+    <p><b>Phone:</b> <span id="confPhone"></span></p>
+    <p><b>Email:</b> <span id="confEmail"></span></p>
+    <p><b>Start Date:</b> <span id="confStart"></span></p>
+    <p><b>End Date:</b> <span id="confEnd"></span></p>
+    <button onclick="generateBoardingPass()">Confirm & Generate Pass</button>
+  </section>
+
+  <!-- Screen 4 -->
+  <section id="screen4" style="display:none;">
     <h2>Your Boarding Pass</h2>
-    <div class="boarding-pass">
-      <h3 id="bpName"></h3>
-      <p><strong>Type:</strong> <span id="bpType"></span></p>
-      <p><strong>Destination:</strong> <span id="bpDestination"></span></p>
-      <p><strong>Departure:</strong> <span id="bpDeparture"></span></p>
-      <p><strong>Return:</strong> <span id="bpReturn"></span></p>
-      <div id="qrcode"></div>
-    </div>
-    <h3 id="tagline"></h3>
-  </div>
+    <p><b>Type:</b> <span id="bpType"></span></p>
+    <p><b>Name:</b> <span id="bpName"></span></p>
+    <p><b>Customers:</b> <span id="bpCustomers"></span></p>
+    <p><b>Start Date:</b> <span id="bpStart"></span></p>
+    <p><b>End Date:</b> <span id="bpEnd"></span></p>
+    <canvas id="qrCode"></canvas>
+  </section>
 
-  <!-- QR Code Library -->
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+  <!-- QRious for QR code -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
   <!-- JS -->
   <script src="js/script.js"></script>
 </body>
