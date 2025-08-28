@@ -3,37 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VoyageX</title>
-  <!-- FIXED PATHS -->
+  <title>TripNest</title>
+  <!-- ✅ Correct CSS link -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="screen active" id="screen1">
-    <h1>VoyageX</h1>
-    <p>Turn miles into smiles!</p>
-    <h2>Choose your dream destination!</h2>
-    <button onclick="goToBooking('International')">International</button>
-    <button onclick="goToBooking('Domestic')">Domestic</button>
-  </div>
+  <!-- First Screen -->
+  <section id="screen1" class="screen active">
+    <h1>Welcome to TripNest</h1>
+    <button onclick="goToScreen('screen2')">Start Booking</button>
+  </section>
 
-  <div class="screen" id="screen2">
-    <h2>Booking Screen</h2>
-    <button onclick="goToConfirmation()">Confirm Booking</button>
-  </div>
+  <!-- Second Screen -->
+  <section id="screen2" class="screen">
+    <h2>Enter Your Details</h2>
+    <form id="bookingForm">
+      <input type="text" placeholder="Name" required><br>
+      <input type="text" placeholder="Destination" required><br>
+      <button type="button" onclick="goToScreen('screen3')">Next</button>
+    </form>
+  </section>
 
-  <div class="screen" id="screen3">
-    <h2>Booking Confirmed!</h2>
-    <button onclick="goToBoardingPass()">View Boarding Pass</button>
-  </div>
+  <!-- Third Screen -->
+  <section id="screen3" class="screen">
+    <h2>Confirmation</h2>
+    <p>Your details have been received!</p>
+    <button onclick="goToScreen('screen4')">View Boarding Pass</button>
+  </section>
 
-  <div class="screen" id="screen4">
+  <!-- Fourth Screen -->
+  <section id="screen4" class="screen">
     <h2>Boarding Pass</h2>
-    <p>Flight: VX123</p>
-    <p>Passenger: John Doe</p>
-    <p>Seat: 12A</p>
-  </div>
+    <div class="boarding-pass">
+      <p>Passenger: John Doe</p>
+      <p>Flight: TN123</p>
+      <p>Destination: Paris</p>
+      <div id="qrcode"></div>
+    </div>
+  </section>
 
-  <!-- FIXED PATH -->
+  <!-- ✅ Correct JS link -->
   <script src="script.js"></script>
+  <!-- QRCode Library (if you want QR) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </body>
 </html>
