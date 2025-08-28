@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TripNest</title>
-  <!-- ✅ Correct CSS link -->
+  <title>VoyageX</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <!-- First Screen -->
   <section id="screen1" class="screen active">
-    <h1>Welcome to TripNest</h1>
+    <h1>Welcome to VoyageX</h1>
     <button onclick="goToScreen('screen2')">Start Booking</button>
   </section>
 
@@ -18,8 +17,8 @@
   <section id="screen2" class="screen">
     <h2>Enter Your Details</h2>
     <form id="bookingForm">
-      <input type="text" placeholder="Name" required><br>
-      <input type="text" placeholder="Destination" required><br>
+      <input type="text" id="name" placeholder="Name" required><br>
+      <input type="text" id="destination" placeholder="Destination" required><br>
       <button type="button" onclick="goToScreen('screen3')">Next</button>
     </form>
   </section>
@@ -27,7 +26,7 @@
   <!-- Third Screen -->
   <section id="screen3" class="screen">
     <h2>Confirmation</h2>
-    <p>Your details have been received!</p>
+    <p id="confirmText"></p>
     <button onclick="goToScreen('screen4')">View Boarding Pass</button>
   </section>
 
@@ -35,16 +34,14 @@
   <section id="screen4" class="screen">
     <h2>Boarding Pass</h2>
     <div class="boarding-pass">
-      <p>Passenger: John Doe</p>
-      <p>Flight: TN123</p>
-      <p>Destination: Paris</p>
+      <p id="bpName"></p>
+      <p id="bpFlight">Flight: VX123</p>
+      <p id="bpDestination"></p>
       <div id="qrcode"></div>
     </div>
   </section>
 
-  <!-- ✅ Correct JS link -->
   <script src="script.js"></script>
-  <!-- QRCode Library (if you want QR) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </body>
 </html>
