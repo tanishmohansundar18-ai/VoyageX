@@ -1,117 +1,67 @@
-body, html {
-  margin: 0;
-  padding: 0;
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(to bottom right, #e6f2ff, #ffffff);
-  color: #002244;
-  height: 100%;
-  overflow-y: auto;
+let travelType = ""; 
+let chosenDestination = "";
+
+function goToScreen(type) {
+  travelType = type;
+  document.getElementById("screen1").classList.remove("active");
+  document.getElementById("screen2").classList.add("active");
+
+  const optionsDiv = document.getElementById("destinationOptions");
+  optionsDiv.innerHTML = "";
+
+  const internationalCities = ["New York", "Sydney", "Paris", "London", "Tokyo", "Dubai", "Maldives", "Bali"];
+  const domesticCities = ["Bengaluru", "Chennai", "Mumbai", "Hyderabad", "Thiruvananthapuram", "Kolkata", "Jaipur", "Srinagar"];
+
+  const list = type === "international" ? internationalCities : domesticCities;
+
+  list.forEach(city => {
+    const btn = document.createElement("button");
+    btn.innerText = city;
+    btn.onclick = () => { chosenDestination = city; };
+    optionsDiv.appendChild(btn);
+  });
 }
 
-/* Screens */
-.screen {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 2rem;
-  text-align: center;
-}
-.active {
-  display: flex;
+function goToForm() {
+  if (!chosenDestination) {
+    alert("Please choose a destination first!");
+    return;
+  }
+  document.getElementById("screen2").classList.remove("active");
+  document.getElementById("screen3").classList.add("active");
 }
 
-/* Typography */
-h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: #004488;
-}
-.subtitle {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-  color: #333;
-}
+function handleBooking(event) {
+  event.preventDefault();
 
-/* Buttons */
-button {
-  background: #004488;
-  color: #fff;
-  border: none;
-  padding: 0.8rem 1.6rem;
-  margin: 0.5rem;
-  border-radius: 10px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-button:hover {
-  background: #0066cc;
-}
-.back-btn {
-  background: #777;
-}
-.btn-group {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
+  // Collect values
+  const name = document.getElementById("name").value;
+  const departure = document.getElementById("departure").value;
+  const returnDate = document.getElementById("return").value;
 
-/* Form */
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  width: 300px;
-  background: #fff;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-label {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  font-size: 0.9rem;
-}
-input, select {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-#priceDetails {
-  font-weight: bold;
-  color: #004488;
-}
+  // Switch screen
+  document.getElementById("screen3").classList.remove("active");
+  document.getElementById("screen4").classList.add("active");
 
-/* Boarding pass */
-.boarding-pass {
-  background: #fff;
-  padding: 1.5rem;
-  border: 2px dashed #004488;
-  border-radius: 12px;
-  display: inline-block;
-  margin-top: 1.5rem;
-}
+  // Fill boarding pass
+  document.getElementById("bpName").innerText = name;
+  document.getElementById("bpType").innerText = travelType.toUpperCase();
+  document.getElementById("bpDestination").innerText = chosenDestination;
+  document.getElementById("bpDeparture").innerText = departure;
+  document.getElementById("bpReturn").innerText = returnDate;
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-}
-::-webkit-scrollbar-track {
-  background: #001f3f;
-}
-::-webkit-scrollbar-thumb {
-  background: #004488;
-  border-radius: 5px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #0066cc;
+  // Tagline
+  document.getElementById("tagline").innerText =
+    travelType === "international"
+      ? "Beyond borders, beyond ordinary"
+      : "Where every journey becomes a story";
+
+  // Generate QR Code with booking details
+  const qrData = `VoyageX Booking\nName: ${name}\nType: ${travelType}\nDestination: ${chosenDestination}\nDeparture: ${departure}\nReturn: ${returnDate}`;
+  document.getElementById("qrcode").innerHTML = ""; // clear old
+  new QRCode(document.getElementById("qrcode"), {
+    text: qrData,
+    width: 128,
+    height: 128
+  });
 }
