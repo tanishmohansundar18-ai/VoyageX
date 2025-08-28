@@ -2,47 +2,71 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VoyageX</title>
+  <title>VoyageX - Ticket Booking</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- First Screen -->
-  <section id="screen1" class="screen active">
-    <h1>Welcome to VoyageX</h1>
-    <button onclick="goToScreen('screen2')">Start Booking</button>
-  </section>
+  <div id="app">
+    <!-- Screen 1 -->
+    <section class="screen active" id="screen1">
+      <h1>Welcome to <span class="highlight">VoyageX</span></h1>
+      <button onclick="goToScreen(2)">Continue</button>
+    </section>
 
-  <!-- Second Screen -->
-  <section id="screen2" class="screen">
-    <h2>Enter Your Details</h2>
-    <form id="bookingForm">
-      <input type="text" id="name" placeholder="Name" required><br>
-      <input type="text" id="destination" placeholder="Destination" required><br>
-      <button type="button" onclick="goToScreen('screen3')">Next</button>
-    </form>
-  </section>
+    <!-- Screen 2 -->
+    <section class="screen" id="screen2">
+      <h2>Where do you want to travel?</h2>
+      <button onclick="chooseType('domestic')">Domestic</button>
+      <button onclick="chooseType('international')">International</button>
+    </section>
 
-  <!-- Third Screen -->
-  <section id="screen3" class="screen">
-    <h2>Confirmation</h2>
-    <p id="confirmText"></p>
-    <button onclick="goToScreen('screen4')">View Boarding Pass</button>
-  </section>
+    <!-- Screen 3 -->
+    <section class="screen" id="screen3">
+      <h2>Choose Your Destination</h2>
+      <div id="destinations"></div>
+    </section>
 
-  <!-- Fourth Screen -->
-  <section id="screen4" class="screen">
-    <h2>Boarding Pass</h2>
-    <div class="boarding-pass">
-      <p id="bpName"></p>
-      <p id="bpFlight">Flight: VX123</p>
-      <p id="bpDestination"></p>
-      <div id="qrcode"></div>
-    </div>
-  </section>
+    <!-- Screen 4 -->
+    <section class="screen" id="screen4">
+      <h2>Enter Your Details</h2>
+      <form id="detailsForm">
+        <input type="text" id="name" placeholder="Full Name" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="tel" id="phone" placeholder="Phone Number" required>
+        <input type="number" id="customers" placeholder="Number of Customers" required>
+        <input type="number" id="age" placeholder="Age" required>
+        <input type="date" id="departure" required>
+        <input type="date" id="return" required>
+        <select id="flight"></select>
+        <button type="submit">Continue</button>
+      </form>
+    </section>
 
-  <!-- Order of scripts is important -->
+    <!-- Screen 5 -->
+    <section class="screen" id="screen5">
+      <h2>Booking Summary</h2>
+      <div id="summary"></div>
+      <button onclick="confirmBooking()">Confirm Booking</button>
+    </section>
+
+    <!-- Screen 6 -->
+    <section class="screen" id="screen6">
+      <h2>Boarding Pass</h2>
+      <div id="boardingPass">
+        <h3>VoyageX</h3>
+        <p><strong>Name:</strong> <span id="bpName"></span></p>
+        <p><strong>Destination:</strong> <span id="bpDestination"></span></p>
+        <p><strong>Flight:</strong> <span id="bpFlight"></span></p>
+        <p><strong>Departure:</strong> <span id="bpDeparture"></span></p>
+        <p><strong>Return:</strong> <span id="bpReturn"></span></p>
+        <p><strong>Seat:</strong> <span id="bpSeat"></span></p>
+        <div id="qrcode"></div>
+      </div>
+      <h3>Congratulations 🎉 Your booking is confirmed!</h3>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
   <script src="script.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </body>
 </html>
