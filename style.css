@@ -1,98 +1,43 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #74ebd5, #ACB6E5);
-  color: #333;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  overflow-y: scroll; /* scrolling bar */
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #6EE7B7, #3B82F6);
+  text-align: center;
+  color: #222;
 }
 
 .screen {
   display: none;
-  text-align: center;
-  width: 100%;
-  padding: 20px;
+  padding: 50px;
 }
 
 .screen.active {
   display: block;
 }
 
-h1 {
-  font-size: 3rem;
-  margin-bottom: 10px;
-}
-
-.caption {
-  font-size: 1.2rem;
-  margin-bottom: 20px;
-}
-
 button {
-  background: #0077ff;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
   color: white;
+  background: #2563eb;
   border: none;
-  padding: 12px 25px;
-  margin: 10px;
   border-radius: 8px;
   cursor: pointer;
-  font-weight: 600;
-  transition: 0.3s;
+  margin-top: 20px;
 }
+
 button:hover {
-  background: #005fcc;
+  background: #1d4ed8;
 }
 
-form label {
-  display: block;
-  margin: 10px 0 5px;
-  font-weight: 600;
-}
-
-form input, form select {
-  padding: 8px;
-  margin-bottom: 10px;
-  width: 80%;
-  max-width: 300px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
-/* Boarding Pass */
-#boardingPass {
-  width: 380px;
-  margin: 20px auto;
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+.boarding-pass {
+  display: inline-block;
+  margin-top: 20px;
   padding: 20px;
-  text-align: left;
-  position: relative;
-}
-
-#boardingPass h2 {
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-.pass-row {
-  display: flex;
-  justify-content: space-between;
-  margin: 8px 0;
-}
-
-.pass-label {
-  font-weight: 600;
-  color: #555;
-}
-
-#qrcode {
-  margin-top: 15px;
-  display: flex;
-  justify-content: center;
+  border: 2px solid #222;
+  border-radius: 10px;
+  background: white;
+  color: black;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
 }
