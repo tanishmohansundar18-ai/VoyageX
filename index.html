@@ -7,88 +7,62 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Screen 1: Landing -->
+  <!-- Screen 1 -->
   <div class="screen active" id="screen1">
     <h1>VoyageX</h1>
     <h2>Turn miles into smiles!</h2>
-    <p class="tagline">Choose your dream destination!</p>
-    <div class="options">
-      <button class="option-btn" onclick="chooseType('international')">International</button>
-      <button class="option-btn" onclick="chooseType('domestic')">Domestic</button>
+    <p class="subtitle">Choose your dream destination!</p>
+    <div class="btn-group">
+      <button onclick="showDestinations('international')">International</button>
+      <button onclick="showDestinations('domestic')">Domestic</button>
     </div>
   </div>
 
-  <!-- Screen 2: Cities -->
+  <!-- Screen 2: Destination Selection -->
   <div class="screen" id="screen2">
-    <h1>Select Destination</h1>
-    <div id="cityOptions" class="options"></div>
+    <h1>Select Your Destination</h1>
+    <div id="destinations"></div>
+    <button class="back-btn" onclick="goBack(1)">⬅ Back</button>
   </div>
 
   <!-- Screen 3: Booking Form -->
   <div class="screen" id="screen3">
-    <h1>VoyageX</h1>
-    <h2>Booking Details</h2>
-    <form id="bookingForm">
-      <div class="form-group">
-        <label>Name</label>
-        <input type="text" id="name" required />
-      </div>
-      <div class="form-group">
-        <label>Destination</label>
-        <input type="text" id="destination" readonly />
-      </div>
-      <div class="form-group">
-        <label>Number of Customers</label>
-        <input type="number" id="customers" min="1" value="1" required />
-      </div>
-      <div class="form-group">
-        <label>Age</label>
-        <input type="number" id="age" min="1" required />
-      </div>
-      <div class="form-group">
-        <label>Phone</label>
-        <input type="tel" id="phone" required />
-      </div>
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="email" required />
-      </div>
-      <div class="form-group">
-        <label>Flight Options</label>
-        <select id="flight"></select>
-      </div>
-      <div class="form-group">
-        <label>Date of Departure</label>
-        <input type="date" id="departure" required />
-      </div>
-      <div class="form-group">
-        <label>Date of Return</label>
-        <input type="date" id="return" required />
-      </div>
-      <div id="priceDisplay">Total Price: ₹0</div>
+    <h1>VoyageX Booking</h1>
+    <form id="bookingForm" onsubmit="submitBooking(event)">
+      <label>Name: <input type="text" id="name" required></label>
+      <label>Email: <input type="email" id="email" required></label>
+      <label>Phone: <input type="tel" id="phone" required></label>
+      <label>Number of Customers: <input type="number" id="customers" min="1" required></label>
+      <label>Age: <input type="number" id="age" min="1" required></label>
+      <label>Flight:
+        <select id="flightOptions"></select>
+      </label>
+      <label>Date of Departure: <input type="date" id="departure" required></label>
+      <label>Date of Return: <input type="date" id="return" required></label>
+      <p id="priceDetails"></p>
       <button type="submit">Book Now!</button>
     </form>
+    <button class="back-btn" onclick="goBack(2)">⬅ Back</button>
   </div>
 
   <!-- Screen 4: Confirmation -->
   <div class="screen" id="screen4">
-    <div id="confirmation">
-      <h2 id="caption"></h2>
-      <div id="boardingPass">
-        <h2>Boarding Pass</h2>
-        <p id="summary"></p>
-        <div id="qrcode"></div>
-      </div>
-    </div>
+    <h1 id="confirmationTitle"></h1>
+    <div id="confirmationDetails"></div>
+    <button onclick="showScreen(5)">Proceed</button>
   </div>
 
   <!-- Screen 5: Final Message -->
   <div class="screen" id="screen5">
-    <h1>🎉 Congratulations!</h1>
-    <h2>Your booking is confirmed ✅</h2>
+    <h1>🎉 Congratulations! 🎉</h1>
+    <p>Your booking is confirmed.</p>
+    <div class="boarding-pass">
+      <h2>VoyageX Boarding Pass</h2>
+      <div id="boardingDetails"></div>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=VoyageXBooking" alt="QR Code">
+    </div>
   </div>
 
   <script src="script.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
 </body>
 </html>
