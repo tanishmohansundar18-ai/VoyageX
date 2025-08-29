@@ -1,43 +1,27 @@
 body {
   margin: 0;
-  font-family: "Poppins", sans-serif;
+  font-family: Arial, sans-serif;
   background: linear-gradient(to bottom, #87ceeb, #f0f8ff);
   overflow-y: scroll;
+  text-align: center;
 }
 
-/* Dark blue scrollbar */
-::-webkit-scrollbar {
-  width: 12px;
-}
-::-webkit-scrollbar-track {
-  background: #f0f8ff;
-}
-::-webkit-scrollbar-thumb {
-  background: darkblue;
-  border-radius: 6px;
-}
+/* Scrollbar */
+::-webkit-scrollbar { width: 12px; }
+::-webkit-scrollbar-thumb { background: darkblue; border-radius: 6px; }
+::-webkit-scrollbar-track { background: #f0f8ff; }
 
 .screen {
   display: none;
-  padding: 20px;
   min-height: 100vh;
+  padding: 20px;
 }
-.screen.active {
-  display: block;
-  animation: fadeIn 0.6s ease;
-}
+.screen.active { display: block; }
 
-@keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity: 1;}
-}
-
-h1, h2 {
-  color: darkblue;
-}
+h1, h2 { color: darkblue; }
 
 button {
-  margin-top: 15px;
+  margin: 12px;
   padding: 12px 24px;
   font-size: 16px;
   border: none;
@@ -45,28 +29,36 @@ button {
   background: darkblue;
   color: white;
   cursor: pointer;
+  transition: 0.2s;
 }
-button:hover {
-  background: #004080;
+button:hover { background: #003366; }
+
+/* Back buttons */
+.back-btn {
+  background: gray;
+  font-size: 14px;
+  padding: 8px 16px;
 }
+.back-btn:hover { background: #555; }
 
 input, select {
-  padding: 8px;
   margin: 6px;
-  border: 1px solid #ccc;
+  padding: 8px;
   border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 220px;
 }
 
-#welcome-screen {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
+/* Center welcome screen */
 .welcome-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  justify-content: center;
   align-items: center;
+  height: 100vh;
+}
+.tagline {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #003366;
 }
