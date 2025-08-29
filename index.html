@@ -2,122 +2,304 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VoyageX</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #003973, #e5e5be);
+      color: #fff;
+      height: 100vh;
+      overflow-y: scroll;
+    }
+
+    #app {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1, h2, h3, p {
+      margin-bottom: 20px;
+    }
+
+    button {
+      background: #004aad;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 20px;
+      margin: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #003080;
+    }
+
+    input {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      margin: 10px 0;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #001f3f;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #004aad;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body>
-  <!-- Screen 1: Welcome -->
-  <div class="screen active" id="welcome-screen">
-    <div class="welcome-container">
-      <h1>VoyageX</h1>
-      <p class="tagline">Turn miles into smiles</p>
-      <button onclick="goToScreen('travel-screen')">Confirm</button>
-    </div>
-  </div>
+  <div id="app"></div>
 
-  <!-- Screen 2: Travel Choice -->
-  <div class="screen" id="travel-screen">
-    <h2>Choose Travel Type</h2>
-    <button onclick="chooseTravel('domestic')">Domestic</button>
-    <button onclick="chooseTravel('international')">International</button>
-  </div>
+  <script>
+    const app = document.getElementById("app");
+    let booking = {
+      tripType: "",
+      destination: "",
+      flight: "",
+      seat: "",
+      date: "",
+      passengerName: "",
+      passengerAge: 0,
+      returnTrip: false,
+      returnFlight: "",
+      returnSeat: "",
+      returnDate: "",
+      price: 0
+    };
 
-  <!-- Screen 3: Passenger Details -->
-  <div class="screen" id="details-screen">
-    <h2>Passenger Details</h2>
-    <form id="details-form">
-      <input type="text" id="name" placeholder="Full Name" required><br>
-      <input type="number" id="age" placeholder="Age" required><br>
-      <input type="text" id="destination" placeholder="Destination" required><br>
-      <input type="tel" id="phone" placeholder="Phone Number" required><br>
-      <input type="email" id="email" placeholder="Email" required><br>
-      <label>Date of Departure: <input type="date" id="departure-date" required></label><br>
-      <button type="submit">Continue</button>
-    </form>
-  </div>
+    function render(content) {
+      app.innerHTML = content;
+    }
 
-  <!-- Screen 4: Flight Options -->
-  <div class="screen" id="flight-screen">
-    <h2>Select Flight Options</h2>
-    <label>Airline: <select id="airline"></select></label><br>
-    <label>Seat Type:
-      <select id="seat-type">
-        <option value="economy">Economy</option>
-        <option value="premium">Premium Economy</option>
-        <option value="business">Business</option>
-      </select>
-    </label><br>
-    <label>Flight Time:
-      <select id="flight-time">
-        <option>06:00 AM</option>
-        <option>11:30 AM</option>
-        <option>04:45 PM</option>
-        <option>10:15 PM</option>
-      </select>
-    </label><br>
-    <button onclick="finishFlightSelection()">Continue</button>
-  </div>
+    // Welcome screen
+    function showWelcome() {
+      render(`
+        <h1>VoyageX</h1>
+        <h2>Turn miles into smiles ✈️</h2>
+        <button onclick="chooseTravel()">Continue</button>
+      `);
+    }
 
-  <!-- Screen 5: Return Flight Question -->
-  <div class="screen" id="return-question-screen">
-    <h2>Do you want to book a return flight?</h2>
-    <button onclick="handleReturnChoice(true)">Yes</button>
-    <button onclick="handleReturnChoice(false)">No</button>
-  </div>
+    // Travel type
+    function chooseTravel() {
+      render(`
+        <h2>Where do you want to travel?</h2>
+        <button onclick="chooseFlight('Domestic')">Domestic</button>
+        <button onclick="chooseFlight('International')">International</button>
+        <br>
+        <button onclick="showWelcome()">⬅ Back</button>
+      `);
+    }
 
-  <!-- Screen 6: Return Flight Options -->
-  <div class="screen" id="return-flight-screen">
-    <h2>Return Flight Options</h2>
-    <label>Airline: <select id="return-airline"></select></label><br>
-    <label>Seat Type:
-      <select id="return-seat-type">
-        <option value="economy">Economy</option>
-        <option value="premium">Premium Economy</option>
-        <option value="business">Business</option>
-      </select>
-    </label><br>
-    <label>Flight Time:
-      <select id="return-flight-time">
-        <option>06:00 AM</option>
-        <option>11:30 AM</option>
-        <option>04:45 PM</option>
-        <option>10:15 PM</option>
-      </select>
-    </label><br>
-    <label>Return Date: <input type="date" id="return-date"></label><br>
-    <button onclick="finishReturnFlightSelection()">Continue</button>
-  </div>
+    // Destination
+    function chooseFlight(type) {
+      booking.tripType = type;
+      let destinations = type === "Domestic"
+        ? ["Mumbai", "Bangalore", "Delhi", "Chennai", "Hyderabad", "Kolkata"]
+        : ["London", "Paris", "New York", "Sydney", "Dubai", "Singapore", "Tokyo"];
 
-  <!-- Screen 7: Summary -->
-  <div class="screen" id="summary-screen">
-    <h2>Booking Summary</h2>
-    <div id="summary-details"></div>
-    <button onclick="goToConfirmation()">Confirm Booking</button>
-  </div>
+      let destButtons = destinations.map(d => `<button onclick="selectDestination('${d}')">${d}</button>`).join("");
 
-  <!-- Screen 8: Confirmation -->
-  <div class="screen" id="confirmation-screen">
-    <h2 id="confirmation-caption"></h2>
-    <p>Your booking has been confirmed!</p>
-    <button onclick="goToBoardingPass()">View Boarding Pass</button>
-  </div>
+      render(`
+        <h2>Select your destination (${type})</h2>
+        ${destButtons}
+        <br>
+        <button onclick="chooseTravel()">⬅ Back</button>
+      `);
+    }
 
-  <!-- Screen 9: Boarding Pass -->
-  <div class="screen" id="boarding-pass-screen">
-    <h2>Boarding Pass</h2>
-    <div id="boarding-pass">
-      <p id="boarding-pass-details"></p>
-      <div id="qrcode"></div>
-    </div>
-    <button onclick="goToScreen('thanks-screen')">Finish</button>
-  </div>
+    // Flight time
+    function selectDestination(dest) {
+      booking.destination = dest;
+      render(`
+        <h2>Choose your flight time</h2>
+        <button onclick="chooseSeat('6:00 AM')">6:00 AM</button>
+        <button onclick="chooseSeat('12:00 PM')">12:00 PM</button>
+        <button onclick="chooseSeat('6:00 PM')">6:00 PM</button>
+        <br>
+        <button onclick="chooseFlight('${booking.tripType}')">⬅ Back</button>
+      `);
+    }
 
-  <!-- Screen 10: Thanks -->
-  <div class="screen" id="thanks-screen">
-    <h1>Thanks for using VoyageX!</h1>
-  </div>
+    // Seat type
+    function chooseSeat(time) {
+      booking.flight = time;
+      render(`
+        <h2>Select your seat type</h2>
+        <button onclick="enterDate('Economy')">Economy</button>
+        <button onclick="enterDate('Premium Economy')">Premium Economy</button>
+        <button onclick="enterDate('Business')">Business Class</button>
+        <br>
+        <button onclick="selectDestination('${booking.destination}')">⬅ Back</button>
+      `);
+    }
 
-  <script src="script.js"></script>
+    // Date
+    function enterDate(seat) {
+      booking.seat = seat;
+      render(`
+        <h2>Select Departure Date</h2>
+        <input type="date" id="departDate"><br><br>
+        <button onclick="enterDetails()">Next</button>
+        <br>
+        <button onclick="chooseSeat('${booking.flight}')">⬅ Back</button>
+      `);
+    }
+
+    // Passenger details
+    function enterDetails() {
+      booking.date = document.getElementById("departDate").value;
+      render(`
+        <h2>Enter Passenger Details</h2>
+        <input type="text" id="pname" placeholder="Passenger Name"><br>
+        <input type="number" id="page" placeholder="Passenger Age"><br><br>
+        <button onclick="checkAge()">Continue</button>
+        <br>
+        <button onclick="enterDate('${booking.seat}')">⬅ Back</button>
+      `);
+    }
+
+    // Age check
+    function checkAge() {
+      booking.passengerName = document.getElementById("pname").value;
+      booking.passengerAge = parseInt(document.getElementById("page").value);
+
+      if (booking.passengerAge < 3) {
+        render(`
+          <h2>Passenger not allowed ❌</h2>
+          <p>Passenger can’t even wipe their ass properly, so they aren’t allowed to fly 🚫</p>
+          <br>
+          <button onclick="enterDetails()">⬅ Back</button>
+        `);
+      } else {
+        askReturn();
+      }
+    }
+
+    // Return flight option
+    function askReturn() {
+      render(`
+        <h2>Do you want to book a return flight?</h2>
+        <button onclick="chooseReturn(true)">Yes</button>
+        <button onclick="chooseReturn(false)">No</button>
+        <br>
+        <button onclick="enterDetails()">⬅ Back</button>
+      `);
+    }
+
+    function chooseReturn(choice) {
+      booking.returnTrip = choice;
+      if (choice) {
+        render(`
+          <h2>Select Return Flight Time</h2>
+          <button onclick="chooseReturnSeat('6:00 AM')">6:00 AM</button>
+          <button onclick="chooseReturnSeat('12:00 PM')">12:00 PM</button>
+          <button onclick="chooseReturnSeat('6:00 PM')">6:00 PM</button>
+          <br>
+          <button onclick="askReturn()">⬅ Back</button>
+        `);
+      } else {
+        showSummary();
+      }
+    }
+
+    function chooseReturnSeat(time) {
+      booking.returnFlight = time;
+      render(`
+        <h2>Select Return Seat</h2>
+        <button onclick="chooseReturnDate('Economy')">Economy</button>
+        <button onclick="chooseReturnDate('Premium Economy')">Premium Economy</button>
+        <button onclick="chooseReturnDate('Business')">Business Class</button>
+        <br>
+        <button onclick="chooseReturn(true)">⬅ Back</button>
+      `);
+    }
+
+    function chooseReturnDate(seat) {
+      booking.returnSeat = seat;
+      render(`
+        <h2>Select Return Date</h2>
+        <input type="date" id="returnDate"><br><br>
+        <button onclick="finalizeReturn()">Continue</button>
+        <br>
+        <button onclick="chooseReturnSeat('${booking.returnFlight}')">⬅ Back</button>
+      `);
+    }
+
+    function finalizeReturn() {
+      booking.returnDate = document.getElementById("returnDate").value;
+      showSummary();
+    }
+
+    // Summary screen
+    function showSummary() {
+      render(`
+        <h2>Booking Summary</h2>
+        <p><b>Name:</b> ${booking.passengerName}</p>
+        <p><b>Age:</b> ${booking.passengerAge}</p>
+        <p><b>Destination:</b> ${booking.destination}</p>
+        <p><b>Flight Time:</b> ${booking.flight}</p>
+        <p><b>Seat:</b> ${booking.seat}</p>
+        <p><b>Date:</b> ${booking.date}</p>
+        ${booking.returnTrip ? `<p><b>Return Flight:</b> ${booking.returnFlight}, ${booking.returnSeat}, ${booking.returnDate}</p>` : ""}
+        <button onclick="showConfirmation()">Confirm Booking</button>
+        <br>
+        <button onclick="askReturn()">⬅ Back</button>
+      `);
+    }
+
+    // Confirmation
+    function showConfirmation() {
+      render(`
+        <h2>Congratulations 🎉</h2>
+        <p>Your booking to <b>${booking.destination}</b> is confirmed!</p>
+        <button onclick="showBoardingPass()">View Boarding Pass</button>
+        <br>
+        <button onclick="showSummary()">⬅ Back</button>
+      `);
+    }
+
+    // Boarding pass
+    function showBoardingPass() {
+      render(`
+        <h2>Boarding Pass 🎫</h2>
+        <p><b>Passenger:</b> ${booking.passengerName}</p>
+        <p><b>Flight:</b> ${booking.flight}</p>
+        <p><b>Seat:</b> ${booking.seat}</p>
+        <p><b>Destination:</b> ${booking.destination}</p>
+        <button onclick="thankYou()">Finish</button>
+        <br>
+        <button onclick="showConfirmation()">⬅ Back</button>
+      `);
+    }
+
+    // Thank you screen
+    function thankYou() {
+      render(`
+        <h1>Thanks for using VoyageX! 🙏</h1>
+        <button onclick="showWelcome()">Book Again</button>
+      `);
+    }
+
+    // Start app
+    showWelcome();
+  </script>
 </body>
 </html>
