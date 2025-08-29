@@ -1,173 +1,141 @@
-let bookingData = {
-  type: "",
-  name: "",
-  destination: "",
-  customers: 1,
-  age: 0,
-  phone: "",
-  email: "",
-  departureDate: "",
-  returnDate: "",
-  flight: "",
-  seat: "",
-  time: "",
-  price: 0,
-  returnFlight: false,
-  returnDetails: {}
-};
+let bookingData = {};
 
+// Go to screen
 function goToScreen(id) {
   document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
   document.getElementById(id).classList.add("active");
 }
 
-// Choose Domestic or International
-function chooseType(type) {
-  bookingData.type = type;
-  const destSelect = document.getElementById("destination");
-  destSelect.innerHTML = "";
+// Travel choice
+function chooseTravel(type) {
+  bookingData.travelType = type;
+  // Populate airlines
+  let airlines = (type === "international")
+    ? ["Emirates", "Singapore Airlines", "Vistara", "Qatar Airways"]
+    : ["IndiGo", "Air India", "Akasa Air", "Vistara"];
 
-  let options = [];
-  if (type === "domestic") {
-    options = ["Mumbai", "Bangalore", "Delhi", "Chennai", "Hyderabad"];
-  } else {
-    options = ["New York", "London", "Paris", "Dubai", "Singapore", "Tokyo", "Sydney"];
-  }
+  let select = document.getElementById("airline");
+  select.innerHTML = airlines.map(a => `<option>${a}</option>`).join("");
 
-  options.forEach(city => {
-    let opt = document.createElement("option");
-    opt.value = city;
-    opt.textContent = city;
-    destSelect.appendChild(opt);
-  });
+  let returnSelect = document.getElementById("return-airline");
+  returnSelect.innerHTML = airlines.map(a => `<option>${a}</option>`).join("");
 
-  goToScreen("detailsScreen");
+  goToScreen("details-screen");
 }
 
-// Flight Options
-function generateFlights() {
-  const flightContainer = document.getElementById("flightOptions");
-  flightContainer.innerHTML = `
-    <button onclick="selectFlight('VoyageX Air 101')">VoyageX Air 101</button>
-    <button onclick="selectFlight('VoyageX Air 202')">VoyageX Air 202</button>
-    <button onclick="selectFlight('VoyageX Air 303')">VoyageX Air 303</button>
-  `;
-}
-generateFlights();
+// Handle details form
+document.getElementById("details-form").addEventListener("submit", e => {
+  e.preventDefault();
+  bookingData.name = document.getElementById("name").value;
+  bookingData.age = document.getElementById("age").value;
+  bookingData.destination = document.getElementById("destination").value;
+  bookingData.phone = document.getElementById("phone").value;
+  bookingData.email = document.getElementById("email").value;
+  bookingData.departureDate = document.getElementById("departure-date").value;
+  bookingData.returnDate = document.getElementById("return-date").value;
 
-function selectFlight(flight) {
-  bookingData.flight = flight;
+  goToScreen("flight-screen");
+});
+
+// Finish first flight selection
+function finishFlightSelection() {
+  bookingData.airline = document.getElementById("airline").value;
+  bookingData.seatType = document.getElementById("seat-type").value;
+  bookingData.flightTime = document.getElementById("flight-time").value;
+
+  goToScreen("return-question-screen");
 }
 
-function selectSeat(seat) {
-  bookingData.seat = seat;
-}
-
-function selectTime(time) {
-  bookingData.time = time;
-}
-
-// Return Flight Choice
-function bookReturn(choice) {
-  bookingData.returnFlight = choice;
+// Return choice
+function handleReturnChoice(choice) {
+  bookingData.hasReturn = choice;
   if (choice) {
-    goToScreen("returnFlightScreen");
+    goToScreen("return-flight-screen");
   } else {
-    goToScreen("summaryScreen");
     showSummary();
   }
 }
 
-// Return Flight Selections
-function selectReturnSeat(seat) {
-  bookingData.returnDetails.seat = seat;
+// Return flight selection
+function finishReturnFlightSelection() {
+  bookingData.returnAirline = document.getElementById("return-airline").value;
+  bookingData.returnSeatType = document.getElementById("return-seat-type").value;
+  bookingData.returnFlightTime = document.getElementById("return-flight-time").value;
+  bookingData.returnFlightDate = document.getElementById("return-flight-date").value;
+  showSummary();
 }
 
-function selectReturnTime(time) {
-  bookingData.returnDetails.time = time;
-}
-
-// Show Summary
+// Summary
 function showSummary() {
-  // collect form values
-  bookingData.name = document.getElementById("name").value;
-  bookingData.destination = document.getElementById("destination").value;
-  bookingData.customers = parseInt(document.getElementById("customers").value);
-  bookingData.age = parseInt(document.getElementById("age").value);
-  bookingData.phone = document.getElementById("phone").value;
-  bookingData.email = document.getElementById("email").value;
-  bookingData.departureDate = document.getElementById("departureDate").value;
-  bookingData.returnDate = document.getElementById("returnDate").value;
+  let basePrice = bookingData.travelType === "international" ? 60000 : 30000;
+  let discount = bookingData.travelType === "international" ? 0.35 : 0.25;
 
-  let basePrice = 20000; // base ticket
-  let depDate = new Date(bookingData.departureDate);
-  let now = new Date();
+  let departureDate = new Date(bookingData.departureDate);
+  let today = new Date();
+  let price = basePrice;
 
-  // price logic
-  if ((depDate - now) / (1000 * 60 * 60 * 24) < 30) {
-    basePrice += 10000;
-  }
-  if (depDate.getMonth() === 11) { // December
-    basePrice += 15000;
-  }
+  // Less than 1 month → +10k
+  let oneMonthLater = new Date();
+  oneMonthLater.setMonth(today.getMonth() + 1);
+  if (departureDate < oneMonthLater) price += 10000;
 
-  // seat multiplier
-  if (bookingData.seat === "Premium Economy") basePrice *= 1.05;
-  if (bookingData.seat === "Business") basePrice *= 1.2;
+  // Christmas
+  if (departureDate.getMonth() === 11 && departureDate.getDate() >= 20) price += 15000;
 
-  bookingData.price = basePrice * bookingData.customers;
+  // Seat type adjustment
+  if (bookingData.seatType === "premium") price *= 1.05;
+  if (bookingData.seatType === "business") price *= 1.20;
 
-  let summaryDiv = document.getElementById("summaryDetails");
-  summaryDiv.innerHTML = `
-    <p><strong>Name:</strong> ${bookingData.name}</p>
-    <p><strong>Destination:</strong> ${bookingData.destination}</p>
-    <p><strong>Flight:</strong> ${bookingData.flight}</p>
-    <p><strong>Seat:</strong> ${bookingData.seat}</p>
-    <p><strong>Time:</strong> ${bookingData.time}</p>
-    <p><strong>Departure:</strong> ${bookingData.departureDate}</p>
-    <p><strong>Total Price:</strong> ₹${bookingData.price}</p>
+  bookingData.price = price - (price * discount);
+
+  let summary = `
+    Name: ${bookingData.name}<br>
+    Destination: ${bookingData.destination}<br>
+    Airline: ${bookingData.airline}<br>
+    Seat: ${bookingData.seatType}<br>
+    Flight Time: ${bookingData.flightTime}<br>
+    Departure: ${bookingData.departureDate}<br>
+    Price: ₹${bookingData.price.toFixed(2)}<br>
   `;
+
+  if (bookingData.hasReturn) {
+    summary += `
+      Return Airline: ${bookingData.returnAirline}<br>
+      Seat: ${bookingData.returnSeatType}<br>
+      Flight Time: ${bookingData.returnFlightTime}<br>
+      Return Date: ${bookingData.returnFlightDate}<br>
+    `;
+  }
+
+  document.getElementById("summary-details").innerHTML = summary;
+  goToScreen("summary-screen");
 }
 
-// Confirmation Screen
-function showConfirmation() {
-  document.getElementById("confirmationCaption").textContent =
-    "Congratulations, " + bookingData.name + "! Your booking is confirmed.";
-  document.getElementById("confirmationDetails").innerHTML = `
-    <p><strong>Flight:</strong> ${bookingData.flight}</p>
-    <p><strong>Destination:</strong> ${bookingData.destination}</p>
-    <p><strong>Date:</strong> ${bookingData.departureDate}</p>
-    <p><strong>Seat:</strong> ${bookingData.seat}</p>
-    <p><strong>Time:</strong> ${bookingData.time}</p>
-  `;
+// Confirmation
+function goToConfirmation() {
+  document.getElementById("confirmation-caption").innerText =
+    bookingData.travelType === "international"
+      ? "Beyond borders, beyond ordinary"
+      : "Where every journey becomes a story";
+  goToScreen("confirmation-screen");
 }
-document.querySelector("#summaryScreen button").addEventListener("click", showConfirmation);
 
-// Boarding Pass with QR
-function generateBoardingPass() {
-  const pass = `
-    <h3>VoyageX Boarding Pass</h3>
-    <p>Name: ${bookingData.name}</p>
-    <p>Flight: ${bookingData.flight}</p>
-    <p>Destination: ${bookingData.destination}</p>
-    <p>Seat: ${bookingData.seat}</p>
-    <p>Time: ${bookingData.time}</p>
-    <p>Date: ${bookingData.departureDate}</p>
+// Boarding pass
+function goToBoardingPass() {
+  let details = `
+    Passenger: ${bookingData.name}<br>
+    Destination: ${bookingData.destination}<br>
+    Airline: ${bookingData.airline}<br>
+    Seat: ${bookingData.seatType}<br>
+    Departure: ${bookingData.departureDate}<br>
   `;
-  document.getElementById("boardingPass").innerHTML = pass;
+  document.getElementById("boarding-pass-details").innerHTML = details;
 
-  // Simple QR (fake for now)
-  const canvas = document.getElementById("qrcode");
-  const ctx = canvas.getContext("2d");
-  canvas.width = 120;
-  canvas.height = 120;
-  ctx.fillStyle = "black";
-  ctx.fillRect(0, 0, 120, 120);
-  ctx.fillStyle = "white";
-  for (let i = 0; i < 120; i += 20) {
-    for (let j = 0; j < 120; j += 20) {
-      if (Math.random() > 0.5) ctx.fillRect(i, j, 20, 20);
-    }
-  }
+  let qr = new QRCode(document.getElementById("qrcode"), {
+    text: JSON.stringify(bookingData),
+    width: 128,
+    height: 128
+  });
+
+  goToScreen("boarding-pass-screen");
 }
-document.querySelector("#confirmationScreen button").addEventListener("click", generateBoardingPass);
