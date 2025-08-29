@@ -1,72 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>VoyageX - Ticket Booking</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>VoyageX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="app">
-    <!-- Screen 1 -->
-    <section class="screen active" id="screen1">
-      <h1>Welcome to <span class="highlight">VoyageX</span></h1>
-      <button onclick="goToScreen(2)">Continue</button>
-    </section>
+  <!-- Screen 1: Welcome -->
+  <section class="screen active" id="screen1">
+    <h1><strong>Welcome To VoyageX</strong></h1>
+    <p class="tagline">Turn miles into smiles!</p>
+    <button class="primary" onclick="goToType()">Continue</button>
+  </section>
 
-    <!-- Screen 2 -->
-    <section class="screen" id="screen2">
-      <h2>Where do you want to travel?</h2>
-      <button onclick="chooseType('domestic')">Domestic</button>
-      <button onclick="chooseType('international')">International</button>
-    </section>
+  <!-- Screen 2: Travel Type -->
+  <section class="screen" id="screen2">
+    <h2>Where do you want to travel?</h2>
+    <div class="btn-row">
+      <button class="primary" onclick="setType('domestic')">Domestic</button>
+      <button class="primary" onclick="setType('international')">International</button>
+    </div>
+  </section>
 
-    <!-- Screen 3 -->
-    <section class="screen" id="screen3">
-      <h2>Choose Your Destination</h2>
-      <div id="destinations"></div>
-    </section>
+  <!-- Screen 3: Destination -->
+  <section class="screen" id="screen3">
+    <h2>Select your destination</h2>
+    <div id="destinations" class="grid"></div>
+    <div class="nav-row">
+      <button class="ghost" onclick="backTo('screen2')">Back</button>
+    </div>
+  </section>
 
-    <!-- Screen 4 -->
-    <section class="screen" id="screen4">
-      <h2>Enter Your Details</h2>
-      <form id="detailsForm">
-        <input type="text" id="name" placeholder="Full Name" required>
-        <input type="email" id="email" placeholder="Email" required>
-        <input type="tel" id="phone" placeholder="Phone Number" required>
-        <input type="number" id="customers" placeholder="Number of Customers" required>
-        <input type="number" id="age" placeholder="Age" required>
-        <input type="date" id="departure" required>
-        <input type="date" id="return" required>
-        <select id="flight"></select>
-        <button type="submit">Continue</button>
-      </form>
-    </section>
+  <!-- Screen 4: Flight selection (with seat class & times) -->
+  <section class="screen" id="screen4">
+    <h2>Choose your flight</h2>
 
-    <!-- Screen 5 -->
-    <section class="screen" id="screen5">
-      <h2>Booking Summary</h2>
-      <div id="summary"></div>
-      <button onclick="confirmBooking()">Confirm Booking</button>
-    </section>
+    <div id="flightList" class="grid"></div>
 
-    <!-- Screen 6 -->
-    <section class="screen" id="screen6">
-      <h2>Boarding Pass</h2>
-      <div id="boardingPass">
-        <h3>VoyageX</h3>
-        <p><strong>Name:</strong> <span id="bpName"></span></p>
-        <p><strong>Destination:</strong> <span id="bpDestination"></span></p>
-        <p><strong>Flight:</strong> <span id="bpFlight"></span></p>
-        <p><strong>Departure:</strong> <span id="bpDeparture"></span></p>
-        <p><strong>Return:</strong> <span id="bpReturn"></span></p>
-        <p><strong>Seat:</strong> <span id="bpSeat"></span></p>
-        <div id="qrcode"></div>
+    <div class="flight-extra">
+      <div class="seat-classes">
+        <label><input type="radio" name="seatClass" value="Economy" checked /> Economy</label>
+        <label><input type="radio" name="seatClass" value="Premium Economy" /> Premium Economy</label>
+        <label><input type="radio" name="seatClass" value="Business" /> Business</label>
       </div>
-      <h3>Congratulations 🎉 Your booking is confirmed!</h3>
-    </section>
-  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+      <div class="time-slots" id="timeSlots">
+        <!-- time buttons will appear here after choosing a flight -->
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="ghost" onclick="backTo('screen3')">Back</button>
+      <button class="primary" id="flightContinue" disabled onclick="goToDetails()">Continue</button>
+    </div>
+  </section>
+
+  <!-- Screen 5: Passenger details -->
+  <section class="screen" id="screen5">
+    <h2>Enter your details</h2>
+    <form id="detailsForm">
+      <input type="text" id="name" placeholder="Full Name" required />
+      <input type="tel" id="phone" placeholder="Phone Number" required />
+      <input type="email" id="email" placeholder="Email ID" required />
+      <input type="number" id="customers" min="1" value="1" placeholder="Number of Customers" required />
+      <input type="number" id="age" min="1" placeholder="Age (Lead Passenger)" required />
+
+      <label class="date-label">Departure Date</label>
+      <input type="date" id="departure" required />
+      <label class="date-label">Return Date</label>
+      <input type="date" id="returnDate" required />
+
+      <div class="nav-row">
+        <button type="button" class="ghost" onclick="backTo('screen4')">Back</button>
+        <button type="submit" class="primary">See Summary</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Screen 6: Summary -->
+  <section class="screen" id="screen6">
+    <h2>Booking Summary</h2>
+    <div id="summaryBox" class="card"></div>
+    <div class="nav-row">
+      <button class="ghost" onclick="backTo('screen5')">Back</button>
+      <button class="primary" onclick="confirmAndShowPass()">Confirm & Get Boarding Pass</button>
+    </div>
+  </section>
+
+  <!-- Screen 7: Boarding Pass (with Congratulations) -->
+  <section class="screen" id="screen7">
+    <h2>Congratulations 🎉</h2>
+    <p class="tagline success">Your booking is confirmed!</p>
+
+    <div class="boarding-pass">
+      <div class="bp-left">
+        <div class="bp-brand">VoyageX</div>
+        <div class="bp-row"><span>Passenger</span><strong id="bpName"></strong></div>
+        <div class="bp-row"><span>Type</span><strong id="bpType"></strong></div>
+        <div class="bp-row"><span>Destination</span><strong id="bpDestination"></strong></div>
+        <div class="bp-row"><span>Flight</span><strong id="bpFlight"></strong></div>
+        <div class="bp-row"><span>Seat Class</span><strong id="bpSeatClass"></strong></div>
+        <div class="bp-row"><span>Time</span><strong id="bpTime"></strong></div>
+        <div class="bp-row two">
+          <div><span>Depart</span><strong id="bpDepart"></strong></div>
+          <div><span>Return</span><strong id="bpReturn"></strong></div>
+        </div>
+        <div class="bp-row two">
+          <div><span>Passengers</span><strong id="bpCust"></strong></div>
+          <div><span>Seat</span><strong id="bpSeat"></strong></div>
+        </div>
+        <div class="bp-row total"><span>Total</span><strong id="bpTotal"></strong></div>
+      </div>
+      <div class="bp-right">
+        <div id="qrcode"></div>
+        <div class="bp-code" id="bpCode"></div>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="primary" onclick="backTo('screen1')">Book Another Trip</button>
+    </div>
+  </section>
+
+  <!-- QR library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
