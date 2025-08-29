@@ -1,64 +1,57 @@
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom, #87ceeb, #f0f8ff);
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to right, #003973, #e5e5be);
+  color: #fff;
+  height: 100vh;
   overflow-y: scroll;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
   text-align: center;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 12px; }
-::-webkit-scrollbar-thumb { background: darkblue; border-radius: 6px; }
-::-webkit-scrollbar-track { background: #f0f8ff; }
-
-.screen {
-  display: none;
-  min-height: 100vh;
-  padding: 20px;
+h1, h2, h3, p {
+  margin-bottom: 20px;
 }
-.screen.active { display: block; }
-
-h1, h2 { color: darkblue; }
 
 button {
-  margin: 12px;
-  padding: 12px 24px;
-  font-size: 16px;
+  background: #004aad;
+  color: #fff;
   border: none;
   border-radius: 8px;
-  background: darkblue;
-  color: white;
+  padding: 12px 20px;
+  margin: 10px;
+  font-size: 16px;
   cursor: pointer;
-  transition: 0.2s;
-}
-button:hover { background: #003366; }
-
-/* Back buttons */
-.back-btn {
-  background: gray;
-  font-size: 14px;
-  padding: 8px 16px;
-}
-.back-btn:hover { background: #555; }
-
-input, select {
-  margin: 6px;
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  width: 220px;
+  transition: background 0.3s ease;
 }
 
-/* Center welcome screen */
-.welcome-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+button:hover {
+  background: #003080;
 }
-.tagline {
-  font-size: 18px;
-  margin-bottom: 20px;
-  color: #003366;
+
+input {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  margin: 10px 0;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #001f3f;
+}
+::-webkit-scrollbar-thumb {
+  background: #004aad;
+  border-radius: 5px;
 }
