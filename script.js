@@ -1,254 +1,173 @@
-// --------- STATE ---------
-const state = {
-  type: "",               // "domestic" | "international"
-  destination: "",
-  flight: "",             // flight code/name
-  time: "",               // chosen time slot
-  seatClass: "Economy",
+let bookingData = {
+  type: "",
   name: "",
+  destination: "",
+  customers: 1,
+  age: 0,
   phone: "",
   email: "",
-  customers: 1,
-  age: 1,
-  departure: "",
+  departureDate: "",
   returnDate: "",
-  totalPrice: 0
+  flight: "",
+  seat: "",
+  time: "",
+  price: 0,
+  returnFlight: false,
+  returnDetails: {}
 };
 
-// Destinations
-const DOMESTIC = [
-  "Mumbai","Bengaluru","Chennai","Delhi","Hyderabad","Thiruvananthapuram","Kolkata","Jaipur","Srinagar"
-];
-const INTERNATIONAL = [
-  "New York","Sydney","Paris","London","Tokyo","Singapore","Dubai","Maldives","Bali","Zurich"
-];
-
-// Flights per type
-const FLIGHTS = {
-  domestic: [
-    { name: "IndiGo 6E-202", times: ["06:30","12:15","22:10"] },
-    { name: "Air India AI-301", times: ["08:00","14:45","20:30"] },
-    { name: "Akasa Air QP-110", times: ["07:20","13:35","21:05"] }
-  ],
-  international: [
-    { name: "Emirates EK-500", times: ["07:20","15:10","23:40"] },
-    { name: "Singapore Airlines SQ-423", times: ["02:50","11:35","19:25"] },
-    { name: "Qatar Airways QR-572", times: ["01:15","09:45","18:10"] },
-    { name: "Vistara UK-105", times: ["06:10","13:55","22:05"] }
-  ]
-};
-
-// --------- NAV ---------
-function show(screenId){
+function goToScreen(id) {
   document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
-  document.getElementById(screenId).classList.add("active");
-  window.scrollTo({ top: 0, behavior: "instant" });
-}
-function backTo(screenId){ show(screenId); }
-
-function goToType(){ show("screen2"); }
-
-function setType(type){
-  state.type = type;
-  populateDestinations();
-  show("screen3");
+  document.getElementById(id).classList.add("active");
 }
 
-function populateDestinations(){
-  const wrap = document.getElementById("destinations");
-  wrap.innerHTML = "";
-  const list = state.type === "domestic" ? DOMESTIC : INTERNATIONAL;
-  list.forEach(city => {
-    const b = document.createElement("button");
-    b.className = "primary";
-    b.textContent = city;
-    b.onclick = () => selectDestination(city);
-    wrap.appendChild(b);
-  });
-}
+// Choose Domestic or International
+function chooseType(type) {
+  bookingData.type = type;
+  const destSelect = document.getElementById("destination");
+  destSelect.innerHTML = "";
 
-function selectDestination(city){
-  state.destination = city;
-  populateFlights();
-  show("screen4");
-}
-
-function populateFlights(){
-  const list = FLIGHTS[state.type] || [];
-  const container = document.getElementById("flightList");
-  const timeSlots = document.getElementById("timeSlots");
-  const continueBtn = document.getElementById("flightContinue");
-
-  container.innerHTML = "";
-  timeSlots.innerHTML = "";
-  state.flight = "";
-  state.time = "";
-  continueBtn.disabled = true;
-
-  list.forEach(f => {
-    const btn = document.createElement("button");
-    btn.className = "ghost";
-    btn.textContent = f.name;
-    btn.onclick = () => {
-      state.flight = f.name;
-      // Render time slot buttons for the chosen flight
-      timeSlots.innerHTML = "";
-      f.times.forEach(t => {
-        const tb = document.createElement("button");
-        tb.className = "primary";
-        tb.textContent = `${t}`;
-        tb.onclick = () => {
-          state.time = t;
-          continueBtn.disabled = false;
-          // visual selection cue
-          [...timeSlots.querySelectorAll("button")].forEach(x=>x.classList.remove("selected"));
-          tb.classList.add("selected");
-        };
-        timeSlots.appendChild(tb);
-      });
-      // Visual selection cue for flight
-      [...container.querySelectorAll("button")].forEach(x=>x.classList.remove("selected"));
-      btn.classList.add("selected");
-    };
-    container.appendChild(btn);
-  });
-
-  // seat class radios
-  document.querySelectorAll("input[name='seatClass']").forEach(r=>{
-    r.onchange = (e)=>{ state.seatClass = e.target.value; };
-  });
-}
-
-function goToDetails(){
-  // ensure seat class is captured (default already set)
-  const checked = document.querySelector("input[name='seatClass']:checked");
-  if (checked) state.seatClass = checked.value;
-  show("screen5");
-}
-
-// --------- DETAILS / SUMMARY / PRICE ---------
-document.getElementById("detailsForm").addEventListener("submit", (e)=>{
-  e.preventDefault();
-  state.name = document.getElementById("name").value.trim();
-  state.phone = document.getElementById("phone").value.trim();
-  state.email = document.getElementById("email").value.trim();
-  state.customers = Math.max(1, parseInt(document.getElementById("customers").value || "1", 10));
-  state.age = Math.max(1, parseInt(document.getElementById("age").value || "1", 10));
-  state.departure = document.getElementById("departure").value;
-  state.returnDate = document.getElementById("returnDate").value;
-
-  // compute price and show summary
-  state.totalPrice = computeTotalPrice();
-  renderSummary();
-  show("screen6");
-});
-
-function computeTotalPrice(){
-  // Base per person per day & discount
-  const basePerDay = state.type === "international" ? 60000 : 30000;
-  const discount = state.type === "international" ? 0.35 : 0.25;
-
-  // day count
-  const dep = new Date(state.departure);
-  const ret = new Date(state.returnDate);
-  let days = Math.ceil((ret - dep) / (1000*60*60*24));
-  if (!isFinite(days) || days < 1) days = 1; // minimum 1 day
-
-  // price before surcharges/discount
-  let perPerson = basePerDay * days;
-
-  // surcharge: departure within 1 month of today
-  const today = new Date();
-  const monthDiff = (dep.getFullYear() - today.getFullYear())*12 + (dep.getMonth() - today.getMonth());
-  if (monthDiff < 1) perPerson += 10000;
-
-  // surcharge: Christmas window Dec 20–31
-  if (dep.getMonth() === 11 && dep.getDate() >= 20 && dep.getDate() <= 31) {
-    perPerson += 15000;
+  let options = [];
+  if (type === "domestic") {
+    options = ["Mumbai", "Bangalore", "Delhi", "Chennai", "Hyderabad"];
+  } else {
+    options = ["New York", "London", "Paris", "Dubai", "Singapore", "Tokyo", "Sydney"];
   }
 
-  // apply discount
-  perPerson = perPerson * (1 - discount);
+  options.forEach(city => {
+    let opt = document.createElement("option");
+    opt.value = city;
+    opt.textContent = city;
+    destSelect.appendChild(opt);
+  });
 
-  // seat class modifier (optional small multiplier)
-  const seatMods = { "Economy": 1, "Premium Economy": 1.25, "Business": 1.6 };
-  perPerson = perPerson * (seatMods[state.seatClass] || 1);
-
-  return Math.round(perPerson * state.customers);
+  goToScreen("detailsScreen");
 }
 
-function renderSummary(){
-  const box = document.getElementById("summaryBox");
-  const currency = `₹${state.totalPrice.toLocaleString('en-IN')}`;
-  box.innerHTML = `
-    <div class="row"><span>Passenger</span><strong>${state.name}</strong></div>
-    <div class="row"><span>Type</span><strong>${capitalize(state.type)}</strong></div>
-    <div class="row"><span>Destination</span><strong>${state.destination}</strong></div>
-    <div class="row"><span>Flight</span><strong>${state.flight}</strong></div>
-    <div class="row"><span>Seat Class</span><strong>${state.seatClass}</strong></div>
-    <div class="row"><span>Time</span><strong>${state.time}</strong></div>
-    <div class="row"><span>Departure</span><strong>${state.departure || "-"}</strong></div>
-    <div class="row"><span>Return</span><strong>${state.returnDate || "-"}</strong></div>
-    <div class="row"><span>Passengers</span><strong>${state.customers}</strong></div>
-    <div class="row total"><span>Total Price</span><strong>${currency}</strong></div>
+// Flight Options
+function generateFlights() {
+  const flightContainer = document.getElementById("flightOptions");
+  flightContainer.innerHTML = `
+    <button onclick="selectFlight('VoyageX Air 101')">VoyageX Air 101</button>
+    <button onclick="selectFlight('VoyageX Air 202')">VoyageX Air 202</button>
+    <button onclick="selectFlight('VoyageX Air 303')">VoyageX Air 303</button>
   `;
-  // style
-  box.querySelectorAll(".row").forEach(r=>{
-    r.style.display="flex";
-    r.style.justifyContent="space-between";
-    r.style.padding="8px 0";
-    r.style.borderBottom="1px dashed #eee";
-  });
-  const last = box.querySelector(".row.total");
-  if (last){ last.style.borderBottom="0"; last.querySelector("strong").style.fontSize="18px"; }
+}
+generateFlights();
+
+function selectFlight(flight) {
+  bookingData.flight = flight;
 }
 
-function confirmAndShowPass(){
-  // Fill boarding pass
-  document.getElementById("bpName").textContent = state.name;
-  document.getElementById("bpType").textContent = capitalize(state.type);
-  document.getElementById("bpDestination").textContent = state.destination;
-  document.getElementById("bpFlight").textContent = state.flight;
-  document.getElementById("bpSeatClass").textContent = state.seatClass;
-  document.getElementById("bpTime").textContent = state.time;
-  document.getElementById("bpDepart").textContent = state.departure || "-";
-  document.getElementById("bpReturn").textContent = state.returnDate || "-";
-  document.getElementById("bpCust").textContent = String(state.customers);
-  document.getElementById("bpTotal").textContent = `₹${state.totalPrice.toLocaleString('en-IN')}`;
-
-  // random seat like 12A
-  const letters = ["A","B","C","D","E","F"];
-  const seat = `${Math.floor(Math.random()*30)+1}${letters[Math.floor(Math.random()*letters.length)]}`;
-  document.getElementById("bpSeat").textContent = seat;
-
-  // booking code
-  const code = makeCode(6);
-  document.getElementById("bpCode").textContent = `PNR: ${code}`;
-
-  // QR
-  const qrWrap = document.getElementById("qrcode");
-  qrWrap.innerHTML = "";
-  new QRCode(qrWrap, {
-    text: `VoyageX | ${code}
-Name: ${state.name}
-Type: ${state.type}
-To: ${state.destination}
-Flight: ${state.flight} (${state.seatClass})
-Depart: ${state.departure} ${state.time}
-Passengers: ${state.customers}
-Total: ₹${state.totalPrice.toLocaleString('en-IN')}`,
-    width: 140,
-    height: 140
-  });
-
-  show("screen7");
+function selectSeat(seat) {
+  bookingData.seat = seat;
 }
 
-// --------- HELPERS ---------
-function capitalize(s){ return s ? s.charAt(0).toUpperCase()+s.slice(1) : s; }
-function makeCode(len){
-  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-  let out = "";
-  for (let i=0;i<len;i++) out += chars[Math.floor(Math.random()*chars.length)];
-  return out;
+function selectTime(time) {
+  bookingData.time = time;
 }
+
+// Return Flight Choice
+function bookReturn(choice) {
+  bookingData.returnFlight = choice;
+  if (choice) {
+    goToScreen("returnFlightScreen");
+  } else {
+    goToScreen("summaryScreen");
+    showSummary();
+  }
+}
+
+// Return Flight Selections
+function selectReturnSeat(seat) {
+  bookingData.returnDetails.seat = seat;
+}
+
+function selectReturnTime(time) {
+  bookingData.returnDetails.time = time;
+}
+
+// Show Summary
+function showSummary() {
+  // collect form values
+  bookingData.name = document.getElementById("name").value;
+  bookingData.destination = document.getElementById("destination").value;
+  bookingData.customers = parseInt(document.getElementById("customers").value);
+  bookingData.age = parseInt(document.getElementById("age").value);
+  bookingData.phone = document.getElementById("phone").value;
+  bookingData.email = document.getElementById("email").value;
+  bookingData.departureDate = document.getElementById("departureDate").value;
+  bookingData.returnDate = document.getElementById("returnDate").value;
+
+  let basePrice = 20000; // base ticket
+  let depDate = new Date(bookingData.departureDate);
+  let now = new Date();
+
+  // price logic
+  if ((depDate - now) / (1000 * 60 * 60 * 24) < 30) {
+    basePrice += 10000;
+  }
+  if (depDate.getMonth() === 11) { // December
+    basePrice += 15000;
+  }
+
+  // seat multiplier
+  if (bookingData.seat === "Premium Economy") basePrice *= 1.05;
+  if (bookingData.seat === "Business") basePrice *= 1.2;
+
+  bookingData.price = basePrice * bookingData.customers;
+
+  let summaryDiv = document.getElementById("summaryDetails");
+  summaryDiv.innerHTML = `
+    <p><strong>Name:</strong> ${bookingData.name}</p>
+    <p><strong>Destination:</strong> ${bookingData.destination}</p>
+    <p><strong>Flight:</strong> ${bookingData.flight}</p>
+    <p><strong>Seat:</strong> ${bookingData.seat}</p>
+    <p><strong>Time:</strong> ${bookingData.time}</p>
+    <p><strong>Departure:</strong> ${bookingData.departureDate}</p>
+    <p><strong>Total Price:</strong> ₹${bookingData.price}</p>
+  `;
+}
+
+// Confirmation Screen
+function showConfirmation() {
+  document.getElementById("confirmationCaption").textContent =
+    "Congratulations, " + bookingData.name + "! Your booking is confirmed.";
+  document.getElementById("confirmationDetails").innerHTML = `
+    <p><strong>Flight:</strong> ${bookingData.flight}</p>
+    <p><strong>Destination:</strong> ${bookingData.destination}</p>
+    <p><strong>Date:</strong> ${bookingData.departureDate}</p>
+    <p><strong>Seat:</strong> ${bookingData.seat}</p>
+    <p><strong>Time:</strong> ${bookingData.time}</p>
+  `;
+}
+document.querySelector("#summaryScreen button").addEventListener("click", showConfirmation);
+
+// Boarding Pass with QR
+function generateBoardingPass() {
+  const pass = `
+    <h3>VoyageX Boarding Pass</h3>
+    <p>Name: ${bookingData.name}</p>
+    <p>Flight: ${bookingData.flight}</p>
+    <p>Destination: ${bookingData.destination}</p>
+    <p>Seat: ${bookingData.seat}</p>
+    <p>Time: ${bookingData.time}</p>
+    <p>Date: ${bookingData.departureDate}</p>
+  `;
+  document.getElementById("boardingPass").innerHTML = pass;
+
+  // Simple QR (fake for now)
+  const canvas = document.getElementById("qrcode");
+  const ctx = canvas.getContext("2d");
+  canvas.width = 120;
+  canvas.height = 120;
+  ctx.fillStyle = "black";
+  ctx.fillRect(0, 0, 120, 120);
+  ctx.fillStyle = "white";
+  for (let i = 0; i < 120; i += 20) {
+    for (let j = 0; j < 120; j += 20) {
+      if (Math.random() > 0.5) ctx.fillRect(i, j, 20, 20);
+    }
+  }
+}
+document.querySelector("#confirmationScreen button").addEventListener("click", generateBoardingPass);
