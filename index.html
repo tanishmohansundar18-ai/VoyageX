@@ -2,108 +2,125 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VoyageX</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
 </head>
 <body>
   <!-- Screen 1: Welcome -->
-  <div class="screen active" id="welcomeScreen">
-    <h1>VoyageX</h1>
-    <p class="caption">Turn miles into smiles</p>
-    <button onclick="goToScreen('chooseTravelType')">Continue</button>
+  <div class="screen active" id="welcome-screen">
+    <div class="welcome-container">
+      <h1>VoyageX</h1>
+      <p class="tagline">Turn miles into smiles</p>
+      <button onclick="goToScreen('travel-choice-screen')">Continue</button>
+    </div>
   </div>
 
-  <!-- Screen 2: Choose Travel Type -->
-  <div class="screen" id="chooseTravelType">
+  <!-- Screen 2: Travel Choice -->
+  <div class="screen" id="travel-choice-screen">
     <h2>Where do you want to travel?</h2>
-    <button onclick="chooseType('domestic')">Domestic</button>
-    <button onclick="chooseType('international')">International</button>
+    <button onclick="chooseTravel('domestic')">Domestic</button>
+    <button onclick="chooseTravel('international')">International</button>
   </div>
 
-  <!-- Screen 3: Travel Details -->
-  <div class="screen" id="detailsScreen">
-    <h2>Enter Your Details</h2>
-    <form id="detailsForm">
-      <label>Name: <input type="text" id="name" required></label><br>
-      <label>Destination: 
-        <select id="destination"></select>
-      </label><br>
-      <label>Number of Customers: <input type="number" id="customers" min="1" value="1"></label><br>
-      <label>Age: <input type="number" id="age" min="1"></label><br>
-      <label>Phone: <input type="text" id="phone"></label><br>
-      <label>Email: <input type="email" id="email"></label><br>
-      <label>Date of Departure: <input type="date" id="departureDate"></label><br>
-      <label>Date of Return: <input type="date" id="returnDate"></label><br>
-      <button type="button" onclick="goToScreen('flightScreen')">Continue</button>
+  <!-- Screen 3: Passenger Details -->
+  <div class="screen" id="details-screen">
+    <h2>VoyageX - Passenger Details</h2>
+    <form id="details-form">
+      <input type="text" id="name" placeholder="Full Name" required><br>
+      <input type="number" id="age" placeholder="Age" required><br>
+      <input type="text" id="destination" placeholder="Destination" required><br>
+      <input type="tel" id="phone" placeholder="Phone Number" required><br>
+      <input type="email" id="email" placeholder="Email" required><br>
+      <label>Date of Departure: <input type="date" id="departure-date" required></label><br>
+      <label>Date of Return: <input type="date" id="return-date"></label><br>
+      <button type="submit">Continue</button>
     </form>
   </div>
 
   <!-- Screen 4: Flight Options -->
-  <div class="screen" id="flightScreen">
-    <h2>Select Your Flight</h2>
-    <div id="flightOptions"></div>
-    <h3>Choose Seat Type</h3>
-    <button onclick="selectSeat('Economy')">Economy</button>
-    <button onclick="selectSeat('Premium Economy')">Premium Economy</button>
-    <button onclick="selectSeat('Business')">Business Class</button>
-    <h3>Choose Departure Time</h3>
-    <button onclick="selectTime('08:00 AM')">08:00 AM</button>
-    <button onclick="selectTime('01:30 PM')">01:30 PM</button>
-    <button onclick="selectTime('09:45 PM')">09:45 PM</button><br><br>
-    <button onclick="goToScreen('returnFlightQuestion')">Continue</button>
+  <div class="screen" id="flight-screen">
+    <h2>Select Flight Options</h2>
+    <label>Airline:
+      <select id="airline"></select>
+    </label><br>
+    <label>Seat Type:
+      <select id="seat-type">
+        <option value="economy">Economy</option>
+        <option value="premium">Premium Economy</option>
+        <option value="business">Business</option>
+      </select>
+    </label><br>
+    <label>Flight Time:
+      <select id="flight-time">
+        <option>06:00 AM</option>
+        <option>11:30 AM</option>
+        <option>04:45 PM</option>
+        <option>10:15 PM</option>
+      </select>
+    </label><br>
+    <button onclick="finishFlightSelection()">Continue</button>
   </div>
 
-  <!-- Screen 5: Return Flight Question -->
-  <div class="screen" id="returnFlightQuestion">
-    <h2>Do you want to book a return flight?</h2>
-    <button onclick="bookReturn(true)">Yes</button>
-    <button onclick="bookReturn(false)">No</button>
+  <!-- Screen 4b: Return Flight? -->
+  <div class="screen" id="return-question-screen">
+    <h2>Do you want to book a return flight too?</h2>
+    <button onclick="handleReturnChoice(true)">Yes</button>
+    <button onclick="handleReturnChoice(false)">No</button>
   </div>
 
-  <!-- Screen 6: Return Flight Options -->
-  <div class="screen" id="returnFlightScreen">
-    <h2>Select Your Return Flight</h2>
-    <div id="returnFlightOptions"></div>
-    <h3>Choose Seat Type</h3>
-    <button onclick="selectReturnSeat('Economy')">Economy</button>
-    <button onclick="selectReturnSeat('Premium Economy')">Premium Economy</button>
-    <button onclick="selectReturnSeat('Business')">Business Class</button>
-    <h3>Choose Return Time</h3>
-    <button onclick="selectReturnTime('07:00 AM')">07:00 AM</button>
-    <button onclick="selectReturnTime('12:15 PM')">12:15 PM</button>
-    <button onclick="selectReturnTime('10:00 PM')">10:00 PM</button><br><br>
-    <label>Date of Return Flight: <input type="date" id="returnFlightDate"></label><br>
-    <button onclick="goToScreen('summaryScreen')">Continue</button>
+  <!-- Screen 4c: Return Flight Options -->
+  <div class="screen" id="return-flight-screen">
+    <h2>Select Return Flight Options</h2>
+    <label>Airline:
+      <select id="return-airline"></select>
+    </label><br>
+    <label>Seat Type:
+      <select id="return-seat-type">
+        <option value="economy">Economy</option>
+        <option value="premium">Premium Economy</option>
+        <option value="business">Business</option>
+      </select>
+    </label><br>
+    <label>Flight Time:
+      <select id="return-flight-time">
+        <option>06:00 AM</option>
+        <option>11:30 AM</option>
+        <option>04:45 PM</option>
+        <option>10:15 PM</option>
+      </select>
+    </label><br>
+    <label>Date of Departure: <input type="date" id="return-flight-date"></label><br>
+    <button onclick="finishReturnFlightSelection()">Continue</button>
   </div>
 
-  <!-- Screen 7: Summary -->
-  <div class="screen" id="summaryScreen">
+  <!-- Screen 5: Summary -->
+  <div class="screen" id="summary-screen">
     <h2>Booking Summary</h2>
-    <div id="summaryDetails"></div>
-    <button onclick="goToScreen('confirmationScreen')">Confirm Booking</button>
+    <div id="summary-details"></div>
+    <button onclick="goToScreen('confirmation-screen')">Confirm Booking</button>
   </div>
 
-  <!-- Screen 8: Confirmation -->
-  <div class="screen" id="confirmationScreen">
-    <h2>Confirmation</h2>
-    <p id="confirmationCaption"></p>
-    <div id="confirmationDetails"></div>
-    <button onclick="goToScreen('boardingPassScreen')">Generate Boarding Pass</button>
+  <!-- Screen 6: Confirmation -->
+  <div class="screen" id="confirmation-screen">
+    <h2 id="confirmation-caption"></h2>
+    <p>Your booking has been confirmed!</p>
+    <button onclick="goToScreen('boarding-pass-screen')">View Boarding Pass</button>
   </div>
 
-  <!-- Screen 9: Boarding Pass -->
-  <div class="screen" id="boardingPassScreen">
-    <h2>Your Boarding Pass</h2>
-    <div id="boardingPass"></div>
-    <canvas id="qrcode"></canvas><br>
-    <button onclick="goToScreen('thankYouScreen')">Finish</button>
+  <!-- Screen 7: Boarding Pass -->
+  <div class="screen" id="boarding-pass-screen">
+    <h2>Boarding Pass</h2>
+    <div id="boarding-pass">
+      <p id="boarding-pass-details"></p>
+      <div id="qrcode"></div>
+    </div>
+    <button onclick="goToScreen('thanks-screen')">Finish</button>
   </div>
 
-  <!-- Screen 10: Thank You -->
-  <div class="screen" id="thankYouScreen">
+  <!-- Screen 8: Thanks -->
+  <div class="screen" id="thanks-screen">
     <h1>Thanks for using VoyageX!</h1>
-    <p>We hope to see you again soon ✈️</p>
   </div>
 
   <script src="script.js"></script>
