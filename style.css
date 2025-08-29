@@ -1,101 +1,72 @@
-/* General Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
-
 body {
-  background: linear-gradient(135deg, #003366, #0059b3);
-  color: white;
-  height: 100vh;
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(to bottom, #87ceeb, #f0f8ff);
   overflow-y: scroll;
-  scrollbar-width: thin;
-  scrollbar-color: #001a33 #003366;
 }
 
-/* Custom Scrollbar for Webkit */
-body::-webkit-scrollbar {
-  width: 10px;
+/* Dark blue scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
 }
-body::-webkit-scrollbar-track {
-  background: #003366;
+::-webkit-scrollbar-track {
+  background: #f0f8ff;
 }
-body::-webkit-scrollbar-thumb {
-  background: #001a33;
-  border-radius: 10px;
+::-webkit-scrollbar-thumb {
+  background: darkblue;
+  border-radius: 6px;
 }
 
 .screen {
   display: none;
-  text-align: center;
-  padding: 40px;
-  height: 100vh;
-  transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+  padding: 20px;
+  min-height: 100vh;
 }
-
 .screen.active {
   display: block;
-  opacity: 1;
-  transform: translateY(0);
+  animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
 }
 
 h1, h2 {
-  margin-bottom: 20px;
-}
-
-.caption {
-  font-size: 1.2rem;
-  margin-bottom: 30px;
-  font-style: italic;
-  font-weight: bold;
+  color: darkblue;
 }
 
 button {
-  background: #ffcc00;
+  margin-top: 15px;
+  padding: 12px 24px;
+  font-size: 16px;
   border: none;
-  padding: 12px 25px;
-  margin: 10px;
-  font-size: 1rem;
   border-radius: 8px;
+  background: darkblue;
+  color: white;
   cursor: pointer;
-  transition: background 0.3s ease;
 }
-
 button:hover {
-  background: #e6b800;
-}
-
-form {
-  text-align: left;
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 20px;
-  border-radius: 12px;
-}
-
-form label {
-  display: block;
-  margin-bottom: 10px;
+  background: #004080;
 }
 
 input, select {
   padding: 8px;
-  margin-left: 5px;
+  margin: 6px;
+  border: 1px solid #ccc;
   border-radius: 6px;
-  border: none;
 }
 
-#boardingPass {
-  background: white;
-  color: black;
-  display: inline-block;
-  padding: 20px;
-  border-radius: 12px;
-  margin-top: 20px;
+#welcome-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
-canvas {
-  margin-top: 15px;
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
 }
